@@ -1,0 +1,688 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JLPT N2 模擬問題 — Luyện tập</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Noto+Serif+JP:wght@500;700&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --paper:#F1EAD9;
+    --paper-deep:#E8DFC8;
+    --ink:#2B2A26;
+    --ink-soft:#5B564C;
+    --line:#CBBFA0;
+    --hanko:#AF3B34;
+    --hanko-deep:#8E2E29;
+    --gold:#B8863A;
+    --moss:#4B6B4E;
+    --moss-deep:#375138;
+    --card:#FBF7EC;
+    --shadow: 0 1px 0 rgba(43,42,38,.06), 0 8px 24px -12px rgba(43,42,38,.35);
+  }
+  *{box-sizing:border-box;}
+  html,body{margin:0;padding:0;}
+  body{
+    background:
+      radial-gradient(1200px 600px at 100% -10%, #F7F0DC 0%, transparent 60%),
+      repeating-linear-gradient(0deg, rgba(43,42,38,.035) 0px, rgba(43,42,38,.035) 1px, transparent 1px, transparent 34px),
+      repeating-linear-gradient(90deg, rgba(43,42,38,.035) 0px, rgba(43,42,38,.035) 1px, transparent 1px, transparent 34px),
+      var(--paper);
+    color:var(--ink);
+    font-family:'Be Vietnam Pro',sans-serif;
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    padding:28px 16px 60px;
+  }
+  .app{ width:100%; max-width:720px; }
+
+  /* Header */
+  .header{ display:flex; align-items:center; gap:16px; margin-bottom:18px; }
+  .seal{
+    flex:0 0 auto; width:58px; height:58px; border-radius:8px;
+    background:var(--hanko); color:#F7EEDD;
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Shippori Mincho',serif; font-weight:800; font-size:22px;
+    box-shadow: var(--shadow);
+    border:2px solid var(--hanko-deep);
+    transform:rotate(-2deg);
+    letter-spacing:1px;
+  }
+  .htext h1{
+    font-family:'Shippori Mincho',serif; font-weight:800;
+    font-size:26px; margin:0; color:var(--ink);
+  }
+  .htext p{ margin:2px 0 0; font-size:13.5px; color:var(--ink-soft); }
+
+  /* Progress strip */
+  .progress-wrap{ margin-bottom:22px; }
+  .progress-grid{
+    display:grid; grid-template-columns:repeat(auto-fill,minmax(11px,1fr));
+    gap:3px;
+  }
+  .cell{ width:100%; padding-top:100%; position:relative; border-radius:2px; background:var(--paper-deep); border:1px solid var(--line); }
+  .cell.done-correct{ background:var(--moss); border-color:var(--moss-deep); }
+  .cell.done-wrong{ background:var(--hanko); border-color:var(--hanko-deep); }
+  .cell.current{ outline:2px solid var(--gold); outline-offset:1px; }
+  .progress-label{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-top:6px; }
+
+  /* Card */
+  .card{
+    background:var(--card); border:1px solid var(--line); border-radius:10px;
+    box-shadow:var(--shadow); padding:26px 24px; margin-bottom:16px;
+    position:relative; overflow:hidden;
+  }
+  .card::before{
+    content:""; position:absolute; top:0; left:0; right:0; height:3px;
+    background:linear-gradient(90deg,var(--hanko),var(--gold));
+  }
+  .eyebrow{
+    font-size:12.5px; letter-spacing:.4px; color:var(--hanko-deep); font-weight:700;
+    display:flex; align-items:center; gap:8px; margin-bottom:10px;
+  }
+  .eyebrow .no-badge{
+    display:inline-flex; align-items:center; justify-content:center;
+    width:24px; height:24px; border-radius:5px; background:var(--hanko); color:#fff;
+    font-family:'Shippori Mincho',serif; font-weight:700; font-size:13px;
+  }
+  .instruction{ font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; line-height:1.6; }
+
+  .passage{
+    background:#F7F0DD; border:1px solid var(--line); border-left:4px solid var(--gold);
+    border-radius:6px; padding:16px 18px; margin-bottom:18px;
+    font-family:'Noto Serif JP',serif; font-size:15px; line-height:2.05; color:var(--ink);
+    white-space:pre-wrap;
+  }
+  .passage .note{ font-size:12.5px; color:var(--ink-soft); display:block; margin-top:8px; font-family:'Be Vietnam Pro',sans-serif; }
+
+  .stem{
+    font-family:'Noto Serif JP',serif; font-size:18px; line-height:1.8; margin:0 0 18px;
+    color:var(--ink);
+  }
+  .stem .target{ color:var(--hanko-deep); font-weight:700; }
+
+  .options{ display:flex; flex-direction:column; gap:10px; }
+  .opt{
+    display:flex; align-items:flex-start; gap:12px; text-align:left;
+    background:#FEFCF5; border:1.5px solid var(--line); border-radius:8px;
+    padding:12px 14px; cursor:pointer; font-family:'Noto Serif JP',serif; font-size:15.5px;
+    line-height:1.65; color:var(--ink); transition:border-color .15s, background .15s, transform .1s;
+  }
+  .opt:hover{ border-color:var(--gold); background:#FFF8E8; }
+  .opt:active{ transform:scale(.995); }
+  .opt .num{
+    flex:0 0 auto; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; font-size:12px; font-family:'Be Vietnam Pro',sans-serif;
+    font-weight:700; color:var(--ink-soft); margin-top:1px;
+  }
+  .opt.selected{ border-color:var(--gold); background:#FFF3D9; }
+  .opt.correct{ border-color:var(--moss); background:#E9F1E7; }
+  .opt.correct .num{ background:var(--moss); border-color:var(--moss); color:#fff; }
+  .opt.wrong{ border-color:var(--hanko); background:#F7E8E4; }
+  .opt.wrong .num{ background:var(--hanko); border-color:var(--hanko); color:#fff; }
+  .opt.disabled{ cursor:default; }
+  .opt.dim{ opacity:.55; }
+
+  .feedback{
+    margin-top:18px; padding:14px 16px; border-radius:8px; font-size:14px; line-height:1.7;
+    display:none;
+  }
+  .feedback.show{ display:block; }
+  .feedback.ok{ background:#E9F1E7; border:1px solid var(--moss); color:var(--moss-deep); }
+  .feedback.no{ background:#F7E8E4; border:1px solid var(--hanko); color:var(--hanko-deep); }
+  .feedback b{ display:block; margin-bottom:4px; font-size:13.5px; }
+  .feedback .exp{ color:var(--ink); font-weight:400; }
+
+  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:20px; }
+  .btn{
+    font-family:'Be Vietnam Pro',sans-serif; font-weight:700; font-size:14px;
+    border:none; border-radius:7px; padding:11px 20px; cursor:pointer;
+    transition:transform .1s, filter .15s;
+  }
+  .btn:active{ transform:scale(.97); }
+  .btn-primary{ background:var(--hanko); color:#fff; }
+  .btn-primary:hover{ filter:brightness(1.08); }
+  .btn-primary:disabled{ background:#CBBFA0; cursor:not-allowed; }
+  .btn-ghost{ background:transparent; color:var(--ink-soft); border:1.5px solid var(--line); }
+  .btn-ghost:hover{ border-color:var(--ink-soft); }
+
+  /* Section intro */
+  .intro .big-mark{
+    font-family:'Shippori Mincho',serif; font-size:44px; font-weight:800; color:var(--hanko);
+    line-height:1; margin-bottom:6px;
+  }
+  .intro h2{ font-family:'Shippori Mincho',serif; font-size:20px; margin:0 0 6px; }
+  .intro p{ color:var(--ink-soft); font-size:14px; line-height:1.7; margin:0 0 20px; }
+
+  /* Result screen */
+  .result-score{
+    text-align:center; padding:10px 0 6px;
+  }
+  .result-score .num{ font-family:'Shippori Mincho',serif; font-size:56px; font-weight:800; color:var(--hanko); }
+  .result-score .of{ font-size:16px; color:var(--ink-soft); }
+  .result-note{ text-align:center; font-size:14px; color:var(--ink-soft); margin-top:4px; }
+  .breakdown{ margin-top:22px; border-top:1px solid var(--line); padding-top:16px; }
+  .breakdown-row{ display:flex; justify-content:space-between; align-items:center; padding:7px 0; font-size:14px; border-bottom:1px dashed var(--line); }
+  .breakdown-row .lbl{ color:var(--ink); }
+  .breakdown-bar{ flex:1; height:6px; background:var(--paper-deep); border-radius:3px; margin:0 12px; overflow:hidden; }
+  .breakdown-bar > div{ height:100%; background:var(--moss); }
+  .breakdown-row .frac{ font-variant-numeric:tabular-nums; color:var(--ink-soft); width:44px; text-align:right; }
+
+  .review-list{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
+  .review-item{
+    display:flex; justify-content:space-between; align-items:center; gap:10px;
+    background:#FEFCF5; border:1px solid var(--line); border-radius:7px; padding:10px 14px;
+    cursor:pointer; font-size:13.5px;
+  }
+  .review-item:hover{ border-color:var(--hanko); }
+  .review-item .q-no{ font-weight:700; color:var(--hanko-deep); }
+  .review-item .q-txt{ flex:1; font-family:'Noto Serif JP',serif; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+
+  .footer-note{ text-align:center; font-size:12px; color:var(--ink-soft); margin-top:24px; }
+
+  /* Section-selection menu */
+  .sel-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
+  .sel-row{
+    display:flex; align-items:center; gap:12px; cursor:pointer;
+    background:#FEFCF5; border:1.5px solid var(--line); border-radius:8px;
+    padding:12px 14px; transition:border-color .15s, background .15s;
+  }
+  .sel-row:hover{ border-color:var(--gold); }
+  .sel-row.on{ border-color:var(--moss); background:#EEF3EC; }
+  .sel-row .chk{
+    flex:0 0 auto; width:20px; height:20px; border-radius:5px; border:1.5px solid var(--ink-soft);
+    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800;
+    color:#fff; background:transparent;
+  }
+  .sel-row.on .chk{ background:var(--moss); border-color:var(--moss); }
+  .sel-row .sel-label{ flex:1; font-family:'Noto Serif JP',serif; font-size:15px; color:var(--ink); }
+  .sel-row .sel-count{ font-size:12.5px; color:var(--ink-soft); }
+
+  @media (max-width:480px){
+    .card{ padding:20px 16px; }
+    .stem{ font-size:16.5px; }
+    .opt{ font-size:14.5px; }
+    .result-score .num{ font-size:44px; }
+  }
+</style>
+</head>
+<body>
+<div class="app" id="app"></div>
+
+<script>
+/* ---------- DATA ---------- */
+/* Passages shared by more than one question — defined once, reused so the
+   full text stays visible on every question in the group (re-readable). */
+const PASSAGE_58_60 = "①会話の技術は、運転技術とよく似ています。ボーッと運転をしていると、事故を起こします。たとえば、数人で楽しく盛り上がっているときに、いきなり人が入ってきて、自分の話を始める人がいます。あれは、高速道路に加速しないで進入してくる車のようなもので、本人は気づかなくても、入った途端にクラッシュ（注1）しているのです。\n\n　グループに加わると、まず黙って話を聞くこと。②うなずきながら、エンジンを温め、他の人と速度を同じくらいに合わせると、流れにうまく乗ることができます。\n\n　そのうえで、自分の話ばかりしないように注意すること。人は誰でも、自分の話をしたがっているのですから、会話は、ボールゲームのようなものです。サッカーでも、バスケットボールでも、ひとりでボールを独占していたら、だれからも遊んでもらえなくなります。\n\n　みんなで話しているとき、自分がどれだけ話をしたのか、常に意識していることも必要です。特に、大勢で話しているときは、発言しない人により多くの意識を払ってください。おとなしい人は無視されがちですが、同じ場にいることに敬意を払って、その人にも話を振らないと（注2）。\n\n　つくづく思いますけれど、会話ほど、個人のレベルの差が大きいものはありません。充実した会話をしたいのであれば、それなりの準備や練習は必要なのです。私は練習することで得るものは大きいと思います。その中に、人生を変える出会いや幸福が潜んでいる（注3）のではないでしょうか。\n\n（注1）クラッシュする：衝突事故を起こす\n（注2）話を振る：話す機会を与える\n（注3）潜んでいる：隠れている";
+
+const PASSAGE_61_63 = "　たとえば、「走る」ことは、一見単純で誰にでもできる運動ではあるが、「速く走る技術」となると、なかなか①身につけることが難しい。教えられたように走るフォームを改善することが簡単ではないからだ。\n\n　誰でもできる運動なのに、なぜその改善が難しいのだろう。実は、普段慣れている動作ほど、その動作に対する神経支配がしっかりとできあがっているからだ。運動の技術やフォームを改善することは、その運動を支配する神経回路（注１）を組みかえることになるので、そう簡単にはいかない。\n\n　コーチは、腕を振り、膝の運び方、上体の前傾の取り方など、フォームを矯正（注２）しようと指導し、指導を受けるランナー（注３）も指摘された体の動きの修正に意識を向けてトレーニングするのが普通である。しかし、動作の修正には多くの時間と繰り返しが必要であり、またその効果が上がらないことも多い。そして、トレーニングの効果が上がらない人は、「運動神経」が良くないということになる。\n\n　②この場合、運動技術の修正は、「運動の神経回路を修正する」ことであると考えることによって、解決の糸口（注４）がみつかる。\n\n　スポーツ技術や「身のこなし（注５）」の習得には、神経回路に直接的に刺激を与えるようなトレーニング上の工夫が必要である。\n\n　工夫をいろいろと重ねるうちに、「動作をイメージし、それを体感する」ことが、運動の神経回路を改善するのにきわめて有効であることがわかってきた。\n\n（小林寛道『運動神経の科学―誰でも足は速くなる』による）\n\n（注１）神経回路：ここでは、神経をつなぐ仕組み\n（注２）矯正する：正しくなるように直す\n（注３）ランナー：走る人\n（注４）糸口：きっかけ\n（注５）身のこなし：体の動かし方";
+
+const PASSAGE_64_66 = "　これは僕の個人的な意見だが、「悩み」と無縁の幸せは存在しないと思う。ものづくりでも「悩み」はとても重要で悩みをどう解決するか、どう昇華させる（注１）かが、作った結果、物の存在感や主張に直結する。\n\n　その観点で言うと、最近の日本の製品には「悩み」が見えない。悩みに取り組まずに切り捨ててしまうからだと思う。日本人は「シンプル」に強いあこがれを持っているが、いつの頃からか「要素が少なくて単純なことがシンプルだ」という誤った思い込みを抱いてしまっている。だから重要なものを切り捨ててしまって平気なのだ。\n\n　そういう思いつきと勢いだけで作られた商品を「チューイングガム商品」と僕は呼ぶ。作られたものが薄っぺらで、すぐに味がなくなって捨てられるからだ。\n\n　日本人の多くは「日本文化の神髄（注２）はシンプルさだ」と思っているようだが、僕は完全には同意できない。日本文化にはいろいろな相反する（注３）要素が複雑に絡みあって、それらを生かしたまま歴史の中で洗練された結果、一見シンプルに見えているだけなのだ。その深い部分を理解できずに、切り捨てて単純化したものを簡単に製品にしているから味が出てこない。\n\n　日本文化と同様に、切り捨てではなく洗練によってシンプルに見えるものは、ヨーロッパのブランド商品などにもよくある。内在していた相反する要素がうまく噛み合って（注４）いるから、シンプルに見えるだけなのだ。要素が少なくて単純なものと、洗練によってシンプルに見えるものを比較すると、内包されている複雑さが全然違う。しかも後者には、作った人たちのいろいろな悩みも見える。最初のうちはうまく隠されていて見えないが、使っているうちに「あ、こうやって悩んで、それでその結果、こういう処理をして、それでこの製品ができてきたのか」ということがわかってくる。だから奥が深い商品が生まれ、使っていても色んな側面が次々と現れてくるので飽きが来ないのだ。\n\n　悩みを避けて切り捨てた「もの」や「ひと」には、そういう面白みが存在しない。\n\n（奥山清行『ムーンショット　デザイン幸福論』による）\n\n（注１）昇華する：一段と高度なものにする\n（注２）神髄：中心となる本来の性質\n（注３）相反する：互いに対立する\n（注４）噛み合う：ここでは、ぴったり合う";
+
+const SECTIONS = [
+{ key:"q1", label:"問題1 ｜ 漢字の読み方", instruction:"＿＿＿＿ の言葉の読み方として、最もよいものを1・2・3・4から一つ選びなさい。",
+  items:[
+    {n:1, stem:"ガラスの＜b＞破片＜/b＞が落ちているから、気をつけてください。", options:["はへん","ひへん","はがた","ひがた"], a:0, e:"破片（はへん）：mảnh vỡ, mảnh vụn."},
+    {n:2, stem:"山内さんはいつもここから夕日を＜b＞撮影＜/b＞している。", options:["さいえい","さつけい","さいけい","さつえい"], a:3, e:"撮影（さつえい）：quay phim, chụp ảnh."},
+    {n:3, stem:"＜b＞針＜/b＞が見つからなくて困った。", options:["かぎ","くぎ","はり","ねじ"], a:2, e:"針（はり）：cây kim."},
+    {n:4, stem:"その本は、明日までに必ず＜b＞返却＜/b＞してください。", options:["へんきょ","へんきゃく","へんきや","へんきょく"], a:1, e:"返却（へんきゃく）：hoàn trả lại (sách, đồ mượn…)."},
+    {n:5, stem:"中村さんの話は＜b＞抽象的＜/b＞で分かりにくかった。", options:["ゆうぞうてき","ゆうしょうてき","ちゅうぞうてき","ちゅうしょうてき"], a:3, e:"抽象的（ちゅうしょうてき）：trừu tượng."},
+  ]},
+{ key:"q2", label:"問題2 ｜ 漢字の表記", instruction:"＿＿＿＿ の言葉を漢字で書くとき、最もよいものを1・2・3・4から一つ選びなさい。",
+  items:[
+    {n:6, stem:"今度は鈴木さんも＜b＞しょうたい＜/b＞するつもりです。", options:["紹待","紹介","招介","招待"], a:3, e:"しょうたい → 招待（mời）。"},
+    {n:7, stem:"自分に与えられた役割をしっかり＜b＞はたす＜/b＞つもりだ。", options:["任たす","担たす","務たす","果たす"], a:3, e:"はたす → 果たす（hoàn thành）。Đi với cụm「役割を果たす」(hoàn thành vai trò)."},
+    {n:8, stem:"いつのまにか看板が＜b＞かたむいていた＜/b＞。", options:["到いて","倒いて","頃いて","傾いて"], a:3, e:"かたむいて → 傾いて（nghiêng, xiêu vẹo）。"},
+    {n:9, stem:"今学期の＜b＞こうぎ＜/b＞は来週までです。", options:["構議","講義","講議","構義"], a:1, e:"こうぎ → 講義（bài giảng đại học）。"},
+    {n:10, stem:"食費をこれ以上＜b＞けずる＜/b＞ことはできない。", options:["削る","略る","滅る","縮る"], a:0, e:"けずる → 削る（cắt giảm / gọt）。Đi với cụm「食費を削る」(cắt giảm chi phí ăn uống)."},
+  ]},
+{ key:"q3", label:"問題3 ｜ 文脈規定", instruction:"（　）に入れるのに最もよいものを1・2・3・4から一つ選びなさい。",
+  items:[
+    {n:11, stem:"宿題を夏休み（　）に出さなければならない。", options:["止め","分け","閉め","明け"], a:3, e:"夏休み（明け）：「〜明け」nghĩa là ngay sau khi kết thúc một kỳ nghỉ/giai đoạn."},
+    {n:12, stem:"会長候補の中では田中氏が（　）有力だと言われている。", options:["極","頂","最","特"], a:2, e:"（最）有力：「最有力」nghĩa là có triển vọng nhất, khả năng cao nhất."},
+    {n:13, stem:"歌謡曲からクラシックまで、音楽（　）に興味があります。", options:["全般","共通","全国","共同"], a:0, e:"音楽（全般）：「〜全般」nghĩa là toàn bộ, nhìn chung về lĩnh vực đó."},
+    {n:14, stem:"2時50分東京駅（　）の新幹線に乗る予定です。", options:["離","出","発","始"], a:2, e:"東京駅（発）：「〜発」nghĩa là xuất phát từ đâu."},
+    {n:15, stem:"書類に記入ミスがあったので、直してから（　）提出するように言われた。", options:["復","再","次","改"], a:1, e:"（再）提出：「再提出」nghĩa là nộp lại (sau khi sửa lỗi)."},
+  ]},
+{ key:"q4", label:"問題4 ｜ 語彙選択", instruction:"（　）に入れるのに最もよいものを1・2・3・4から一つ選びなさい。",
+  items:[
+    {n:16, stem:"こんなに夜遅くまでおきていると、明日の仕事に（　）よ。", options:["差し支える","引っかかる","割り込む","かかわり合う"], a:0, e:"差し支える：gây cản trở, ảnh hưởng xấu đến công việc ngày mai."},
+    {n:17, stem:"川西さんは柔道をしているので、がっしりした（　）をしている。", options:["容姿","格好","姿勢","体格"], a:3, e:"「がっしりした体格」：vóc dáng, thể hình vạm vỡ / vững chắc."},
+    {n:18, stem:"セミナーの日は朝は準備の時間がないので、資料は（　）コピーしておいてください。", options:["先々","とっくに","あらかじめ","遅くとも"], a:2, e:"あらかじめ：làm sẵn trước một việc gì đó (in tài liệu sẵn trước)."},
+    {n:19, stem:"自転車のタイヤが（　）して、空気が抜けていた。", options:["ミス","ダウン","パンク","ストライキ"], a:2, e:"パンク：xe đạp bị bể bánh / thủng lốp."},
+    {n:20, stem:"工事の音が（　）、全然眠れない。", options:["けわしくて","やかましくて","ずうずうしくて","しつこくて"], a:1, e:"やかましくて：ồn ào, huyên náo (tiếng ồn từ công trường)."},
+    {n:21, stem:"B社が開発した商品管理システムは評価が高く、多くの会社に（　）されている。", options:["移行","吸収","引用","導入"], a:3, e:"導入：hệ thống quản lý được “áp dụng / đưa vào sử dụng” ở nhiều công ty."},
+    {n:22, stem:"子どものいたずらにいちいち（　）を立てても仕方がない。", options:["心","腹","頭","気"], a:1, e:"「腹を立てる」：cụm từ cố định nghĩa là nổi giận."},
+  ]},
+{ key:"q5", label:"問題5 ｜ 類義表現", instruction:"＿＿ の言葉に意味が最も近いものを1・2・3・4から一つ選びなさい。",
+  items:[
+    {n:23, stem:"会場が急に＜b＞そうぞうしく＜/b＞なった。", options:["寒く","うるさく","静かに","暗く"], a:1, e:"そうぞうしく ≒ うるさく（ồn ào）。"},
+    {n:24, stem:"できるだけ＜b＞用心した＜/b＞ほうがいいですよ。", options:["遠慮","我慢","努力","注意"], a:3, e:"用心した ≒ 注意（cẩn thận, chú ý）。"},
+    {n:25, stem:"その発言がうそだという＜b＞あきらかな＜/b＞証拠があります。", options:["はっきりした","新しい","別の","さまざまな"], a:0, e:"あきらかな ≒ はっきりした（rõ ràng）。"},
+    {n:26, stem:"二人は＜b＞たまたま＜/b＞会ったらしい。", options:["さっき","何度も","偶然","すぐに"], a:2, e:"たまたま ≒ 偶然（tình cờ, ngẫu nhiên）。"},
+    {n:27, stem:"この二つのレポートはテーマが＜b＞ことなります＜/b＞。", options:["違います","複雑です","似ています","単純です"], a:0, e:"ことなります ≒ 違います（khác nhau）。"},
+  ]},
+{ key:"q6", label:"問題6 ｜ 語の使い方", instruction:"次の言葉の使い方として最もよいものを1・2・3・4から一つ選びなさい。", type:"usage",
+  items:[
+    {n:28, target:"行方", options:[
+        "土曜日の私の行方はいつも決まっていて、近くの喫茶店か図書館だ。",
+        "交差点を右に曲がると、行方に黒い高層ビルが見えた。",
+        "慌てていたので、行方を確かめずにバスに乗ってしまった。",
+        "この写真の二人は事件に関係があるらしいが、まだ行方が分からない。"], a:3,
+      e:"「行方」(tung tích, nơi đến) đúng khi dùng theo kiểu「まだ行方が分からない」— diễn tả nơi đến/tung tích của người hay vật. Câu nói về việc chưa rõ tung tích của hai người trong ảnh là phù hợp."},
+    {n:29, target:"甘やかす", options:[
+        "今日は、いつもより多めに砂糖を入れて、コーヒーを甘やかした。",
+        "ひどくなったら大変だから、風邪を甘やかさないほうがいいですよ。",
+        "田中さんは、ずっと親に甘やかされて育ったせいか、わがままで困る。",
+        "今年のY社の就職試験は、昨年より内容が甘やかされている。"], a:2,
+      e:"「甘やかす」(nuông chiều) mang nghĩa nuôi dạy ai đó quá bao bọc, khiến người đó trở nên ích kỷ, nhõng nhẽo. Câu nói được bố mẹ nuông chiều nên nay ích kỷ là phù hợp."},
+    {n:30, target:"用途", options:[
+        "本来の用途ではないが、この容器は花瓶にしてもいいと思う。",
+        "森さんの才能は、多くの用途に生かされるだろう。",
+        "会社での私の用途は、新入社員の指導をすることだ。",
+        "新しい趣味を始めるため、時間の用途を工夫することにした。"], a:0,
+      e:"「用途」(mục đích/công dụng sử dụng) chỉ cách dùng của một vật. Câu nói dù không phải công dụng gốc nhưng vẫn dùng làm bình hoa là phù hợp."},
+    {n:31, target:"振り向く", options:[
+        "佐藤さんは私を見ると、恥ずかしそうに下を振り向いたまま顔を上げなかった。",
+        "だれかが空を指したので、近くにいた人たちが一斉に上を振り向いた。",
+        "道を渡るときは、左右を振り向いて車が来ないことを確認しよう。",
+        "だれかに後ろから呼ばれたので振り向いたら、課長だった。"], a:3,
+      e:"「振り向く」(ngoảnh lại) là động tác quay người ra sau. Câu nói bị gọi từ phía sau nên ngoảnh lại thì thấy là trưởng phòng là phù hợp."},
+    {n:32, target:"温暖", options:[
+        "エアコンをつけたら、部屋の中が温暖になって眠くなってきた。",
+        "この地方は温暖で暮らしやすく、野菜や果物などの農産物も豊富だ。",
+        "冷めるとおいしくないので、なるべく温暖なうちに召し上がってください。",
+        "宮田さんはいつも厳しいが、本当はとても温暖な性格の人だ。"], a:1,
+      e:"「温暖」(ấm áp) chủ yếu dùng để nói về khí hậu. Câu nói vùng này khí hậu ấm áp, dễ sống là phù hợp."},
+  ]},
+{ key:"q8", label:"問題8 ｜ 文の組み立て（★の位置）", instruction:"次の文の ★ に入る最もよいものを1・2・3・4から一つ選びなさい。", type:"order",
+  items:[
+    {n:45, stem:"いつ行っても長い行列ができているラーメン屋なのに　＿＿　＿＿　★　＿＿　だ。",
+      options:["今回あまり並ばないで済んだのは","事前に確認してから","何時ごろがすいているか","行ったから"], a:1,
+      e:"Thứ tự sắp xếp đúng: 「今回あまり並ばないで済んだのは」→「何時ごろがすいているか」→ ★「事前に確認してから」→「行ったから」。"},
+    {n:46, stem:"薬は正しく　＿＿　＿＿　★　＿＿　状態を悪化させてしまう危険もある。",
+      options:["得られないだけでなく","得られるはずの","飲まないと","効果が"], a:3,
+      e:"Thứ tự sắp xếp đúng: 「飲まないと」→「得られるはずの」→ ★「効果が」→「得られないだけでなく」。"},
+    {n:47, stem:"近所のスーパーの隣にはクリーニング屋がある。スーパーもクリーニング屋も私が　＿＿　＿＿　★　＿＿　助かる。",
+      options:["仕事から帰る時間でも","預けた服を取りに行けるのが","買い物するついでに","開いていて"], a:2,
+      e:"Thứ tự sắp xếp đúng: 「仕事から帰る時間でも」→「開いていて」→ ★「買い物するついでに」→「預けた服を取りに行けるのが」。"},
+    {n:48, stem:"このお菓子はとても簡単に作れるから初心者でも失敗する　＿＿　★　＿＿　＿＿　友人の話を聞いて、作ってみようと思った。",
+      options:["まず","ない","という","ことは"], a:0,
+      e:"Thứ tự sắp xếp đúng: 「ことは」→ ★「まず」→「ない」→「という」。Câu hoàn chỉnh: 「失敗することは［まず］ないという友人の話」。"},
+    {n:49, stem:"一人暮らしを始めたころは、料理も洗濯もすべて自分でするのが大変で、これまでずっと　＿＿　★　＿＿　＿＿　。",
+      options:["と感じさせられる","どんなに恵まれた","毎日だった","環境にいたか"], a:0,
+      e:"Thứ tự sắp xếp đúng: 「どんなに恵まれた」→「環境にいたか」→ ★「と感じさせられる」→「毎日だった」。"},
+  ]},
+{ key:"q9", label:"問題9 ｜ 文章の文法", instruction:"次の文章を読んで、文章全体の内容を考えて、（　）の中に入る最もよいものを1・2・3・4から一つ選びなさい。", type:"cloze",
+  passage:"日本発のトイレマーク\n\n　公衆トイレの入り口に描かれている男女の絵のマーク。そのマークがあれば、文字で「トイレ」と書かれていなくても、そこがトイレであることがわかる。世界のあちこちで使われているこのトイレマークが実は日本で生まれたものだということを（50）。\n\n　トイレマークが生まれたのは、1964年の東京オリンピックがきっかけだ。この東京オリンピックは、アルファベットを使わない国での初めての開催であったため、特に問題になったのが、言葉の壁だった。当時、日本国内の案内板は「お手洗い」などと日本語で書かれているものがほとんどだった。（51）、それでは世界90数か国からやって来る選手たちに理解してもらえない。かといって参加国すべての国の言葉で書くわけにもいかない。そこで、案内板作成者たちは、あらゆる国の選手が理解できるよう、絵で表すことを考えた。（52）、トイレマークなのだ。\n\n　そのほかにも、食堂、シャワー、公衆電話等の施設や設備を表すマークや、水泳、バレーボール等の競技を表すマークも作られた。競技を表すマークは、この東京オリンピックで初めて全面的に導入され、高い評価を受けた。そして、その後のオリンピックでもデザインを変えながら毎回（53）。トイレマークに代表されるように、東京オリンピックをきっかけに日本で生まれたマークが、言葉の壁を越え、今や新たなコミュニケーション手段として、世界に広がっている。それは、あらゆる人にわかりやすくという思いが世界に届いた（54）。",
+  items:[
+    {n:50, stem:"（50）に入る最もよいものはどれか。", options:["ご存じだからだろう","ご存じのようだ","ご存じだろうか","ご存じなわけだ"], a:2, e:"「ご存じだろうか」(bạn có biết...?): mẫu câu mở đầu mang tính đặt câu hỏi dẫn dắt người đọc, theo dạng「〜ということをご存じだろうか」."},
+    {n:51, stem:"（51）に入る最もよいものはどれか。", options:["それどころか","または","しかし","それに"], a:2, e:"「しかし」(tuy nhiên) mang nghĩa nghịch tiếp: hầu hết biển chỉ dẫn đều viết bằng tiếng Nhật → tuy nhiên, như vậy vận động viên nước ngoài sẽ không hiểu được — thể hiện sự tương phản."},
+    {n:52, stem:"（52）に入る最もよいものはどれか。", options:["こうして生まれたのが","ここに生み出したのは","日本で考えられたのが","作成者が理解したのは"], a:0, e:"「こうして生まれたのが」(và như vậy, thứ ra đời chính là...): mẫu câu kết luận, tiếp nối diễn biến đã trình bày trước đó."},
+    {n:53, stem:"（53）に入る最もよいものはどれか。", options:["使用したいものだ","使用していける","使用した点だ","使用されている"], a:3, e:"Thể bị động「使用されている」diễn tả một sự thật khách quan: các kỳ Olympic sau đó vẫn tiếp tục sử dụng biểu tượng này mỗi lần."},
+    {n:54, stem:"（54）に入る最もよいものはどれか。", options:["結果でなければならなかった","結果に違いない","結果のはずだった","結果として表れるかもしれない"], a:1, e:"「結果に違いない」(chắc chắn là kết quả của...): thể hiện sự suy đoán, khẳng định mạnh mẽ của tác giả."},
+  ]},
+{ key:"q10", label:"問題10 ｜ 内容理解（短文）", instruction:"次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。", type:"comp",
+  items:[
+    {n:55,
+      passage:"①　論理的に書かれている文章を読むときには、書かれた文章を自分が理解できたかどうかということにとどまらず、書かれている主張や根拠（注1）が本当に妥当だろうか、論理的に筋が通っている（注2）だろうか、別の考え方はないだろうかと考えて読むことが、とても大切です。こうして読むことによって、書かれている内容についての理解を深め、見方を広げることができます。これは批判的読みと呼ばれるものです。\n\n（秋田喜代美『読む心・書く心―文章の心理学入門』による）\n\n（注1）根拠：ある考えのもとになるもの\n（注2）筋が通っている：矛盾がない",
+      stem:"「こうして読む」とは、どのように読むことか。",
+      options:["理解が妥当かどうか確認しながら読むこと","理解を深めたり、見方を広げるように読むこと","内容の論理性や妥当性などを考えながら読むこと","別の主張や意見が述べられていないか探しながら読むこと"], a:2,
+      e:"「こうして読む」chỉ chung việc đọc trong khi suy nghĩ xem chủ trương và căn cứ có thỏa đáng không, có logic mạch lạc không. Đáp án 2 chỉ là “kết quả/hiệu quả” của cách đọc đó, chứ không phải mô tả bản thân cách đọc."},
+    {n:56,
+      passage:"②　以下は、ある庭園の案内である。\n\n多田庭園\n\n　多田庭園は、地元有力者多田家の別荘の庭を保存したもので、一般に公開されています。庭の一角には1800年代初めまで使用されていた伝統的な建物も残されています。\n\n　庭の中心には池があり、滝が約3メートルの高さから流れ落ちています。夏は滝の音が涼しげで、暑さを忘れさせてくれます。秋の夜にはライトアップが行われ、紅葉と滝が光の中に浮かんで見えて見事です。そのため、この時期には多くの観光客が訪れます。",
+      stem:"この案内から、多田庭園についてどんなことがわかるか。",
+      options:["秋の夜には紅葉と滝が美しく見える","年を通して多くの観光客が訪れる","庭園は建物を中心として造られている","1800年代初めに多田家によって造られた"], a:0,
+      e:"Bài đọc ghi rõ: “vào đêm mùa thu có chiếu sáng (light-up), lá đỏ và thác nước hiện lên trong ánh sáng rất đẹp”. Khách du lịch đông chỉ vào thời điểm này (không phải quanh năm). Công trình chỉ còn lại ở một góc vườn chứ không phải trung tâm, và bài cũng không nói rõ thời điểm xây dựng."},
+    {n:57,
+      passage:"③　私がやっている企業研究の現場で、学歴で差が出る瞬間に出くわす（注１）ことがある。それは、能力の差ではない。どの時点で「あっ、オレにはできない」とあきらめるかの差だ。\n\n　高学歴の者がえてして優秀な成績を収める（注２）のは、その人の能力が高いと言うよりも、その成長過程の中で「やればできる」「私には分からないはずはない」という自信が身についているからだ。この自信は、過去の成功体験に裏打ちされている（注3）。\n\n（注１）出くわす：ここでは、出会う\n（注２）えてして〜収める：ここでは、収める傾向がある\n（注３）裏打ちされている：裏付けられている",
+      stem:"企業研究の経験から、筆者は、なぜ高学歴の成績が優秀だと考えているか。",
+      options:["成功したことについては、自信があり、簡単にはあきらめないから","成功によって裏づけられた能力を身につけているから","成功するにはどのような能力が必要かを知っているから","成功体験によって自信がつき、失敗しなくなっているから"], a:0,
+      e:"Tác giả cho rằng đó không phải là sự khác biệt về năng lực, mà là khác biệt ở “thời điểm buông xuôi”. Nhờ có sự tự tin được củng cố bởi những trải nghiệm thành công trong quá khứ nên họ không dễ dàng bỏ cuộc — đó chính là lý do khiến người học lực cao thường đạt thành tích tốt hơn."},
+  ]},
+{ key:"q11", label:"問題11 ｜ 内容理解（中文）", instruction:"次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。", type:"comp",
+  items:[
+    {n:58,
+      passage:PASSAGE_58_60,
+      stem:"①会話の技術は、運転技術とよく似ていますとあるが、この文章ではどんなところが似ていると述べているか。",
+      options:["車の運転で事故を起こさない人は会話も同じように慎重に進められるところ","会話も車の運転のように他者とペースを合わせることが求められるところ","会話も車の運転も技術が高ければ仲間と楽しい時間を過ごせるところ","運転で他の車に注意が払える人は会話でも他者に敬意が払えるところ"], a:1,
+      e:"Bài viết cho rằng hội thoại giống với việc lái xe ở điểm: cả hai đều đòi hỏi phải điều chỉnh tốc độ (nhịp độ) cho phù hợp với người khác."},
+    {n:59,
+      passage:PASSAGE_58_60,
+      stem:"②うなずきながらエンジンを温めとあるが、ここではどういうことか。",
+      options:["静かに自分の話をしながら次の話題に移るのを待つこと","まずは人の話を聞きながら会話に加わる準備をすること","自分の話を聞いてもらいながらグループの話も聞くこと","人の話に軽く返事をしながら車のエンジンを温めること"], a:1,
+      e:"Đây là cách diễn đạt ngay sau câu “khi tham gia vào nhóm, trước tiên hãy im lặng lắng nghe”, chỉ việc vừa nghe người khác nói vừa chuẩn bị tham gia vào cuộc trò chuyện."},
+    {n:60,
+      passage:PASSAGE_58_60,
+      stem:"みんなで会話をしているときには、どのような注意が必要だと述べているか。",
+      options:["おとなしい人も、大勢で話すときは意識して他の人に話しかけるようにすること","ふだん発言しない人も、みんなの話を聞いて会話に参加するようにすること","発言が少ない人やおとなしい人の話をよく聞き、それに答えるようにすること","自分の発言量を意識しながら、おとなしい人にも話してもらえるようにすること"], a:3,
+      e:"Bài viết nói cần luôn ý thức được bản thân đã nói bao nhiêu, đồng thời cũng cần chủ động nhường lời (tạo cơ hội phát biểu) cho cả những người ít nói."},
+    {n:61,
+      passage:PASSAGE_61_63,
+      stem:"「速く走る技術」はなぜ①身につけることが難しいのか。",
+      options:["走るための神経の仕組みは他の動作とは違う特殊なものだから","走るための神経の仕組みはすでにできていて変えにくいから","走るフォームを指導する方法があまり改善されていないから","走るフォームは一度固定されると変えられないから"], a:1,
+      e:"Động tác càng quen thuộc thì cơ chế điều khiển thần kinh cho động tác đó càng được hình thành chắc chắn, nên việc tổ chức lại mạch thần kinh đó không hề đơn giản."},
+    {n:62,
+      passage:PASSAGE_61_63,
+      stem:"②この場合とはどんな場合か。",
+      options:["コーチの指導が理解できない場合","走り方の改善に集中できない場合","練習の効果がうまく現れない場合","練習に十分な時間が取れない場合"], a:2,
+      e:"「この場合」(trường hợp này) chỉ nội dung ngay trước đó: dù việc chỉnh sửa động tác cần nhiều thời gian và lặp lại nhiều lần, hiệu quả luyện tập vẫn thường không rõ rệt."},
+    {n:63,
+      passage:PASSAGE_61_63,
+      stem:"筆者によると、「速く走る技術」を身につけるにはどうすればよいか。",
+      options:["コーチの指導を受けながら走り方の修正に全神経を集中させて走る","頭で考えるよりも、何度も練習を重ねて体で覚えるようにする","神経の仕組みに直接刺激を与えるためにいろいろな走り方を試す","速く走る動きを頭に描いてその感覚を体で感じるようにする"], a:3,
+      e:"Bài viết nêu rằng việc “hình dung động tác trong đầu rồi cảm nhận nó bằng cơ thể” có hiệu quả trong việc cải thiện mạch thần kinh — tức là hình dung động tác chạy nhanh trong đầu và cảm nhận cảm giác đó bằng cơ thể."},
+  ]},
+{ key:"q13", label:"問題13 ｜ 主張理解（長文）", instruction:"次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。", type:"comp",
+  items:[
+    {n:64,
+      passage:PASSAGE_64_66,
+      stem:"ここでの重要なものとは何か。",
+      options:["強いあこがれ","シンプルさ","思い込み","悩み"], a:3,
+      e:"Theo mạch văn ngay trước câu “vứt bỏ những thứ quan trọng mà vẫn thấy bình thường”, “thứ quan trọng” bị vứt bỏ ở đây chính là「悩み」(sự trăn trở, khó khăn)."},
+    {n:65,
+      passage:PASSAGE_64_66,
+      stem:"筆者は、日本文化をどのようなものだと考えているか。",
+      options:["洗練されていないが深い味があるもの","要素が少なくシンプルなもの","単純であるが飽きが来ないもの","単純に見えて実は複雑なもの"], a:3,
+      e:"Tác giả cho rằng văn hóa Nhật Bản là sự đan xen phức tạp của nhiều yếu tố đối lập, được mài giũa qua lịch sử nên “chỉ nhìn có vẻ đơn giản” — tức là nhìn thì đơn giản nhưng thực chất rất phức tạp."},
+    {n:66,
+      passage:PASSAGE_64_66,
+      stem:"ものづくりについて、筆者はどのようなことが必要だと言いたいのか。",
+      options:["迷いながらも複雑に絡みあった要素をうまく切り捨てていくこと","深く考えながら対立する要素をうまく合わせていくこと","あまり悩まずにシンプルさを求めていくこと","できるだけ作り方を複雑にしていくこと"], a:1,
+      e:"Tác giả cho rằng thay vì né tránh và cắt bỏ những trăn trở, việc làm sản phẩm tốt cần khéo léo kết hợp các yếu tố đối lập — tức là vừa suy nghĩ sâu sắc vừa dung hòa những yếu tố trái ngược nhau."},
+  ]},
+];
+
+/* Flatten all questions in order, keep section ref */
+const ALL = [];
+SECTIONS.forEach(sec=>{
+  sec.items.forEach((it,idx)=>{
+    ALL.push({...it, sectionKey:sec.key, sectionLabel:sec.label, instruction:sec.instruction,
+      type:sec.type||"plain", sharedPassage:sec.passage||null, isFirstInSection: idx===0});
+  });
+});
+const TOTAL = ALL.length;
+
+function shuffleArray(arr){
+  const a = arr.slice();
+  for(let i=a.length-1;i>0;i--){
+    const j = Math.floor(Math.random()*(i+1));
+    [a[i],a[j]] = [a[j],a[i]];
+  }
+  return a;
+}
+
+/* Return a clone of the item with its 4 options shuffled and the correct
+   index recalculated to match — used fresh every time a session starts. */
+function shuffleItem(it){
+  const order = shuffleArray([0,1,2,3]); // order[newPos] = oldPos
+  const newOptions = order.map(oldPos=>it.options[oldPos]);
+  const newA = order.indexOf(it.a);
+  return {...it, options:newOptions, a:newA};
+}
+
+/* ---------- STATE ---------- */
+let screen = "menu";      // "menu" | "quiz"
+let selected = new Set(SECTIONS.map(s=>s.key)); // sections chosen for the session
+let cursor = 0;            // index into "flow"
+let answers = {};          // n -> {picked, correct}
+let flow = [];             // sequence of {type:'intro', sec} or {type:'q', item}
+
+function buildFlow(){
+  flow = [];
+  SECTIONS.filter(sec=>selected.has(sec.key)).forEach(sec=>{
+    flow.push({type:"intro", sec});
+    ALL.filter(it=>it.sectionKey===sec.key).forEach(it=> flow.push({type:"q", item:shuffleItem(it), sec}));
+  });
+}
+
+function renderTarget(html){
+  return html.replaceAll("＜b＞","<span class=\"target\">").replaceAll("＜/b＞","</span>");
+}
+
+/* ---------- RENDER ---------- */
+const app = document.getElementById("app");
+
+function sessionQItems(){ return flow.filter(f=>f.type==="q"); }
+
+function progressGrid(){
+  const qs = sessionQItems();
+  let cells = "";
+  qs.forEach((f,i)=>{
+    const rec = answers[f.item.n];
+    let cls = "cell";
+    if(rec) cls += rec.correct ? " done-correct" : " done-wrong";
+    if(i===cursor) cls += " current";
+    cells += `<div class="${cls}"></div>`;
+  });
+  const answeredCount = Object.keys(answers).length;
+  return `<div class="progress-wrap">
+    <div class="progress-grid">${cells}</div>
+    <div class="progress-label"><span>Đã làm ${answeredCount}/${qs.length} câu</span><span>${Math.round(answeredCount/qs.length*100)}%</span></div>
+  </div>`;
+}
+
+function header(sub){
+  return `<div class="header">
+    <div class="seal">N2</div>
+    <div class="htext">
+      <h1>JLPT N2 模擬問題</h1>
+      <p>${sub || "Đề luyện tập mô phỏng — " + TOTAL + " câu trắc nghiệm"}</p>
+    </div>
+  </div>`;
+}
+
+function renderMenu(){
+  let rows = "";
+  SECTIONS.forEach(sec=>{
+    const checked = selected.has(sec.key);
+    rows += `<div class="sel-row ${checked?"on":""}" onclick="toggleSection('${sec.key}')">
+      <span class="chk">${checked?"✓":""}</span>
+      <span class="sel-label">${sec.label}</span>
+      <span class="sel-count">${sec.items.length} câu</span>
+    </div>`;
+  });
+  const count = SECTIONS.filter(s=>selected.has(s.key)).reduce((n,s)=>n+s.items.length,0);
+  const allOn = selected.size===SECTIONS.length;
+  return `
+  ${header("Chọn phần muốn luyện tập")}
+  <div class="card">
+    <div class="eyebrow"><span class="no-badge">選</span>Chọn 問題 muốn luyện</div>
+    <p class="instruction">Chọn một hoặc nhiều phần. Mỗi lần bắt đầu, thứ tự các lựa chọn trong từng câu sẽ được xáo trộn ngẫu nhiên.</p>
+    <div class="sel-list">${rows}</div>
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="toggleAll()">${allOn?"Bỏ chọn tất cả":"Chọn tất cả"}</button>
+      <button class="btn btn-primary" onclick="startQuiz()" ${count===0?"disabled":""}>Bắt đầu ${count} câu →</button>
+    </div>
+  </div>
+  <div class="footer-note">JLPT N2 模擬問題 — nội dung câu hỏi &amp; giải thích lấy từ đề và đáp án bạn đã tải lên.</div>`;
+}
+
+function renderIntro(step){
+  const sec = step.sec;
+  return `
+  ${header()}
+  ${progressGrid()}
+  <div class="card intro">
+    <div class="big-mark">${sec.label.split(" ｜")[0]}</div>
+    <h2>${sec.label.split(" ｜ ")[1]||""}</h2>
+    <p>${sec.instruction}</p>
+    ${sec.passage ? `<div class="passage">${sec.passage}</div>` : ""}
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="backToMenu()">← Chọn lại phần</button>
+      <button class="btn btn-primary" onclick="goNext()">Bắt đầu ${sec.items.length} câu →</button>
+    </div>
+  </div>`;
+}
+
+function renderQuestion(step){
+  const it = step.item;
+  const rec = answers[it.n];
+  const passageHtml = it.passage
+    ? `<div class="passage">${it.passage}</div>`
+    : (it.sharedPassage ? `<div class="passage">${it.sharedPassage}</div>` : "");
+
+  let optsHtml = "";
+  it.options.forEach((opt,i)=>{
+    let cls = "opt";
+    if(rec){
+      cls += " disabled";
+      if(i===it.a) cls += " correct";
+      else if(i===rec.picked) cls += " wrong";
+      else cls += " dim";
+    }
+    optsHtml += `<div class="${cls}" onclick="pick(${it.n},${i})"><span class="num">${i+1}</span><span>${opt}</span></div>`;
+  });
+
+  const stemHtml = it.type==="usage"
+    ? `<div class="stem">次の言葉の使い方として最もよいものはどれか：<br><span class="target" style="font-size:22px;">「${it.target}」</span></div>`
+    : `<div class="stem">${renderTarget(it.stem)}</div>`;
+
+  const feedback = rec ? `
+    <div class="feedback show ${rec.correct?"ok":"no"}">
+      <b>${rec.correct ? "✓ Chính xác！" : "✗ Chưa đúng — đáp án đúng là " + (it.a+1) + "."}</b>
+      <span class="exp">${it.e}</span>
+    </div>` : `<div class="feedback"></div>`;
+
+  const isLast = (cursor === flow.length-1);
+  const nextLabel = isLast ? "Xem kết quả →" : "Câu tiếp theo →";
+
+  return `
+  ${header()}
+  ${progressGrid()}
+  <div class="card">
+    <div class="eyebrow"><span class="no-badge">${it.n}</span>${step.sec.label}</div>
+    ${passageHtml}
+    ${stemHtml}
+    <div class="options">${optsHtml}</div>
+    ${feedback}
+    <div class="nav-row">
+      <button class="btn btn-ghost" onclick="goPrev()" ${cursor===0?"disabled":""}>← Câu trước</button>
+      <button class="btn btn-primary" id="nextBtn" onclick="goNext()" ${rec?"":"disabled"}>${nextLabel}</button>
+    </div>
+  </div>`;
+}
+
+function renderResult(){
+  const qItems = sessionQItems().map(f=>f.item);
+  const sessionTotal = qItems.length;
+  const answeredEntries = Object.values(answers);
+  const correctCount = answeredEntries.filter(r=>r.correct).length;
+  const pct = Math.round(correctCount/sessionTotal*100);
+
+  let note = "Cần luyện thêm — xem lại phần giải thích các câu sai nhé.";
+  if(pct>=85) note = "Xuất sắc! Trình độ rất vững cho N2.";
+  else if(pct>=70) note = "Khá tốt! Chỉ còn vài điểm cần củng cố.";
+  else if(pct>=50) note = "Ổn, nhưng nên ôn lại các phần còn yếu.";
+
+  let breakdown = "";
+  SECTIONS.filter(sec=>selected.has(sec.key)).forEach(sec=>{
+    const items = qItems.filter(it=>it.sectionKey===sec.key);
+    const correct = items.filter(it=>answers[it.n] && answers[it.n].correct).length;
+    const w = Math.round(correct/items.length*100);
+    breakdown += `<div class="breakdown-row">
+      <span class="lbl">${sec.label}</span>
+      <div class="breakdown-bar"><div style="width:${w}%;"></div></div>
+      <span class="frac">${correct}/${items.length}</span>
+    </div>`;
+  });
+
+  let missed = "";
+  qItems.forEach(it=>{
+    const rec = answers[it.n];
+    if(rec && !rec.correct){
+      const label = it.type==="usage" ? "「"+it.target+"」" : (it.stem||"").replace(/＜\/?b＞/g,"");
+      missed += `<div class="review-item" onclick="jumpTo(${it.n})">
+        <span class="q-no">#${it.n}</span><span class="q-txt">${label}</span><span>↻</span>
+      </div>`;
+    }
+  });
+
+  return `
+  ${header()}
+  <div class="card">
+    <div class="result-score">
+      <div class="num">${correctCount}<span class="of"> / ${sessionTotal}</span></div>
+      <div class="result-note">${note}</div>
+    </div>
+    <div class="breakdown">${breakdown}</div>
+    ${missed ? `<div class="breakdown" style="border-top:1px solid var(--line);"><b style="font-size:13.5px;">Xem lại câu sai:</b><div class="review-list">${missed}</div></div>` : `<p style="text-align:center;color:var(--moss-deep);margin-top:20px;font-weight:600;">Không có câu sai nào — tuyệt vời！</p>`}
+    <div class="nav-row" style="justify-content:center; gap:12px; margin-top:24px;">
+      <button class="btn btn-ghost" onclick="backToMenu()">Chọn phần khác</button>
+      <button class="btn btn-primary" onclick="restart()">Làm lại (xáo trộn mới)</button>
+    </div>
+  </div>
+  <div class="footer-note">JLPT N2 模擬問題 — nội dung câu hỏi &amp; giải thích lấy từ đề và đáp án bạn đã tải lên.</div>`;
+}
+
+function render(){
+  if(screen==="menu"){
+    app.innerHTML = renderMenu();
+    return;
+  }
+  if(cursor >= flow.length){
+    app.innerHTML = renderResult();
+    return;
+  }
+  const step = flow[cursor];
+  app.innerHTML = step.type==="intro" ? renderIntro(step) : renderQuestion(step);
+}
+function renderAndScrollTop(){
+  render();
+  window.scrollTo({top:0, behavior:"instant"});
+}
+
+function toggleSection(key){
+  if(selected.has(key)) selected.delete(key); else selected.add(key);
+  render();
+}
+function toggleAll(){
+  if(selected.size===SECTIONS.length) selected = new Set();
+  else selected = new Set(SECTIONS.map(s=>s.key));
+  render();
+}
+function startQuiz(){
+  if(selected.size===0) return;
+  buildFlow();
+  answers = {};
+  cursor = 0;
+  screen = "quiz";
+  renderAndScrollTop();
+}
+function backToMenu(){
+  screen = "menu";
+  renderAndScrollTop();
+}
+
+function pick(n, idx){
+  if(answers[n]) return; // already answered
+  const step = flow.find(f=>f.type==="q" && f.item.n===n);
+  const it = step.item;
+  answers[n] = {picked:idx, correct: idx===it.a};
+  render(); // stays in place so the feedback appears where the user is looking
+}
+
+function goNext(){
+  cursor++;
+  renderAndScrollTop();
+}
+function goPrev(){
+  if(cursor>0){ cursor--; renderAndScrollTop(); }
+}
+function jumpTo(n){
+  const idx = flow.findIndex(f=>f.type==="q" && f.item.n===n);
+  if(idx>=0){ cursor=idx; renderAndScrollTop(); }
+}
+function restart(){
+  buildFlow(); // reshuffle
+  answers = {};
+  cursor = 0;
+  renderAndScrollTop();
+}
+
+render();
+</script>
+</body>
+</html>
