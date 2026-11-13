@@ -1,688 +1,1061 @@
-<!DOCTYPE html>
-<html lang="vi">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JLPT N2 模擬問題 — Luyện tập</title>
+
+Neko Ôn Tập.html
+100%
+<!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
+<title>Neko Ôn Tập</title>
+<meta name="claude:viewport-fit-sides" content="cover">
 <link rel="preconnect" href="https://fonts.googleapis.com">
-<link href="https://fonts.googleapis.com/css2?family=Shippori+Mincho:wght@500;600;800&family=Noto+Serif+JP:wght@500;700&family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Nunito:wght@400;600;700;800&family=Zen+Maru+Gothic:wght@400;500;700&display=swap">
 <style>
-  :root{
-    --paper:#F1EAD9;
-    --paper-deep:#E8DFC8;
-    --ink:#2B2A26;
-    --ink-soft:#5B564C;
-    --line:#CBBFA0;
-    --hanko:#AF3B34;
-    --hanko-deep:#8E2E29;
-    --gold:#B8863A;
-    --moss:#4B6B4E;
-    --moss-deep:#375138;
-    --card:#FBF7EC;
-    --shadow: 0 1px 0 rgba(43,42,38,.06), 0 8px 24px -12px rgba(43,42,38,.35);
+/* Layout: một cột giữa trang, thẻ "sticker" viền đậm + bóng cứng; mascot mèo Neko dẫn đường */
+:root{
+  --bg:#FFF3F3; --dot:#FFDDE5; --surface:#FFFFFF;
+  --ink:#443342; --ink-soft:#7F6B7B; --line:#443342;
+  --pink:#FFB3C7; --pink-soft:#FFE6ED; --on-pink:#443342;
+  --mint:#A6E6CC; --mint-soft:#E0F8EE; --mint-ink:#16704F;
+  --sky:#AEDAF6; --sky-soft:#E6F4FD;
+  --butter:#FFDB82; --butter-soft:#FFF4D1;
+  --bad:#FF9E9E; --bad-soft:#FFE5E2; --bad-ink:#A93030;
+  --cat:#FFFFFF; --cat-line:#443342;
+  --f-display:'Fredoka','Zen Maru Gothic','Nunito',system-ui,sans-serif;
+  --f-body:'Nunito','Zen Maru Gothic',system-ui,sans-serif;
+  --f-jp:'Zen Maru Gothic','Nunito','Hiragino Maru Gothic ProN','Yu Gothic',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#241B29; --dot:#2E2334; --surface:#352A3C;
+    --ink:#FBEFF4; --ink-soft:#C3AEBC; --line:#9A83A6;
+    --pink:#A24A6C; --pink-soft:#4B2D3D; --on-pink:#FFF4F8;
+    --mint:#2F8C6A; --mint-soft:#1F3B33; --mint-ink:#8EE6C3;
+    --sky:#3F7BA3; --sky-soft:#22364A;
+    --butter:#C99A2E; --butter-soft:#463C22;
+    --bad:#B84E57; --bad-soft:#472629; --bad-ink:#FFA9A9;
+    --cat:#F7EAF0; --cat-line:#4A3A52; color-scheme:dark;
   }
-  *{box-sizing:border-box;}
-  html,body{margin:0;padding:0;}
-  body{
-    background:
-      radial-gradient(1200px 600px at 100% -10%, #F7F0DC 0%, transparent 60%),
-      repeating-linear-gradient(0deg, rgba(43,42,38,.035) 0px, rgba(43,42,38,.035) 1px, transparent 1px, transparent 34px),
-      repeating-linear-gradient(90deg, rgba(43,42,38,.035) 0px, rgba(43,42,38,.035) 1px, transparent 1px, transparent 34px),
-      var(--paper);
-    color:var(--ink);
-    font-family:'Be Vietnam Pro',sans-serif;
-    min-height:100vh;
-    display:flex;
-    justify-content:center;
-    padding:28px 16px 60px;
-  }
-  .app{ width:100%; max-width:720px; }
+}
+:root[data-theme="dark"]{
+  --bg:#241B29; --dot:#2E2334; --surface:#352A3C;
+  --ink:#FBEFF4; --ink-soft:#C3AEBC; --line:#9A83A6;
+  --pink:#A24A6C; --pink-soft:#4B2D3D; --on-pink:#FFF4F8;
+  --mint:#2F8C6A; --mint-soft:#1F3B33; --mint-ink:#8EE6C3;
+  --sky:#3F7BA3; --sky-soft:#22364A;
+  --butter:#C99A2E; --butter-soft:#463C22;
+  --bad:#B84E57; --bad-soft:#472629; --bad-ink:#FFA9A9;
+  --cat:#F7EAF0; --cat-line:#4A3A52; color-scheme:dark;
+}
+*{box-sizing:border-box;min-width:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  margin:0; background-color:var(--bg); color:var(--ink);
+  background-image:radial-gradient(var(--dot) 2px, transparent 2px); background-size:26px 26px;
+  font-family:var(--f-body); font-size:16px; line-height:1.65;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+  padding-block:18px 64px; overflow-x:hidden;
+}
+.wrap{max-width:860px; margin:0 auto}
+h1,h2,h3{font-family:var(--f-display); font-weight:600; margin:0; text-wrap:balance; line-height:1.25}
+p{margin:0}
+.jp{font-family:var(--f-jp)}
+ruby{ruby-position:over} rt{font-size:.5em; color:var(--ink-soft); font-weight:500; user-select:none}
+button{font:inherit; color:inherit; cursor:pointer}
+:focus-visible{outline:3px solid var(--butter); outline-offset:2px}
+.lbl{display:inline-block; font-size:12px; font-weight:800; letter-spacing:.06em; text-transform:uppercase; color:var(--ink-soft); margin-right:8px}
 
-  /* Header */
-  .header{ display:flex; align-items:center; gap:16px; margin-bottom:18px; }
-  .seal{
-    flex:0 0 auto; width:58px; height:58px; border-radius:8px;
-    background:var(--hanko); color:#F7EEDD;
-    display:flex; align-items:center; justify-content:center;
-    font-family:'Shippori Mincho',serif; font-weight:800; font-size:22px;
-    box-shadow: var(--shadow);
-    border:2px solid var(--hanko-deep);
-    transform:rotate(-2deg);
-    letter-spacing:1px;
-  }
-  .htext h1{
-    font-family:'Shippori Mincho',serif; font-weight:800;
-    font-size:26px; margin:0; color:var(--ink);
-  }
-  .htext p{ margin:2px 0 0; font-size:13.5px; color:var(--ink-soft); }
+/* ---------- mascot ---------- */
+.cat{display:block; flex:none}
+.cat .fur{fill:var(--cat); stroke:var(--cat-line); stroke-width:3; stroke-linejoin:round}
+.cat .ear{fill:var(--pink); stroke:none}
+.cat .ln{fill:none; stroke:var(--cat-line); stroke-width:3; stroke-linecap:round; stroke-linejoin:round}
+.cat .thin{stroke-width:2; opacity:.65}
+.cat .dot{fill:var(--cat-line)}
+.cat .cheek{fill:#FF9DB8; opacity:.55}
+.cat .nose{fill:#FF7FA2; stroke:var(--cat-line); stroke-width:1.5; stroke-linejoin:round}
+.cat .mouth{fill:#FF7FA2; stroke:var(--cat-line); stroke-width:2.5; stroke-linejoin:round}
+.cat .tear{fill:#8FD0F5; stroke:var(--cat-line); stroke-width:1.5}
+.cat .bow{fill:#FF7FA2; stroke:var(--cat-line); stroke-width:2; stroke-linejoin:round}
 
-  /* Progress strip */
-  .progress-wrap{ margin-bottom:22px; }
-  .progress-grid{
-    display:grid; grid-template-columns:repeat(auto-fill,minmax(11px,1fr));
-    gap:3px;
-  }
-  .cell{ width:100%; padding-top:100%; position:relative; border-radius:2px; background:var(--paper-deep); border:1px solid var(--line); }
-  .cell.done-correct{ background:var(--moss); border-color:var(--moss-deep); }
-  .cell.done-wrong{ background:var(--hanko); border-color:var(--hanko-deep); }
-  .cell.current{ outline:2px solid var(--gold); outline-offset:1px; }
-  .progress-label{ display:flex; justify-content:space-between; font-size:12px; color:var(--ink-soft); margin-top:6px; }
+/* ---------- shared pieces ---------- */
+.card{background:var(--surface); border:2.5px solid var(--line); border-radius:22px; box-shadow:0 5px 0 var(--line)}
+.btn{
+  display:inline-flex; align-items:center; justify-content:center; gap:8px; text-align:center;
+  background:var(--pink); color:var(--on-pink); border:2.5px solid var(--line); border-radius:999px;
+  padding:10px 22px; font-family:var(--f-display); font-weight:600; font-size:16px; line-height:1.2;
+  box-shadow:0 4px 0 var(--line); transition:transform .08s, box-shadow .08s;
+}
+.btn:hover{transform:translateY(-1px); box-shadow:0 5px 0 var(--line)}
+.btn:active{transform:translateY(3px); box-shadow:0 1px 0 var(--line)}
+.btn.alt{background:var(--surface); color:var(--ink)}
+.btn.mint{background:var(--mint); color:var(--on-pink)}
+.btn.sm{padding:6px 14px; font-size:14px; box-shadow:0 3px 0 var(--line)}
+.btn[disabled]{opacity:.45; cursor:not-allowed; transform:none; box-shadow:0 4px 0 var(--line)}
+.chip{display:inline-flex; align-items:center; gap:6px; background:var(--butter-soft); border:2px solid var(--line); border-radius:999px; padding:2px 12px; font-size:13px; font-weight:700}
 
-  /* Card */
-  .card{
-    background:var(--card); border:1px solid var(--line); border-radius:10px;
-    box-shadow:var(--shadow); padding:26px 24px; margin-bottom:16px;
-    position:relative; overflow:hidden;
-  }
-  .card::before{
-    content:""; position:absolute; top:0; left:0; right:0; height:3px;
-    background:linear-gradient(90deg,var(--hanko),var(--gold));
-  }
-  .eyebrow{
-    font-size:12.5px; letter-spacing:.4px; color:var(--hanko-deep); font-weight:700;
-    display:flex; align-items:center; gap:8px; margin-bottom:10px;
-  }
-  .eyebrow .no-badge{
-    display:inline-flex; align-items:center; justify-content:center;
-    width:24px; height:24px; border-radius:5px; background:var(--hanko); color:#fff;
-    font-family:'Shippori Mincho',serif; font-weight:700; font-size:13px;
-  }
-  .instruction{ font-size:13.5px; color:var(--ink-soft); margin:0 0 16px; line-height:1.6; }
+/* ---------- top bar ---------- */
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap}
+.brand{display:flex; align-items:center; gap:10px; font-family:var(--f-display); font-weight:700; font-size:22px}
+.brand small{font-family:var(--f-body); font-weight:700; font-size:12px; color:var(--ink-soft); display:block; margin-top:-4px}
 
-  .passage{
-    background:#F7F0DD; border:1px solid var(--line); border-left:4px solid var(--gold);
-    border-radius:6px; padding:16px 18px; margin-bottom:18px;
-    font-family:'Noto Serif JP',serif; font-size:15px; line-height:2.05; color:var(--ink);
-    white-space:pre-wrap;
-  }
-  .passage .note{ font-size:12.5px; color:var(--ink-soft); display:block; margin-top:8px; font-family:'Be Vietnam Pro',sans-serif; }
+/* ---------- home ---------- */
+.hero{display:flex; align-items:center; gap:20px; padding:22px 24px; margin-bottom:26px; background:var(--pink-soft)}
+.hero h1{font-size:30px; margin-bottom:6px}
+.hero p{color:var(--ink-soft); max-width:46ch}
+@media (max-width:560px){ .hero{flex-direction:column; text-align:center; padding:18px 16px} .hero h1{font-size:26px} }
+.shuffle{display:flex; align-items:center; gap:10px; margin:0 0 18px; padding:10px 16px; background:var(--sky-soft); border:2px dashed var(--line); border-radius:16px; font-weight:700; font-size:15px; cursor:pointer}
+.shuffle input{width:20px; height:20px; accent-color:#E0668B; flex:none}
+.shuffle span span{display:block; font-weight:400; font-size:13px; color:var(--ink-soft)}
+.exams{display:grid; gap:18px; grid-template-columns:repeat(auto-fit,minmax(min(100%,300px),1fr))}
+.exam{padding:20px; display:flex; flex-direction:column; gap:12px}
+.exam .tag{align-self:flex-start; background:var(--butter); color:var(--on-pink); border:2px solid var(--line); border-radius:999px; padding:1px 14px; font-family:var(--f-display); font-weight:600; font-size:14px}
+.exam h2{font-size:26px}
+.exam ul{margin:0; padding:0; list-style:none; display:grid; gap:6px; font-size:15px}
+.exam li{display:flex; gap:10px; align-items:baseline}
+.exam li b{font-family:var(--f-jp); font-weight:700; flex:none}
+.exam .btn{margin-top:auto; align-self:stretch}
+.exam.soon{border-style:dashed; box-shadow:none; background:transparent; justify-content:center; align-items:center; text-align:center; color:var(--ink-soft); min-height:220px}
+.exam.soon h2{font-size:20px; color:var(--ink)}
 
-  .stem{
-    font-family:'Noto Serif JP',serif; font-size:18px; line-height:1.8; margin:0 0 18px;
-    color:var(--ink);
-  }
-  .stem .target{ color:var(--hanko-deep); font-weight:700; }
+/* ---------- quiz chrome ---------- */
+.prog{display:flex; align-items:center; gap:14px; margin-bottom:14px; flex-wrap:wrap}
+.prog .bar{flex:1 1 160px; height:16px; background:var(--surface); border:2.5px solid var(--line); border-radius:999px; overflow:hidden}
+.prog .bar i{display:block; height:100%; background:var(--mint); border-right:2.5px solid var(--line); transition:width .3s}
+.prog .bar i[style*="width:0%"]{border-right:none}
+.prog .txt{font-family:var(--f-display); font-weight:600; font-size:15px; white-space:nowrap}
+.banner{background:var(--butter-soft); border:2px dashed var(--line); border-radius:14px; padding:8px 14px; font-weight:700; font-size:14px; margin-bottom:14px}
+.tabs{display:flex; gap:10px; overflow-x:auto; padding:2px 2px 10px; margin-bottom:6px}
+.tab{
+  flex:1 1 0; min-width:132px; text-align:left; background:var(--surface); border:2.5px solid var(--line); border-radius:16px;
+  padding:8px 14px; box-shadow:0 3px 0 var(--line); display:flex; flex-direction:column; gap:0;
+}
+.tab b{font-family:var(--f-jp); font-size:16px; line-height:1.3}
+.tab span{font-size:13px; color:var(--ink-soft); font-weight:700}
+.tab.on{background:var(--pink); color:var(--on-pink)}
+.tab.on span{color:var(--on-pink)}
+.tab.full span::after{content:" ✓"; color:var(--mint-ink); font-weight:800}
+.tab.on.full span::after{color:var(--on-pink)}
 
-  .options{ display:flex; flex-direction:column; gap:10px; }
-  .opt{
-    display:flex; align-items:flex-start; gap:12px; text-align:left;
-    background:#FEFCF5; border:1.5px solid var(--line); border-radius:8px;
-    padding:12px 14px; cursor:pointer; font-family:'Noto Serif JP',serif; font-size:15.5px;
-    line-height:1.65; color:var(--ink); transition:border-color .15s, background .15s, transform .1s;
-  }
-  .opt:hover{ border-color:var(--gold); background:#FFF8E8; }
-  .opt:active{ transform:scale(.995); }
-  .opt .num{
-    flex:0 0 auto; width:22px; height:22px; border-radius:50%; border:1.5px solid var(--ink-soft);
-    display:flex; align-items:center; justify-content:center; font-size:12px; font-family:'Be Vietnam Pro',sans-serif;
-    font-weight:700; color:var(--ink-soft); margin-top:1px;
-  }
-  .opt.selected{ border-color:var(--gold); background:#FFF3D9; }
-  .opt.correct{ border-color:var(--moss); background:#E9F1E7; }
-  .opt.correct .num{ background:var(--moss); border-color:var(--moss); color:#fff; }
-  .opt.wrong{ border-color:var(--hanko); background:#F7E8E4; }
-  .opt.wrong .num{ background:var(--hanko); border-color:var(--hanko); color:#fff; }
-  .opt.disabled{ cursor:default; }
-  .opt.dim{ opacity:.55; }
+.sec{padding:22px 24px 8px; margin-bottom:22px}
+@media (max-width:560px){ .sec{padding:16px 14px 4px} }
+.sec-head{margin-bottom:18px}
+.sec-head h2{font-size:24px; display:flex; flex-wrap:wrap; align-items:baseline; gap:10px}
+.sec-head h2 .jp{background:var(--sky); color:var(--on-pink); border:2px solid var(--line); border-radius:10px; padding:0 10px; font-size:18px}
+.sec-head p{color:var(--ink-soft); font-size:15px; margin-top:6px}
+.sec-head p .jp{font-size:13px; display:block; opacity:.85}
 
-  .feedback{
-    margin-top:18px; padding:14px 16px; border-radius:8px; font-size:14px; line-height:1.7;
-    display:none;
-  }
-  .feedback.show{ display:block; }
-  .feedback.ok{ background:#E9F1E7; border:1px solid var(--moss); color:var(--moss-deep); }
-  .feedback.no{ background:#F7E8E4; border:1px solid var(--hanko); color:var(--hanko-deep); }
-  .feedback b{ display:block; margin-bottom:4px; font-size:13.5px; }
-  .feedback .exp{ color:var(--ink); font-weight:400; }
+/* ---------- questions ---------- */
+.q{padding:16px 0 22px; border-top:2.5px dashed var(--dot)}
+.q:first-of-type{border-top:none; padding-top:0}
+.q-head{display:flex; gap:12px; align-items:flex-start; margin-bottom:14px}
+.qn{flex:none; width:36px; height:36px; border-radius:50%; background:var(--butter); color:var(--on-pink); border:2.5px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:var(--f-display); font-weight:700; font-size:16px; margin-top:2px}
+.qtext{font-family:var(--f-jp); font-size:18px; line-height:2; padding-top:1px; min-width:0}
+.qtext .ctx{display:block; color:var(--ink-soft); font-size:15px}
+.blank{display:inline-block; min-width:3.2em; text-align:center; border-bottom:3px solid #E0668B; color:#C0305F; font-weight:700; margin:0 2px; line-height:1.3}
+:root[data-theme="dark"] .blank{color:#FF9DB8; border-color:#FF9DB8}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .blank{color:#FF9DB8; border-color:#FF9DB8} }
+.choices{display:grid; gap:10px; grid-template-columns:repeat(2,minmax(0,1fr)); padding-left:48px}
+.choices.long{grid-template-columns:1fr}
+@media (max-width:640px){ .choices{grid-template-columns:1fr; padding-left:0} }
+.choice{
+  display:flex; align-items:center; gap:12px; text-align:left; width:100%;
+  background:var(--surface); border:2.5px solid var(--line); border-radius:16px; padding:10px 14px;
+  font-family:var(--f-jp); font-size:17px; line-height:1.5; transition:transform .08s, background .12s;
+}
+.choice:hover:not([disabled]){background:var(--pink-soft); transform:translateY(-1px)}
+.choice[disabled]{cursor:default}
+.choice .let{flex:none; width:28px; height:28px; border-radius:50%; border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:var(--f-display); font-weight:700; font-size:14px; background:var(--sky-soft)}
+.choice .ct{flex:1 1 auto}
+.choice .mk{flex:none; font-family:var(--f-body); font-weight:800; font-size:13px}
+.choice.right{background:var(--mint-soft); border-color:var(--mint-ink)}
+.choice.right .let{background:var(--mint); color:var(--on-pink); border-color:var(--mint-ink)}
+.choice.right .mk{color:var(--mint-ink)}
+.choice.wrong{background:var(--bad-soft); border-color:var(--bad-ink)}
+.choice.wrong .let{background:var(--bad); color:var(--on-pink); border-color:var(--bad-ink)}
+.choice.wrong .mk{color:var(--bad-ink)}
+.choice.dim{opacity:.6}
 
-  .nav-row{ display:flex; justify-content:space-between; align-items:center; margin-top:20px; }
-  .btn{
-    font-family:'Be Vietnam Pro',sans-serif; font-weight:700; font-size:14px;
-    border:none; border-radius:7px; padding:11px 20px; cursor:pointer;
-    transition:transform .1s, filter .15s;
-  }
-  .btn:active{ transform:scale(.97); }
-  .btn-primary{ background:var(--hanko); color:#fff; }
-  .btn-primary:hover{ filter:brightness(1.08); }
-  .btn-primary:disabled{ background:#CBBFA0; cursor:not-allowed; }
-  .btn-ghost{ background:transparent; color:var(--ink-soft); border:1.5px solid var(--line); }
-  .btn-ghost:hover{ border-color:var(--ink-soft); }
+/* explain */
+.explain{margin:14px 0 0 48px; padding:14px 16px; border:2.5px solid var(--line); border-radius:18px; font-size:15px; display:grid; gap:10px; animation:pop .25s ease}
+@media (max-width:640px){ .explain{margin-left:0} }
+.explain.ok{background:var(--mint-soft)} .explain.no{background:var(--bad-soft)}
+.ex-top{display:flex; align-items:center; gap:12px}
+.bubble{position:relative; background:var(--surface); border:2.5px solid var(--line); border-radius:16px; padding:6px 14px; font-family:var(--f-display); font-weight:600; font-size:16px; line-height:1.35}
+.bubble::before{content:""; position:absolute; left:-9px; top:50%; width:14px; height:14px; margin-top:-7px; background:var(--surface); border-left:2.5px solid var(--line); border-bottom:2.5px solid var(--line); transform:rotate(45deg)}
+.explain .jp{font-size:17px}
+.explain ul{margin:6px 0 0; padding-left:20px; display:grid; gap:2px}
+.explain b{font-weight:800}
+.ex-star{display:inline-flex; align-items:center; gap:8px; flex-wrap:wrap}
+.ex-star b{background:var(--butter); color:var(--on-pink); border:2px solid var(--line); border-radius:10px; padding:0 10px; font-family:var(--f-jp)}
+mark{background:var(--butter); color:var(--on-pink); border-radius:6px; padding:0 4px}
+u{text-decoration:none; border-bottom:3px solid #E0668B; font-weight:700; padding-bottom:1px}
+:root[data-theme="dark"] u{border-color:#FF9DB8}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) u{border-color:#FF9DB8} }
+.tgt{display:inline-block; font-family:var(--f-jp); font-size:22px; font-weight:700; background:var(--butter-soft); border:2.5px solid var(--line); border-radius:12px; padding:0 14px; line-height:1.7}
+.plab{display:inline-flex; align-items:center; justify-content:center; width:28px; height:28px; margin-right:8px; border-radius:8px; background:var(--sky); color:var(--on-pink); border:2px solid var(--line); font-family:var(--f-display); font-weight:700; font-size:15px; line-height:1; vertical-align:middle}
+.pnote{font-family:var(--f-jp); font-size:14px; color:var(--ink-soft); margin:2px 4px 14px; line-height:1.7}
+@keyframes pop{from{opacity:0; transform:translateY(-6px)} to{opacity:1; transform:none}}
 
-  /* Section intro */
-  .intro .big-mark{
-    font-family:'Shippori Mincho',serif; font-size:44px; font-weight:800; color:var(--hanko);
-    line-height:1; margin-bottom:6px;
-  }
-  .intro h2{ font-family:'Shippori Mincho',serif; font-size:20px; margin:0 0 6px; }
-  .intro p{ color:var(--ink-soft); font-size:14px; line-height:1.7; margin:0 0 20px; }
+/* ordering */
+.order-line{font-family:var(--f-jp); font-size:18px; line-height:2.5; margin:0 0 6px 48px}
+@media (max-width:640px){ .order-line{margin-left:0} }
+.slot{
+  display:inline-flex; align-items:center; justify-content:center; position:relative; min-width:76px; height:38px; padding:0 10px; margin:0 3px;
+  background:var(--surface); border:2.5px dashed var(--line); border-radius:12px; font-size:16px; vertical-align:middle; line-height:1;
+}
+button.slot{cursor:pointer}
+.slot.star{border-color:#E0668B; background:var(--butter-soft)}
+.slot.star::before{content:"★"; position:absolute; top:-16px; left:50%; transform:translateX(-50%); font-size:16px; color:#E0A400; line-height:1}
+.slot.filled{border-style:solid}
+.slot.ok{background:var(--mint-soft); border-color:var(--mint-ink); border-style:solid}
+.slot.no{background:var(--bad-soft); border-color:var(--bad-ink); border-style:solid}
+.slot.empty{color:var(--ink-soft)}
+.frags{display:flex; flex-wrap:wrap; gap:10px; margin-left:48px}
+@media (max-width:640px){ .frags{margin-left:0} }
+.frag{display:inline-flex; align-items:center; gap:8px; background:var(--sky-soft); border:2.5px solid var(--line); border-radius:14px; padding:8px 14px; font-family:var(--f-jp); font-size:16px; box-shadow:0 3px 0 var(--line); transition:transform .08s}
+.frag:hover:not([disabled]){transform:translateY(-2px)}
+.frag:active:not([disabled]){transform:translateY(2px); box-shadow:0 1px 0 var(--line)}
+.frag .let{width:22px; height:22px; border-radius:50%; background:var(--surface); border:2px solid var(--line); display:flex; align-items:center; justify-content:center; font-family:var(--f-display); font-weight:700; font-size:12px}
+.frag[disabled]{opacity:.35; box-shadow:none; cursor:default}
+.order-tools{margin:12px 0 0 48px}
+@media (max-width:640px){ .order-tools{margin-left:0} }
+.link{background:none; border:none; color:var(--ink-soft); text-decoration:underline; text-underline-offset:3px; font-size:14px; font-weight:700; padding:2px 0}
 
-  /* Result screen */
-  .result-score{
-    text-align:center; padding:10px 0 6px;
-  }
-  .result-score .num{ font-family:'Shippori Mincho',serif; font-size:56px; font-weight:800; color:var(--hanko); }
-  .result-score .of{ font-size:16px; color:var(--ink-soft); }
-  .result-note{ text-align:center; font-size:14px; color:var(--ink-soft); margin-top:4px; }
-  .breakdown{ margin-top:22px; border-top:1px solid var(--line); padding-top:16px; }
-  .breakdown-row{ display:flex; justify-content:space-between; align-items:center; padding:7px 0; font-size:14px; border-bottom:1px dashed var(--line); }
-  .breakdown-row .lbl{ color:var(--ink); }
-  .breakdown-bar{ flex:1; height:6px; background:var(--paper-deep); border-radius:3px; margin:0 12px; overflow:hidden; }
-  .breakdown-bar > div{ height:100%; background:var(--moss); }
-  .breakdown-row .frac{ font-variant-numeric:tabular-nums; color:var(--ink-soft); width:44px; text-align:right; }
+/* passage */
+.passage{background:var(--butter-soft); border:2.5px solid var(--line); border-radius:18px; padding:18px 20px; margin-bottom:8px; font-family:var(--f-jp); font-size:17px; line-height:2.15}
+@media (max-width:560px){ .passage{padding:14px 14px; font-size:16px} }
+.passage p{margin-bottom:14px} .passage p:last-child{margin-bottom:0}
+.pb{display:inline-block; font-family:var(--f-display); font-weight:700; font-size:15px; line-height:1.4; padding:0 10px; margin:0 3px; background:var(--surface); color:#C0305F; border:2px dashed #E0668B; border-radius:10px}
+:root[data-theme="dark"] .pb{color:#FF9DB8; border-color:#FF9DB8}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]) .pb{color:#FF9DB8; border-color:#FF9DB8} }
+.pb.ok{background:var(--mint); color:var(--on-pink); border:2px solid var(--mint-ink)}
+.pb.no{background:var(--bad); color:var(--on-pink); border:2px solid var(--bad-ink)}
+.ptools{display:flex; justify-content:flex-end; margin:0 0 12px}
+.stem{font-family:var(--f-jp); font-size:16px; line-height:1.9; background:var(--sky-soft); border-radius:12px; padding:6px 12px; margin:0 0 12px 48px; color:var(--ink)}
+@media (max-width:640px){ .stem{margin-left:0} }
 
-  .review-list{ margin-top:18px; display:flex; flex-direction:column; gap:8px; }
-  .review-item{
-    display:flex; justify-content:space-between; align-items:center; gap:10px;
-    background:#FEFCF5; border:1px solid var(--line); border-radius:7px; padding:10px 14px;
-    cursor:pointer; font-size:13.5px;
-  }
-  .review-item:hover{ border-color:var(--hanko); }
-  .review-item .q-no{ font-weight:700; color:var(--hanko-deep); }
-  .review-item .q-txt{ flex:1; font-family:'Noto Serif JP',serif; color:var(--ink-soft); overflow:hidden; text-overflow:ellipsis; white-space:nowrap; }
+/* modal */
+.overlay{position:fixed; inset:0; z-index:50; background:rgba(40,28,44,.55); display:flex; align-items:center; justify-content:center; padding:max(16px, env(safe-area-inset-top,0px)) 16px max(16px, env(safe-area-inset-bottom,0px)); animation:pop .2s ease}
+.modal{max-width:680px; width:100%; max-height:84vh; display:flex; flex-direction:column; overflow:hidden}
+.modal-head{display:flex; align-items:center; justify-content:space-between; gap:12px; padding:14px 18px; border-bottom:2.5px solid var(--line); background:var(--pink-soft)}
+.modal-head h3{font-size:19px}
+.modal-body{padding:16px 20px 20px; overflow-y:auto; display:grid; gap:14px; font-size:16px}
+.modal-body .pn{display:inline-block; font-family:var(--f-display); font-weight:700; font-size:12px; background:var(--butter); color:var(--on-pink); border:2px solid var(--line); border-radius:8px; padding:0 8px; margin-right:8px}
+.x{width:36px; height:36px; border-radius:50%; background:var(--surface); border:2.5px solid var(--line); font-weight:800; line-height:1; flex:none}
 
-  .footer-note{ text-align:center; font-size:12px; color:var(--ink-soft); margin-top:24px; }
+/* nav */
+.navrow{display:flex; justify-content:space-between; align-items:center; gap:10px; flex-wrap:wrap; margin-top:4px}
+.navrow .hint{font-family:var(--f-display); font-weight:600; font-size:14px; color:var(--ink-soft)}
+@media (max-width:480px){ .navrow .hint{order:3; width:100%; text-align:center} }
 
-  /* Section-selection menu */
-  .sel-list{ display:flex; flex-direction:column; gap:8px; margin-bottom:20px; }
-  .sel-row{
-    display:flex; align-items:center; gap:12px; cursor:pointer;
-    background:#FEFCF5; border:1.5px solid var(--line); border-radius:8px;
-    padding:12px 14px; transition:border-color .15s, background .15s;
-  }
-  .sel-row:hover{ border-color:var(--gold); }
-  .sel-row.on{ border-color:var(--moss); background:#EEF3EC; }
-  .sel-row .chk{
-    flex:0 0 auto; width:20px; height:20px; border-radius:5px; border:1.5px solid var(--ink-soft);
-    display:flex; align-items:center; justify-content:center; font-size:13px; font-weight:800;
-    color:#fff; background:transparent;
-  }
-  .sel-row.on .chk{ background:var(--moss); border-color:var(--moss); }
-  .sel-row .sel-label{ flex:1; font-family:'Noto Serif JP',serif; font-size:15px; color:var(--ink); }
-  .sel-row .sel-count{ font-size:12.5px; color:var(--ink-soft); }
+/* ---------- results ---------- */
+.res-hero{display:flex; gap:22px; align-items:center; padding:22px 24px; margin-bottom:22px; background:var(--butter-soft); flex-wrap:wrap}
+.res-score{flex:none; width:128px; height:128px; border-radius:50%; background:var(--pink); color:var(--on-pink); border:3px solid var(--line); box-shadow:0 5px 0 var(--line); display:flex; flex-direction:column; align-items:center; justify-content:center; transform:rotate(-6deg); font-family:var(--f-display)}
+.res-score b{font-size:38px; line-height:1; font-weight:700} .res-score span{font-size:14px; font-weight:600}
+.res-copy{flex:1 1 260px}
+.res-copy h2{font-size:26px; margin-bottom:6px}
+.res-copy .row{display:flex; align-items:center; gap:12px; margin-top:8px}
+.res-copy .bubble{font-size:15px}
+.acts{display:flex; gap:12px; flex-wrap:wrap; margin:0 0 24px}
+.bd{display:grid; gap:12px; grid-template-columns:repeat(auto-fit,minmax(min(100%,190px),1fr)); margin-bottom:26px}
+.bd-card{padding:12px 16px}
+.bd-card .t{font-size:14px; font-weight:700}
+.bd-card .f{font-family:var(--f-display); font-size:24px; font-weight:700}
+.bd-card .bar{height:10px; background:var(--dot); border-radius:999px; overflow:hidden; border:2px solid var(--line); margin-top:6px}
+.bd-card .bar i{display:block; height:100%; background:var(--mint)}
+.rv-title{font-size:22px; margin:0 0 12px}
+.rv{display:grid; gap:12px}
+.rv-item{padding:14px 16px; border:2.5px solid var(--line); border-radius:18px; background:var(--surface)}
+.rv-item.ok{border-left-width:10px; border-left-color:var(--mint-ink)}
+.rv-item.no{border-left-width:10px; border-left-color:var(--bad-ink)}
+.rv-top{display:flex; align-items:center; gap:10px; margin-bottom:6px; font-size:13px; font-weight:800; color:var(--ink-soft)}
+.rv-top .st{width:24px; height:24px; border-radius:50%; display:flex; align-items:center; justify-content:center; color:var(--on-pink); font-weight:800; border:2px solid var(--line); font-size:13px}
+.rv-item.ok .st{background:var(--mint)} .rv-item.no .st{background:var(--bad)}
+.rv-q{font-family:var(--f-jp); font-size:17px; line-height:1.95}
+.rv-ans{margin-top:6px; font-family:var(--f-jp); font-size:16px}
+.rv-ans .mine{color:var(--bad-ink); text-decoration:line-through; margin-right:10px}
+.rv-ans .right{color:var(--mint-ink); font-weight:700}
+details.rv-ex{margin-top:8px}
+details.rv-ex summary{cursor:pointer; font-weight:800; font-size:14px; color:var(--ink-soft)}
+details.rv-ex .body{margin-top:8px; display:grid; gap:8px; font-size:15px}
+details.rv-ex .jp{font-size:16px}
+details.rv-ex ul{margin:4px 0 0; padding-left:20px}
 
-  @media (max-width:480px){
-    .card{ padding:20px 16px; }
-    .stem{ font-size:16.5px; }
-    .opt{ font-size:14.5px; }
-    .result-score .num{ font-size:44px; }
-  }
+@media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
 </style>
-</head>
-<body>
-<div class="app" id="app"></div>
+
+<div class="wrap" id="app"></div>
 
 <script>
-/* ---------- DATA ---------- */
-/* Passages shared by more than one question — defined once, reused so the
-   full text stays visible on every question in the group (re-readable). */
-const PASSAGE_58_60 = "①会話の技術は、運転技術とよく似ています。ボーッと運転をしていると、事故を起こします。たとえば、数人で楽しく盛り上がっているときに、いきなり人が入ってきて、自分の話を始める人がいます。あれは、高速道路に加速しないで進入してくる車のようなもので、本人は気づかなくても、入った途端にクラッシュ（注1）しているのです。\n\n　グループに加わると、まず黙って話を聞くこと。②うなずきながら、エンジンを温め、他の人と速度を同じくらいに合わせると、流れにうまく乗ることができます。\n\n　そのうえで、自分の話ばかりしないように注意すること。人は誰でも、自分の話をしたがっているのですから、会話は、ボールゲームのようなものです。サッカーでも、バスケットボールでも、ひとりでボールを独占していたら、だれからも遊んでもらえなくなります。\n\n　みんなで話しているとき、自分がどれだけ話をしたのか、常に意識していることも必要です。特に、大勢で話しているときは、発言しない人により多くの意識を払ってください。おとなしい人は無視されがちですが、同じ場にいることに敬意を払って、その人にも話を振らないと（注2）。\n\n　つくづく思いますけれど、会話ほど、個人のレベルの差が大きいものはありません。充実した会話をしたいのであれば、それなりの準備や練習は必要なのです。私は練習することで得るものは大きいと思います。その中に、人生を変える出会いや幸福が潜んでいる（注3）のではないでしょうか。\n\n（注1）クラッシュする：衝突事故を起こす\n（注2）話を振る：話す機会を与える\n（注3）潜んでいる：隠れている";
+/* ================= DỮ LIỆU ================= */
+const R=(k,r)=>`<ruby>${k}<rt>${r}</rt></ruby>`;
+const BLANK=/（[\s　]*）/g;
+const plain=s=>s.replace(/<rt>.*?<\/rt>/g,'').replace(/<br>/g,' ／ ').replace(/<[^>]+>/g,'');
 
-const PASSAGE_61_63 = "　たとえば、「走る」ことは、一見単純で誰にでもできる運動ではあるが、「速く走る技術」となると、なかなか①身につけることが難しい。教えられたように走るフォームを改善することが簡単ではないからだ。\n\n　誰でもできる運動なのに、なぜその改善が難しいのだろう。実は、普段慣れている動作ほど、その動作に対する神経支配がしっかりとできあがっているからだ。運動の技術やフォームを改善することは、その運動を支配する神経回路（注１）を組みかえることになるので、そう簡単にはいかない。\n\n　コーチは、腕を振り、膝の運び方、上体の前傾の取り方など、フォームを矯正（注２）しようと指導し、指導を受けるランナー（注３）も指摘された体の動きの修正に意識を向けてトレーニングするのが普通である。しかし、動作の修正には多くの時間と繰り返しが必要であり、またその効果が上がらないことも多い。そして、トレーニングの効果が上がらない人は、「運動神経」が良くないということになる。\n\n　②この場合、運動技術の修正は、「運動の神経回路を修正する」ことであると考えることによって、解決の糸口（注４）がみつかる。\n\n　スポーツ技術や「身のこなし（注５）」の習得には、神経回路に直接的に刺激を与えるようなトレーニング上の工夫が必要である。\n\n　工夫をいろいろと重ねるうちに、「動作をイメージし、それを体感する」ことが、運動の神経回路を改善するのにきわめて有効であることがわかってきた。\n\n（小林寛道『運動神経の科学―誰でも足は速くなる』による）\n\n（注１）神経回路：ここでは、神経をつなぐ仕組み\n（注２）矯正する：正しくなるように直す\n（注３）ランナー：走る人\n（注４）糸口：きっかけ\n（注５）身のこなし：体の動かし方";
+const EXAMS=[{
+ id:'ko1', no:1, tag:'Bộ đề 1', title:'小テスト',
+ sections:[
 
-const PASSAGE_64_66 = "　これは僕の個人的な意見だが、「悩み」と無縁の幸せは存在しないと思う。ものづくりでも「悩み」はとても重要で悩みをどう解決するか、どう昇華させる（注１）かが、作った結果、物の存在感や主張に直結する。\n\n　その観点で言うと、最近の日本の製品には「悩み」が見えない。悩みに取り組まずに切り捨ててしまうからだと思う。日本人は「シンプル」に強いあこがれを持っているが、いつの頃からか「要素が少なくて単純なことがシンプルだ」という誤った思い込みを抱いてしまっている。だから重要なものを切り捨ててしまって平気なのだ。\n\n　そういう思いつきと勢いだけで作られた商品を「チューイングガム商品」と僕は呼ぶ。作られたものが薄っぺらで、すぐに味がなくなって捨てられるからだ。\n\n　日本人の多くは「日本文化の神髄（注２）はシンプルさだ」と思っているようだが、僕は完全には同意できない。日本文化にはいろいろな相反する（注３）要素が複雑に絡みあって、それらを生かしたまま歴史の中で洗練された結果、一見シンプルに見えているだけなのだ。その深い部分を理解できずに、切り捨てて単純化したものを簡単に製品にしているから味が出てこない。\n\n　日本文化と同様に、切り捨てではなく洗練によってシンプルに見えるものは、ヨーロッパのブランド商品などにもよくある。内在していた相反する要素がうまく噛み合って（注４）いるから、シンプルに見えるだけなのだ。要素が少なくて単純なものと、洗練によってシンプルに見えるものを比較すると、内包されている複雑さが全然違う。しかも後者には、作った人たちのいろいろな悩みも見える。最初のうちはうまく隠されていて見えないが、使っているうちに「あ、こうやって悩んで、それでその結果、こういう処理をして、それでこの製品ができてきたのか」ということがわかってくる。だから奥が深い商品が生まれ、使っていても色んな側面が次々と現れてくるので飽きが来ないのだ。\n\n　悩みを避けて切り捨てた「もの」や「ひと」には、そういう面白みが存在しない。\n\n（奥山清行『ムーンショット　デザイン幸福論』による）\n\n（注１）昇華する：一段と高度なものにする\n（注２）神髄：中心となる本来の性質\n（注３）相反する：互いに対立する\n（注４）噛み合う：ここでは、ぴったり合う";
+ /* ---------- 問題5 ---------- */
+ {id:'s5', jp:'問題5', name:'Ngữ pháp', type:'mc',
+  hint:'Chọn đáp án phù hợp nhất điền vào chỗ trống （　　）.',
+  hintJp:'次の文の（　　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, text:`今日はもう帰ろう。残業続きで${R('疲労','ひろう')}もたまっている（　　）。`,
+   choices:['ことだし','ものだから','ためだし','なのだから'], a:0,
+   tr:'Hôm nay về thôi. Tăng ca liên tục, mà mệt mỏi cũng đã tích tụ rồi.',
+   vi:`<b>〜ことだし</b> = "vì… (lại còn…) nên", nêu lý do nhẹ nhàng cho một đề nghị hay quyết định (ở đây là 帰ろう). Nối với thể thường: 疲労もたまっている<b>ことだし</b>.<ul><li><b>ものだから</b>: nêu lý do kiểu biện minh, giải thích cho kết quả đã xảy ra; không hợp với câu rủ rê "帰ろう".</li><li><b>ためだし</b>: không phải cách nói tự nhiên (chỉ có 〜ためだ hoặc 〜ことだし).</li><li><b>なのだから</b>: "なの" chỉ nối với danh từ/tính từ な, không đứng sau động từ ている.</li></ul>`},
+  {n:2, text:`当店の${R('工芸品','こうげいひん')}は、${R('職人','しょくにん')}が一つひとつ${R('精魂','せいこん')}（　　）作っております。`,
+   choices:['につけ','において','をもって','をこめて'], a:3,
+   tr:'Đồ thủ công của cửa hàng chúng tôi được các nghệ nhân dồn hết tâm huyết làm ra từng sản phẩm một.',
+   vi:`<b>精魂をこめる</b> = dồn hết tâm huyết, tinh thần vào việc gì → 精魂<b>をこめて</b>作る.<ul><li><b>につけ</b>: "mỗi khi…" (見るにつけ).</li><li><b>において</b>: "tại, trong (nơi chốn, lĩnh vực)".</li><li><b>をもって</b>: "bằng (phương tiện, thời điểm)"; không kết hợp với 精魂 để chỉ "dồn tâm huyết".</li></ul>`},
+  {n:3, text:`周囲の期待を（　　）、彼女はせっかく決まった一流会社の${R('内定','ないてい')}を${R('蹴','け')}ってしまった。`,
+   choices:['しりめに','ふまえて','こたえて','よそに'], a:3,
+   tr:'Bất chấp kỳ vọng của mọi người xung quanh, cô ấy đã từ chối lời mời nhận việc của công ty hàng đầu mà vất vả lắm mới có được.',
+   vi:`<b>〜をよそに</b> = "mặc kệ, bất chấp" (kỳ vọng, lo lắng của người xung quanh). Hợp với ý: bỏ ngoài tai kỳ vọng mà từ chối công ty tốt.<ul><li><b>しりめに</b>: cũng có nghĩa "làm ngơ", nhưng thường đi với việc đang diễn ra trước mắt (他人の成功を尻目に); với 期待 thì dùng をよそに mới tự nhiên.</li><li><b>ふまえて</b>: "dựa trên (tình hình, kết quả)".</li><li><b>こたえて</b>: "đáp lại", nhưng đi với に (期待<b>に</b>こたえて) và nghĩa ngược với câu.</li></ul>`},
+  {n:4, text:`彼女は${R('生真面目','きまじめ')}で、他人のミスを指摘せずには（　　）らしい。`,
+   choices:['いられない','ならない','たえない','できない'], a:0,
+   tr:'Cô ấy là người cực kỳ nghiêm túc, nghe nói không thể không chỉ ra lỗi của người khác.',
+   vi:`<b>〜ずにはいられない</b> = "không thể không…, không kìm được mà…" (= 〜ないではいられない). する → <b>せず</b>に: 指摘せずには<b>いられない</b>. Đằng sau gắn thêm <b>らしい</b> (nghe nói/có vẻ).<ul><li><b>ならない</b>: chỉ đi với 〜てならない (không chịu nổi), không đi với 〜ずには.</li><li><b>たえない</b>: 〜に堪えない (không đành nhìn/nghe).</li><li><b>できない</b>: không có dạng 〜ずにはできない.</li></ul>`},
+  {n:5, text:`（大学で）<br>Ａさん：「これから郵便局に${R('速達','そくたつ')}を出しに行かなきゃなんないんだけど、Ｂさんの自転車、ちょっとの間、（　　）。」<br>Ｂさん：「うん、いいよ。使って。」`,
+   choices:['使ってもらうならかまわない','使わせてもらわない','使わせてもらってもいいかな','使ってもらって'], a:2,
+   tr:'A: "Bây giờ mình phải đi bưu điện gửi thư chuyển phát nhanh, cho mình dùng xe đạp của cậu một lát được không?" B: "Ừ, được thôi. Cứ dùng đi."',
+   vi:`A xin phép dùng xe của B → dùng <b>使わせてもらう</b> (xin được cho dùng) + <b>〜てもいいかな</b> (xin phép, thân mật): <b>使わせてもらってもいいかな</b> = "cho mình dùng nhé?". Câu đáp "いいよ。使って。" của B cũng khớp.<ul><li><b>使ってもらうならかまわない</b>: 使ってもらう = nhờ người khác dùng, đổi mất chủ thể.</li><li><b>使わせてもらわない</b>: dạng phủ định "không xin dùng", mâu thuẫn.</li><li><b>使ってもらって</b>: câu bỏ lửng và cũng sai chủ thể.</li></ul>`},
+  {n:6, text:`わずか半年という短い期間（　　）、新たな業務をいろいろ経験できたという意味では、いい職場だったといえる。`,
+   choices:['だったものの','だったからには','だったくせに','だったとあって'], a:0,
+   tr:'Tuy chỉ là khoảng thời gian ngắn ngủi nửa năm, nhưng xét ở việc đã được trải nghiệm nhiều công việc mới thì có thể nói đó là một nơi làm việc tốt.',
+   vi:`<b>〜ものの</b> = "tuy… nhưng…" (quan hệ nghịch). "Tuy chỉ nửa năm ngắn ngủi, nhưng được trải nghiệm nhiều việc → nơi làm việc tốt".<ul><li><b>だったからには</b>: "một khi đã… thì phải…", thường đi kèm quyết tâm/nghĩa vụ.</li><li><b>だったくせに</b>: "vậy mà…", sắc thái chê trách người.</li><li><b>だったとあって</b>: "vì là… nên (kết quả đặc biệt)", không phải quan hệ nghịch.</li></ul>`},
+  {n:7, text:`（館内の説明をする前に）<br>Ａさん：「皆さま、本日はようこそ当博物館にお越しくださいました。これからスタッフが館内を（　　）。」`,
+   choices:['ご案内いただきます','ご案内されます','ご案内させられます','ご案内させていただきます'], a:3,
+   tr:'"Xin chào mừng quý vị đã đến với bảo tàng của chúng tôi. Sau đây, nhân viên chúng tôi xin phép được hướng dẫn quý vị tham quan trong bảo tàng."',
+   vi:`Người nói là phía bảo tàng, nói về hành động của nhân viên phía mình với khách → dùng khiêm nhường ngữ: <b>ご案内させていただきます</b> = "xin phép được hướng dẫn".<ul><li><b>ご案内いただきます</b>: いただく = nhận từ người khác, thành "chúng tôi nhận được sự hướng dẫn", sai chiều.</li><li><b>ご案内されます</b>: kính ngữ dành để tôn người làm hành động, không dùng cho nhân viên phía mình trước khách.</li><li><b>ご案内させられます</b>: thể bị động sai khiến, "bị bắt phải hướng dẫn".</li></ul>`},
+  {n:8, text:`Ａさん：「ねえ、聞いた？ナンバーワン食品って、${R('倒産','とうさん')}したらしいよ。」<br>Ｂさん：「当然だよ。社名（　　）${R('胡散臭','うさんくさ')}かったんだから。」`,
+   choices:['として','からして','をみて','にあって'], a:1,
+   tr:'A: "Này, nghe chưa? Nghe nói công ty thực phẩm Number One phá sản rồi." B: "Đương nhiên thôi. Chỉ riêng cái tên công ty đã đáng ngờ rồi mà."',
+   vi:`<b>〜からして</b> = "ngay từ… đã (như vậy)": lấy một chi tiết nhỏ nhất để cho thấy toàn thể. "Chỉ riêng cái tên công ty (社名からして) đã đáng ngờ" nên phá sản là chuyện đương nhiên.<ul><li><b>として</b>: "với tư cách là".</li><li><b>をみて</b>: "nhìn vào", không nối tự nhiên với 胡散臭かった.</li><li><b>にあって</b>: "trong hoàn cảnh/ở vị trí".</li></ul>`},
+  {n:9, text:`（電話で）<br>Ａ「はい、スズキ電気でございます。」<br>Ｂ「すみません、洗濯機の修理について（　　）。」`,
+   choices:['お聞かせしたいんですが','お聞かせしましょうか','お伺いさせましょか','お伺いしたいんですが'], a:3,
+   tr:'A: "Vâng, Suzuki Denki xin nghe ạ." B: "Xin lỗi, tôi muốn hỏi về việc sửa máy giặt ạ."',
+   vi:`Gọi điện hỏi công ty → dùng khiêm nhường ngữ của 聞く: <b>お伺いしたいんですが</b> = "tôi muốn hỏi ạ".<ul><li><b>お聞かせしたい / お聞かせしましょうか</b>: 聞かせる = cho người khác nghe, tức "tôi muốn nói cho anh nghe", sai chiều.</li><li><b>お伺いさせましょか</b>: cấu trúc sai.</li></ul>`},
+  {n:10, text:`${R('後輩','こうはい')}達には私たちの${R('代','だい')}が（　　）全国大会優勝を成し遂げてもらいたい。`,
+   choices:['成しがたかった','成してやまなかった','成してならなかった','成しえなかった'], a:3,
+   tr:'Tôi muốn các đàn em đạt được chức vô địch toàn quốc mà khóa chúng tôi đã không thể làm được.',
+   vi:`<b>〜えない / 〜えなかった</b> (得る) = "không thể (làm)". Khóa chúng tôi <b>đã không thể</b> đạt được (成しえなかった) chức vô địch, nên muốn đàn em làm được.<ul><li><b>成しがたかった</b>: 〜がたい thường đi với động từ cảm xúc/nhận thức (信じがたい), không tự nhiên với 成す.</li><li><b>成してやまなかった</b>: 〜てやまない = "luôn mong…" (願ってやまない).</li><li><b>成してならなかった</b>: 〜てならない = "không chịu nổi…" (気になってならない).</li></ul>`}
+  ]},
 
-const SECTIONS = [
-{ key:"q1", label:"問題1 ｜ 漢字の読み方", instruction:"＿＿＿＿ の言葉の読み方として、最もよいものを1・2・3・4から一つ選びなさい。",
-  items:[
-    {n:1, stem:"ガラスの＜b＞破片＜/b＞が落ちているから、気をつけてください。", options:["はへん","ひへん","はがた","ひがた"], a:0, e:"破片（はへん）：mảnh vỡ, mảnh vụn."},
-    {n:2, stem:"山内さんはいつもここから夕日を＜b＞撮影＜/b＞している。", options:["さいえい","さつけい","さいけい","さつえい"], a:3, e:"撮影（さつえい）：quay phim, chụp ảnh."},
-    {n:3, stem:"＜b＞針＜/b＞が見つからなくて困った。", options:["かぎ","くぎ","はり","ねじ"], a:2, e:"針（はり）：cây kim."},
-    {n:4, stem:"その本は、明日までに必ず＜b＞返却＜/b＞してください。", options:["へんきょ","へんきゃく","へんきや","へんきょく"], a:1, e:"返却（へんきゃく）：hoàn trả lại (sách, đồ mượn…)."},
-    {n:5, stem:"中村さんの話は＜b＞抽象的＜/b＞で分かりにくかった。", options:["ゆうぞうてき","ゆうしょうてき","ちゅうぞうてき","ちゅうしょうてき"], a:3, e:"抽象的（ちゅうしょうてき）：trừu tượng."},
+ /* ---------- 問題6 ---------- */
+ {id:'s6', jp:'問題6', name:'Sắp xếp câu ★', type:'order',
+  hint:'Chạm lần lượt 4 mảnh để xếp thành câu đúng. Sau đó xem mảnh nằm ở ô ★ nhé.',
+  hintJp:'次の文の ★ に入る最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, pre:'英語の辞書などに', post:'、減少するばかりか事態は一層深刻になっている。',
+   f:{a:R('掲載','けいさい')+'されるほど', b:R('過労死','かろうし')+'であるが', c:'国際語となった', d:'そのまま'}, order:['d','a','c','b'],
+   tr:'"Karoshi" (chết vì làm việc quá sức) đã trở thành từ quốc tế đến mức được đưa nguyên vẹn vào các từ điển tiếng Anh, nhưng không những không giảm mà tình hình còn nghiêm trọng hơn.',
+   vi:`<b>〜ほど</b> = "đến mức…". <b>そのまま</b> bổ nghĩa cho 掲載される (được đăng nguyên như vậy). Cụm <b>国際語となった</b> bổ nghĩa cho danh từ 過労死 đứng ngay sau; <b>〜であるが</b> = "là…, nhưng", dẫn sang vế nghịch 減少するばかりか….<br>Thứ tự: そのまま → 掲載されるほど → <b>国際語となった</b> (★) → 過労死であるが.`},
+  {n:2, pre:'全国高校サッカー選手権は5日、決勝が行われ、Ａ校が延長戦', post:'下し、初の優勝を果たした。',
+   f:{a:'を', b:'Ｂ校', c:'末に', d:'の'}, order:['d','c','b','a'],
+   tr:'Trận chung kết giải bóng đá học sinh cấp 3 toàn quốc diễn ra vào ngày 5; trường A đã đánh bại trường B sau hiệp phụ và lần đầu tiên giành chức vô địch.',
+   vi:`<b>〜の末に</b> = "sau cả một quá trình (như hiệp phụ)… cuối cùng thì…". 下す (đánh bại) đi với <b>を</b>: B校<b>を</b>下し.<br>Thứ tự: の → 末に → <b>B校</b> (★) → を (延長戦の末にB校を下し).`},
+  {n:3, ctx:'彼にまた貸した本を汚されちゃって、まいったよ。', pre:'一度', post:'となると、もう貸したくない。',
+   f:{a:'二度三度', b:'だけ', c:'なら', d:'まだしも'}, order:['b','c','d','a'],
+   tr:'Cậu ta lại làm bẩn quyển sách tôi cho mượn, thật hết nói nổi. Một lần thì còn chấp nhận được, chứ đến hai ba lần thì tôi không muốn cho mượn nữa.',
+   vi:`<b>〜ならまだしも</b> = "nếu chỉ… thì còn chấp nhận được (chứ hơn thế thì không)". Vế sau 二度三度となると nói đến mức không chấp nhận nổi.<br>Thứ tự: だけ → なら → <b>まだしも</b> (★) → 二度三度 (一度だけならまだしも二度三度となると).`},
+  {n:4, pre:'彼女は', post:'落ち着きぶりだった。',
+   f:{a:'ベテラン', b:'ながら', c:'かと思うような', d:'新人'}, order:['d','b','a','c'],
+   tr:'Cô ấy tuy là người mới nhưng điềm tĩnh đến mức khiến người ta tưởng là một người kỳ cựu.',
+   vi:`<b>〜ながら</b> = "tuy (là)…". <b>〜かと思うような</b> = "như thể là…", bổ nghĩa cho 落ち着きぶり.<br>Thứ tự: 新人 → ながら → <b>ベテラン</b> (★) → かと思うような.`},
+  {n:5, pre:'さんざん', post:'2分だった。',
+   f:{a:'あげくに', b:'たったの', c:'待たされた', d:R('診察','しんさつ')+'が'}, order:['c','a','d','b'],
+   tr:'Bị bắt chờ mãi, rốt cuộc buổi khám chỉ vỏn vẹn có 2 phút.',
+   vi:`<b>さんざん 〜 あげくに</b> = "sau khi (làm/bị làm) hết sức…, rốt cuộc thì…" (thường kết quả không tốt). 待たされた là thể bị động sai khiến: "bị bắt chờ". たったの2分 = chỉ vỏn vẹn 2 phút.<br>Thứ tự: 待たされた → あげくに → <b>診察が</b> (★) → たったの.`}
   ]},
-{ key:"q2", label:"問題2 ｜ 漢字の表記", instruction:"＿＿＿＿ の言葉を漢字で書くとき、最もよいものを1・2・3・4から一つ選びなさい。",
-  items:[
-    {n:6, stem:"今度は鈴木さんも＜b＞しょうたい＜/b＞するつもりです。", options:["紹待","紹介","招介","招待"], a:3, e:"しょうたい → 招待（mời）。"},
-    {n:7, stem:"自分に与えられた役割をしっかり＜b＞はたす＜/b＞つもりだ。", options:["任たす","担たす","務たす","果たす"], a:3, e:"はたす → 果たす（hoàn thành）。Đi với cụm「役割を果たす」(hoàn thành vai trò)."},
-    {n:8, stem:"いつのまにか看板が＜b＞かたむいていた＜/b＞。", options:["到いて","倒いて","頃いて","傾いて"], a:3, e:"かたむいて → 傾いて（nghiêng, xiêu vẹo）。"},
-    {n:9, stem:"今学期の＜b＞こうぎ＜/b＞は来週までです。", options:["構議","講義","講議","構義"], a:1, e:"こうぎ → 講義（bài giảng đại học）。"},
-    {n:10, stem:"食費をこれ以上＜b＞けずる＜/b＞ことはできない。", options:["削る","略る","滅る","縮る"], a:0, e:"けずる → 削る（cắt giảm / gọt）。Đi với cụm「食費を削る」(cắt giảm chi phí ăn uống)."},
+
+ /* ---------- 問題7 ---------- */
+ {id:'s7', jp:'問題7', name:'Đọc hiểu', type:'mc', reading:true,
+  hint:'Đọc đoạn văn rồi chọn đáp án phù hợp nhất cho mỗi chỗ trống 【1】–【5】.',
+  hintJp:'次の文章を読んで、文章全体の趣旨を踏まえて、1から5の中に入る最もよいものを選びなさい。',
+  passage:[
+   `先日、こんな記事を目にして、私はひどく${R('切','せつ')}ない気持ちになった。${R('台風','たいふう')}が${R('首都圏','しゅとけん')}を${R('襲','おそ')}った日、駅周辺の${R('植','う')}え${R('込','こ')}みや駅構内の階段の手すりに、${R('壊','こわ')}れて使い物にならなくなったビニール傘が大量に${R('放置','ほうち')}され、山のようになっていたというのだ。`,
+   `ビニール傘とは、その名の通り、ビニールで作られた${R('透明','とうめい')}な傘である。コンビニや100円ショップに行けば、安く手に入るため、非常に${R('身近','みぢか')}な存在となっている。ただ、その{{1}}、大事に長く使うものとは考えられていないというのも事実である。とはいうものの、あちらこちらで{{2}}ように思われる。日本の傘の${R('年間消費量','ねんかんしょうひりょう')}をみると、その数は日本の人口とほぼ同じ約1億3000万本、ビニール傘はその約9割を${R('占','し')}めている。`,
+   `現在、世界では${R('資源','しげん')}のリサイクルに地球規模で取り組むようになってきており、{{3}}だろう。環境分野で初のノーベル平和賞を${R('受賞','じゅしょう')}したケニア人女性ワンガリ・マータイさんが、日本語の「もったいない」を、環境を守る世界共通語「MOTTAINAI」として広めることを${R('提唱','ていしょう')}した。彼女は、来日した際、${R('水洗','すいせん')}トイレのレバーが「大」「小」に分かれている点に{{4}}を感じたという。彼女のメッセージは、私たち日本人の意識にもちょっとした変化を与えた。{{5a}}、レバーの使い分けなど、当たり前のことすぎて、気にもかけないでいた。{{5b}}、「MOTTAINAI」が世界に知られたのをきっかけに、自然に節約が意識されている日本社会を${R('誇','ほこ')}りに思うようになったのだ。`,
+   `毎年1億本以上のビニール傘が消費されている現実に${R('少','すく')}なからずショックを受けたあなた、「もったいない」という言葉が${R('死語','しご')}になってしまわないように、まずは1つ「MOTTAINAI」ことをやめてみてはどうだろうか。`
+  ],
+  passageVi:[
+   'Hôm trước, tôi đọc được một bài báo và cảm thấy vô cùng xót xa. Vào ngày bão đổ bộ vùng thủ đô, những chiếc ô nhựa đã hỏng, không còn dùng được nữa, bị vứt la liệt với số lượng lớn ở các bụi cây quanh ga và trên tay vịn cầu thang trong nhà ga, chất cao như núi.',
+   'Ô nhựa (ビニール傘), đúng như tên gọi, là loại ô trong suốt làm bằng nhựa vinyl. Vì mua được rẻ ở cửa hàng tiện lợi hay cửa hàng 100 yên nên nó trở thành thứ vô cùng quen thuộc. Tuy nhiên, cũng đúng là chính vì rẻ nên nó không được coi là món đồ để dùng cẩn thận và lâu dài. Dù vậy, có vẻ như ở khắp nơi nó đang bị đối xử quá sơ sài. Nhìn vào lượng ô tiêu thụ hằng năm của Nhật Bản, con số này xấp xỉ bằng dân số Nhật, khoảng 130 triệu chiếc, trong đó ô nhựa chiếm khoảng 90%.',
+   'Hiện nay, trên thế giới, việc tái chế tài nguyên đang được thực hiện trên quy mô toàn cầu, và có lẽ cũng có nhiều nước chú ý đến việc phân loại rác. Bà Wangari Maathai, người phụ nữ Kenya đầu tiên nhận giải Nobel Hòa bình ở lĩnh vực môi trường, đã đề xướng việc lan truyền từ "mottainai" trong tiếng Nhật thành từ chung toàn thế giới "MOTTAINAI" để bảo vệ môi trường. Khi đến Nhật, bà kể rằng mình cảm nhận được ý thức tiết kiệm nước cao của người Nhật ở chỗ cần xả bồn cầu chia thành "lớn" và "nhỏ". Thông điệp của bà đã mang lại một chút thay đổi trong nhận thức của người Nhật chúng ta. Cho đến lúc đó, việc dùng phân biệt cần xả là chuyện quá đỗi hiển nhiên nên chúng ta chẳng để tâm. Thế nhưng, nhân dịp "MOTTAINAI" được thế giới biết đến, chúng ta tự nhiên bắt đầu tự hào về xã hội Nhật Bản, nơi việc tiết kiệm được ý thức một cách tự nhiên.',
+   'Nếu bạn là người đã khá sốc trước thực tế mỗi năm có hơn 100 triệu chiếc ô nhựa bị tiêu thụ, thì để từ "mottainai" không trở thành từ chết, trước hết hãy thử bỏ đi một việc "MOTTAINAI" xem sao.'
+  ],
+  qs:[
+  {n:1, label:'【1】', stem:'ただ、その【1】、大事に長く使うものとは考えられていないというのも事実である。',
+   choices:['軽さゆえに','手軽ささえ','安さゆえに','格安ささえ'], a:2,
+   full:'ただ、その<mark>安さゆえに</mark>、大事に長く使うものとは考えられていないというのも事実である。',
+   tr:'Tuy nhiên, cũng đúng là chính vì rẻ nên chúng không được coi là thứ để dùng cẩn thận và lâu dài.',
+   vi:`Ngay trước đó bài viết nói ô nhựa mua được <b>rẻ</b> ở cửa hàng tiện lợi, nên vế sau "không được trân trọng dùng lâu" là hệ quả của giá rẻ → <b>安さゆえに</b>. <b>〜ゆえに</b> = "vì, do" (văn viết).<ul><li><b>軽さゆえに</b>: "vì nhẹ" không liên quan đến việc không giữ gìn.</li><li><b>手軽ささえ / 格安ささえ</b>: さえ = "ngay cả/chỉ cần", không tạo quan hệ nguyên nhân – kết quả với vế sau; 格安さ cũng không phải cách nói tự nhiên.</li></ul>`},
+  {n:2, label:'【2】', stem:'とはいうものの、あちらこちらで【2】ように思われる。',
+   choices:['粗末に扱われすぎている','差別的に買いすぎている','長く持ちすぎている','大事にされすぎている'], a:0,
+   full:'とはいうものの、あちらこちらで<mark>粗末に扱われすぎている</mark>ように思われる。',
+   tr:'Dù vậy, có vẻ như ở khắp nơi chúng đang bị đối xử quá sơ sài (bị coi nhẹ, vứt bỏ tùy tiện).',
+   vi:`Mạch văn: ô nhựa không được coi là đồ dùng lâu dài → <b>とはいうものの</b> ("tuy nói vậy") → thực tế khắp nơi nó <b>bị đối xử quá sơ sài</b> (粗末に扱われすぎている), đúng với cảnh ô hỏng bị vứt thành đống và con số 130 triệu chiếc mỗi năm.<ul><li><b>大事にされすぎている / 長く持ちすぎている</b>: ngược hẳn với nội dung bài.</li><li><b>差別的に買いすぎている</b>: vô nghĩa trong ngữ cảnh.</li></ul>`},
+  {n:3, label:'【3】', stem:'現在、世界では資源のリサイクルに地球規模で取り組むようになってきており、【3】だろう。',
+   choices:['ゴミの分別を意識している国も多い。','ゴミの分別を忘れている国も多い。','ゴミの重要性を意識している国は多くない。','ゴミの重要性を忘れている国は多くない。'], a:0,
+   full:'現在、世界では資源のリサイクルに地球規模で取り組むようになってきており、<mark>ゴミの分別を意識している国も多い</mark>だろう。',
+   tr:'Hiện nay, trên thế giới việc tái chế tài nguyên đang được thực hiện trên quy mô toàn cầu, và có lẽ cũng có nhiều nước chú ý đến việc phân loại rác.',
+   vi:`Vế trước nói thế giới <b>ngày càng nỗ lực tái chế tài nguyên</b>, nên vế sau phải đi cùng hướng: nhiều nước đang chú ý phân loại rác (<b>ゴミの分別を意識している国も多い</b>).<ul><li><b>分別を忘れている</b> và <b>重要性を意識している国は多くない</b>: đi ngược xu hướng "đang nỗ lực" ở vế trước.</li><li><b>重要性を忘れている国は多くない</b>: ý gần đúng nhưng nói về "tầm quan trọng của rác" thì không tự nhiên và không cụ thể như việc phân loại rác.</li></ul>`},
+  {n:4, label:'【4】', stem:'彼女は、来日した際、水洗トイレのレバーが「大」「小」に分かれている点に【4】を感じたという。',
+   choices:['日本人の防水意識の低さ','ケニア人の防水意識の高さ','日本人の節水意識の低さ','日本人の節水意識の高さ'], a:3,
+   full:'彼女は、来日した際、水洗トイレのレバーが「大」「小」に分かれている点に<mark>日本人の節水意識の高さ</mark>を感じたという。',
+   tr:'Khi đến Nhật, bà kể rằng mình cảm nhận được ý thức tiết kiệm nước cao của người Nhật ở chỗ cần xả bồn cầu chia thành "lớn" và "nhỏ".',
+   vi:`Cần xả chia "lớn/nhỏ" giúp dùng nước vừa đủ → bà Maathai cảm nhận <b>ý thức tiết kiệm nước (節水) cao</b> của <b>người Nhật</b> (日本人の節水意識の高さ). Đây cũng là tinh thần "mottainai" mà bà muốn lan tỏa.<ul><li><b>防水</b> = chống thấm nước, không liên quan.</li><li><b>ケニア人</b>: người cảm nhận là bà Maathai (người Kenya), đối tượng được nhận xét là người Nhật.</li><li><b>低さ</b>: bà đánh giá cao nên không thể là "thấp".</li></ul>`},
+  {n:5, label:'【5】(a・b)', fixed:true, stem:'【5‑a】、レバーの使い分けなど、当たり前のことすぎて、気にもかけないでいた。【5‑b】、「MOTTAINAI」が世界に知られたのをきっかけに、自然に節約が意識されている日本社会を誇りに思うようになったのだ。',
+   choices:['a それまでは ／ b ところが','a それからは ／ b そこで','a そのくせ ／ b しかし','a それはそうと ／ b したがって'], a:0,
+   full:'<mark>それまでは</mark>、レバーの使い分けなど、当たり前のことすぎて、気にもかけないでいた。<mark>ところが</mark>、「MOTTAINAI」が世界に知られたのをきっかけに、自然に節約が意識されている日本社会を誇りに思うようになったのだ。',
+   tr:'Cho đến lúc đó, việc dùng phân biệt cần xả là chuyện quá hiển nhiên nên chúng ta chẳng để tâm. Thế nhưng, nhân dịp "MOTTAINAI" được thế giới biết đến, chúng ta bắt đầu tự hào về xã hội Nhật Bản, nơi việc tiết kiệm được ý thức một cách tự nhiên.',
+   vi:`Đoạn văn mô tả sự thay đổi nhận thức theo trục "trước – sau" khi thông điệp của bà Maathai lan ra.<br><b>a: それまでは</b> = "cho đến lúc đó" (trước đây không để ý đến cần xả). <b>b: ところが</b> = "thế nhưng" (sau khi MOTTAINAI nổi tiếng thì lại tự hào).<ul><li><b>それからは / そこで</b>: "từ đó về sau" và "vì vậy"; a nói về thái độ trước đây nên không thể là "từ đó về sau".</li><li><b>そのくせ / しかし</b>: そのくせ = "vậy mà" (chê trách), không hợp.</li><li><b>それはそうと / したがって</b>: "nhân tiện" (đổi chủ đề) và "do đó", đều phá mạch đối lập trước – sau.</li></ul>`}
+  ]}
+ ]
+},
+{
+ id:'ko2', no:2, tag:'Bộ đề 2', title:'小テスト 2',
+ sections:[
+
+ /* ---------- 問題1 ---------- */
+ {id:'b2s1', jp:'問題1', name:'Đọc kanji', type:'mc',
+  hint:'Chọn cách đọc đúng của từ được gạch chân.',
+  hintJp:'＿＿の言葉の読み方として最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, text:'彼は料理の<u>修業</u>のためにフランスに行くことにした。',
+   choices:['しゅごう','しゅぎょう','しゅうごう','しゅうぎょう'], a:1,
+   tr:'Anh ấy quyết định sang Pháp để học nghề nấu ăn.',
+   vi:'<b>修業（しゅぎょう）</b> = học nghề, rèn luyện tay nghề. Chú ý 業 đọc <b>ぎょう</b> và âm "しゅ" ngắn.<ul><li>しゅうぎょう là cách đọc của 就業 (đi làm) hoặc 終業 (kết thúc giờ làm), không phải 修業.</li><li>しゅごう, しゅうごう không phải cách đọc của từ này.</li></ul>'},
+  {n:2, text:'彼女のことは<u>潔く</u>あきらめよう。',
+   choices:['こころよく','いちじるしく','はなはだしく','いさぎよく'], a:3,
+   tr:'Mình sẽ dứt khoát từ bỏ cô ấy.',
+   vi:'<b>潔い（いさぎよい）</b> = dứt khoát, gọn gàng, không lưu luyến → 潔く = <b>いさぎよく</b>.<ul><li>快く (こころよく): vui lòng, sẵn lòng.</li><li>著しく (いちじるしく): rõ rệt, đáng kể.</li><li>甚だしく (はなはだしく): quá mức.</li></ul>'},
+  {n:3, text:'若者の消費行動を<u>分析</u>した。',
+   choices:['ぶんせき','ぶんせつ','ぶんき','ぶんきん'], a:0,
+   tr:'Đã phân tích hành vi tiêu dùng của giới trẻ.',
+   vi:'<b>分析（ぶんせき）</b> = phân tích. 析 đọc <b>せき</b>. Các đáp án còn lại (ぶんせつ, ぶんき, ぶんきん) không phải cách đọc của từ nào cả.'},
+  {n:4, text:'Ａ国はＢ国からの援助の申し出を頑なに<u>拒んで</u>いる。',
+   choices:['おがんで','はばんで','こばんで','ねたんで'], a:2,
+   tr:'Nước A kiên quyết từ chối đề nghị viện trợ từ nước B.',
+   vi:'<b>拒む（こばむ）</b> = từ chối, cự tuyệt → 拒んで = <b>こばんで</b>.<ul><li>拝む (おがむ): cầu nguyện, vái lạy.</li><li>阻む (はばむ): ngăn cản.</li><li>妬む (ねたむ): ghen tị.</li></ul>'},
+  {n:5, text:'ここは<u>精密</u>な機械を作る工場だ。',
+   choices:['しんみつ','せいみつ','きみつ','ちみつ'], a:1,
+   tr:'Đây là nhà máy chế tạo máy móc chính xác.',
+   vi:'<b>精密（せいみつ）</b> = tinh vi, chính xác. 精 đọc <b>せい</b>, 密 đọc <b>みつ</b>.<ul><li>きみつ: 機密 (bí mật).</li><li>ちみつ: 緻密 (tỉ mỉ, kỹ lưỡng), dễ nhầm vì cùng đuôi みつ.</li></ul>'},
+  {n:6, text:'仕事の<u>合間</u>に少し体操をするとよい。',
+   choices:['ごうま','ごうかん','あいま','あいかん'], a:2,
+   tr:'Nên tập thể dục nhẹ một chút trong lúc nghỉ giữa các việc.',
+   vi:'<b>合間（あいま）</b> = khoảng trống, lúc nghỉ giữa hai việc. Đây là từ đọc theo kun (合 = あい, 間 = ま).'}
   ]},
-{ key:"q3", label:"問題3 ｜ 文脈規定", instruction:"（　）に入れるのに最もよいものを1・2・3・4から一つ選びなさい。",
-  items:[
-    {n:11, stem:"宿題を夏休み（　）に出さなければならない。", options:["止め","分け","閉め","明け"], a:3, e:"夏休み（明け）：「〜明け」nghĩa là ngay sau khi kết thúc một kỳ nghỉ/giai đoạn."},
-    {n:12, stem:"会長候補の中では田中氏が（　）有力だと言われている。", options:["極","頂","最","特"], a:2, e:"（最）有力：「最有力」nghĩa là có triển vọng nhất, khả năng cao nhất."},
-    {n:13, stem:"歌謡曲からクラシックまで、音楽（　）に興味があります。", options:["全般","共通","全国","共同"], a:0, e:"音楽（全般）：「〜全般」nghĩa là toàn bộ, nhìn chung về lĩnh vực đó."},
-    {n:14, stem:"2時50分東京駅（　）の新幹線に乗る予定です。", options:["離","出","発","始"], a:2, e:"東京駅（発）：「〜発」nghĩa là xuất phát từ đâu."},
-    {n:15, stem:"書類に記入ミスがあったので、直してから（　）提出するように言われた。", options:["復","再","次","改"], a:1, e:"（再）提出：「再提出」nghĩa là nộp lại (sau khi sửa lỗi)."},
+
+ /* ---------- 問題2 ---------- */
+ {id:'b2s2', jp:'問題2', name:'Điền từ theo ngữ cảnh', type:'mc',
+  hint:'Chọn từ phù hợp nhất điền vào chỗ trống （　　）.',
+  hintJp:'（　　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:7, text:'アルバイト先の会社と（　　）して時給を上げてもらった。',
+   choices:['交流','交渉','交付','交代'], a:1,
+   tr:'Mình đã thương lượng với công ty nơi làm thêm và được tăng lương theo giờ.',
+   vi:'<b>交渉（こうしょう）する</b> = thương lượng, đàm phán (để được tăng lương).<ul><li>交流: giao lưu.</li><li>交付: cấp phát (giấy tờ).</li><li>交代: thay phiên, đổi ca.</li></ul>'},
+  {n:8, text:'これは（　　）な問題だから、人前で話さないほうがいい。',
+   choices:['ソフト','ロマンチック','ルーズ','デリケート'], a:3,
+   tr:'Đây là vấn đề tế nhị nên không nên nói trước mặt mọi người.',
+   vi:'<b>デリケート</b> (delicate) = tế nhị, nhạy cảm → デリケートな問題.<ul><li>ソフト: mềm, nhẹ nhàng.</li><li>ロマンチック: lãng mạn.</li><li>ルーズ: lỏng lẻo, luộm thuộm.</li></ul>'},
+  {n:9, text:'結婚したら、（　　）してお金を貯めようと思っている。',
+   choices:['統制','節制','倹約','要約'], a:2,
+   tr:'Nếu kết hôn, mình định tiết kiệm chi tiêu để dành tiền.',
+   vi:'<b>倹約（けんやく）する</b> = tiết kiệm (chi tiêu) để dành tiền.<ul><li>統制: kiểm soát, thống chế.</li><li>節制: điều độ (ăn uống, sinh hoạt).</li><li>要約: tóm tắt.</li></ul>'},
+  {n:10, text:'健康（　　）のために、毎日運動している。',
+   choices:['保管','整理','維持','抑制'], a:2,
+   tr:'Mình tập thể dục mỗi ngày để duy trì sức khỏe.',
+   vi:'<b>維持（いじ）</b> = duy trì → 健康維持.<ul><li>保管: bảo quản (đồ vật).</li><li>整理: sắp xếp, dọn dẹp.</li><li>抑制: kiềm chế, hạn chế.</li></ul>'},
+  {n:11, text:'事故の（　　）について、新聞が詳しく報じていた。',
+   choices:['経緯','経験','経歴','経路'], a:0,
+   tr:'Báo đã đưa tin chi tiết về diễn biến của vụ tai nạn.',
+   vi:'<b>経緯（けいい）</b> = đầu đuôi, diễn biến của sự việc.<ul><li>経験: kinh nghiệm.</li><li>経歴: lý lịch, quá trình học tập và công tác.</li><li>経路: lộ trình, đường đi (của thông tin, bệnh...).</li></ul>'},
+  {n:12, text:'喫煙によりがんになる危険（　　）が高くなる。',
+   choices:['性','的','面','感'], a:0,
+   tr:'Hút thuốc làm tăng nguy cơ bị ung thư.',
+   vi:'<b>危険性（きけんせい）</b>: hậu tố <b>〜性</b> tạo danh từ chỉ tính chất/mức độ ("tính nguy hiểm", "nguy cơ").<ul><li>〜的: dùng như tính từ な (危険的 không tự nhiên).</li><li>〜面: mặt, khía cạnh (安全面).</li><li>〜感: cảm giác (安心感).</li></ul>'},
+  {n:13, text:'客からの問い合わせには、丁寧に（　　）しなければならない。',
+   choices:['接待','待遇','対応','反応'], a:2,
+   tr:'Phải ứng xử/xử lý một cách lịch sự đối với các thắc mắc của khách.',
+   vi:'<b>対応（たいおう）する</b> = ứng xử, xử lý (yêu cầu, thắc mắc).<ul><li>接待: chiêu đãi (khách hàng).</li><li>待遇: đãi ngộ.</li><li>反応: phản ứng.</li></ul>'}
   ]},
-{ key:"q4", label:"問題4 ｜ 語彙選択", instruction:"（　）に入れるのに最もよいものを1・2・3・4から一つ選びなさい。",
-  items:[
-    {n:16, stem:"こんなに夜遅くまでおきていると、明日の仕事に（　）よ。", options:["差し支える","引っかかる","割り込む","かかわり合う"], a:0, e:"差し支える：gây cản trở, ảnh hưởng xấu đến công việc ngày mai."},
-    {n:17, stem:"川西さんは柔道をしているので、がっしりした（　）をしている。", options:["容姿","格好","姿勢","体格"], a:3, e:"「がっしりした体格」：vóc dáng, thể hình vạm vỡ / vững chắc."},
-    {n:18, stem:"セミナーの日は朝は準備の時間がないので、資料は（　）コピーしておいてください。", options:["先々","とっくに","あらかじめ","遅くとも"], a:2, e:"あらかじめ：làm sẵn trước một việc gì đó (in tài liệu sẵn trước)."},
-    {n:19, stem:"自転車のタイヤが（　）して、空気が抜けていた。", options:["ミス","ダウン","パンク","ストライキ"], a:2, e:"パンク：xe đạp bị bể bánh / thủng lốp."},
-    {n:20, stem:"工事の音が（　）、全然眠れない。", options:["けわしくて","やかましくて","ずうずうしくて","しつこくて"], a:1, e:"やかましくて：ồn ào, huyên náo (tiếng ồn từ công trường)."},
-    {n:21, stem:"B社が開発した商品管理システムは評価が高く、多くの会社に（　）されている。", options:["移行","吸収","引用","導入"], a:3, e:"導入：hệ thống quản lý được “áp dụng / đưa vào sử dụng” ở nhiều công ty."},
-    {n:22, stem:"子どものいたずらにいちいち（　）を立てても仕方がない。", options:["心","腹","頭","気"], a:1, e:"「腹を立てる」：cụm từ cố định nghĩa là nổi giận."},
+
+ /* ---------- 問題3 ---------- */
+ {id:'b2s3', jp:'問題3', name:'Từ đồng nghĩa', type:'mc',
+  hint:'Chọn từ có nghĩa gần nhất với từ được gạch chân.',
+  hintJp:'＿＿の言葉に意味が最も近いものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:14, text:'あの人がいると、いつも話が<u>ややこしく</u>なる。',
+   choices:['つまらなく','長く','あいまいに','複雑に'], a:3,
+   tr:'Hễ có người đó là câu chuyện luôn trở nên rắc rối.',
+   vi:'<b>ややこしい</b> = phức tạp, rắc rối → <b>複雑に</b>.<ul><li>つまらなく: chán, vô vị.</li><li>長く: dài.</li><li>あいまいに: mơ hồ, không rõ ràng (khác với "rối rắm").</li></ul>'},
+  {n:15, text:'親は子供の将来を<u>案じる</u>ものだ。',
+   choices:['決める','心配する','変える','無視する'], a:1,
+   tr:'Cha mẹ thường lo lắng cho tương lai của con cái.',
+   vi:'<b>案じる（あんじる）</b> = lo lắng, bận tâm → <b>心配する</b>.'},
+  {n:16, text:'現内閣は、<u>世論</u>を反映させた政策を行っているとはいえない。',
+   choices:['一般の人の考え','専門家の考え','政治家の考え','テレビや新聞の考え'], a:0,
+   tr:'Không thể nói nội các hiện tại đang thực hiện chính sách phản ánh dư luận.',
+   vi:'<b>世論（よろん／せろん）</b> = dư luận, ý kiến của người dân nói chung → <b>一般の人の考え</b>.'},
+  {n:17, text:'佐藤先生はいつも弱い側の<u>肩を持つ</u>。',
+   choices:['味方をする','歩くのを助ける','反対する','ばかにする'], a:0,
+   tr:'Thầy Sato lúc nào cũng đứng về phía người yếu thế.',
+   vi:'<b>肩を持つ</b> = bênh vực, đứng về phía ai → <b>味方をする</b>. Đây là thành ngữ, không phải nghĩa đen "đỡ vai để đi".'},
+  {n:18, text:'申し込みの<u>手順</u>を間違えて、もう一度用紙に記入しなければならなくなった。',
+   choices:['時期','やり方','相手','場所'], a:1,
+   tr:'Tôi làm sai thủ tục đăng ký nên phải điền lại tờ đơn một lần nữa.',
+   vi:'<b>手順（てじゅん）</b> = trình tự, các bước tiến hành → <b>やり方</b>.'},
+  {n:19, text:'彼は<u>そもそも</u>、そういうことを言える立場ではない。',
+   choices:['全部','いつも','最初から','何となく'], a:2,
+   tr:'Vốn dĩ anh ta không ở vị trí để nói những điều như vậy.',
+   vi:'<b>そもそも</b> = vốn dĩ, ngay từ đầu → <b>最初から</b>.'}
   ]},
-{ key:"q5", label:"問題5 ｜ 類義表現", instruction:"＿＿ の言葉に意味が最も近いものを1・2・3・4から一つ選びなさい。",
-  items:[
-    {n:23, stem:"会場が急に＜b＞そうぞうしく＜/b＞なった。", options:["寒く","うるさく","静かに","暗く"], a:1, e:"そうぞうしく ≒ うるさく（ồn ào）。"},
-    {n:24, stem:"できるだけ＜b＞用心した＜/b＞ほうがいいですよ。", options:["遠慮","我慢","努力","注意"], a:3, e:"用心した ≒ 注意（cẩn thận, chú ý）。"},
-    {n:25, stem:"その発言がうそだという＜b＞あきらかな＜/b＞証拠があります。", options:["はっきりした","新しい","別の","さまざまな"], a:0, e:"あきらかな ≒ はっきりした（rõ ràng）。"},
-    {n:26, stem:"二人は＜b＞たまたま＜/b＞会ったらしい。", options:["さっき","何度も","偶然","すぐに"], a:2, e:"たまたま ≒ 偶然（tình cờ, ngẫu nhiên）。"},
-    {n:27, stem:"この二つのレポートはテーマが＜b＞ことなります＜/b＞。", options:["違います","複雑です","似ています","単純です"], a:0, e:"ことなります ≒ 違います（khác nhau）。"},
+
+ /* ---------- 問題4 ---------- */
+ {id:'b2s4', jp:'問題4', name:'Cách dùng từ', type:'mc', usage:true,
+  hint:'Chọn câu dùng từ đã cho đúng nhất.',
+  hintJp:'次の言葉の使い方として最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:20, text:'配送する',
+   choices:['デパートで買った家具をうちまで<u>配送して</u>もらった。','ミーティングの後、部長に報告のメールを<u>配送した</u>。','お世話になった先輩に感謝の気持ちを<u>配送し</u>たい。','毎朝、子どもを幼稚園に<u>配送して</u>から出社している。'], a:0,
+   vi:'<b>配送（はいそう）する</b> = giao hàng, vận chuyển hàng hóa đến nơi nhận. Câu đúng: nhờ cửa hàng giao đồ nội thất đến tận nhà.<ul><li>Câu 2: gửi email là <b>送信する</b>.</li><li>Câu 3: gửi gắm lòng biết ơn thì dùng <b>伝える</b>.</li><li>Câu 4: đưa con đến nhà trẻ là <b>送る／送っていく</b>, 配送 chỉ dùng cho hàng hóa.</li></ul>'},
+  {n:21, text:'不備',
+   choices:['夏の暑さで体の<u>不備</u>を訴える人が増えている。','睡眠時間の<u>不備</u>で体調を崩してしまった。','原子力発電の安全性に対して<u>不備</u>の声が出ている。','書類に<u>不備</u>があるので、もう一度提出してください。'], a:3,
+   vi:'<b>不備（ふび）</b> = thiếu sót, chưa đầy đủ (giấy tờ, thiết bị, thủ tục). Câu đúng: hồ sơ có thiếu sót nên hãy nộp lại.<ul><li>Câu 1: cơ thể khó chịu là <b>不調</b>.</li><li>Câu 2: thiếu ngủ là <b>不足</b>.</li><li>Câu 3: tiếng nói lo ngại là <b>不安</b>.</li></ul>'},
+  {n:22, text:'推進する',
+   choices:['政府は新しい宇宙計画を<u>推進して</u>いる。','ドアを<u>推進して</u>家の中に入った。','新しい部長に山田課長を<u>推進した</u>。','先生の好みを<u>推進して</u>お菓子を贈った。'], a:0,
+   vi:'<b>推進（すいしん）する</b> = thúc đẩy, đẩy mạnh (kế hoạch, chính sách, dự án). Câu đúng: chính phủ đang thúc đẩy kế hoạch vũ trụ mới.<ul><li>Câu 2: đẩy cửa là <b>押す</b>.</li><li>Câu 3: đề cử người là <b>推薦する</b>.</li><li>Câu 4: đoán sở thích là <b>推測する</b>.</li></ul>'},
+  {n:23, text:'でたらめ',
+   choices:['部屋の中が<u>でたらめ</u>なので誰にも見せられない。','ガラスが割れて<u>でたらめ</u>になってしまった。','新聞に<u>でたらめ</u>な内容の記事が書かれている。','この辺りは建物が多くて<u>でたらめ</u>だ。'], a:2,
+   vi:'<b>でたらめ</b> = bịa đặt, vô căn cứ, nhảm nhí (lời nói, nội dung). Câu đúng: báo đăng bài có nội dung bịa đặt.<ul><li>Câu 1: phòng bừa bộn là <b>散らかっている／めちゃくちゃ</b>.</li><li>Câu 2: kính vỡ nát là <b>めちゃくちゃ／ばらばら</b>.</li><li>Câu 4: nhà cửa nhiều, lộn xộn là <b>ごちゃごちゃ</b>.</li></ul>'},
+  {n:24, text:'きっぱり',
+   choices:['彼はうそをつかない<u>きっぱり</u>とした人間だ。','両親と彼の考えは<u>きっぱり</u>と違う。','シャワーを浴びて頭が<u>きっぱり</u>とした。','何度も借金を頼まれたが、彼は<u>きっぱり</u>と断った。'], a:3,
+   vi:'<b>きっぱり（と）</b> = dứt khoát, rõ ràng (khi từ chối, quyết định). Câu đúng: bị nhờ cho vay tiền nhiều lần nhưng anh ấy đã từ chối dứt khoát.<ul><li>Câu 1: người ngay thẳng không nói dối là <b>正直な</b>.</li><li>Câu 2: khác nhau rõ rệt là <b>はっきり</b>.</li><li>Câu 3: đầu óc tỉnh táo, sảng khoái là <b>すっきり</b>.</li></ul>'},
+  {n:25, text:'説得する',
+   choices:['事故の状況について警察を<u>説得した</u>。','親を<u>説得して</u>留学に行かせてもらった。','先生は悪いことをした小学生をいつも<u>説得した</u>。','会議で自分の意見をみんなに<u>説得した</u>。'], a:1,
+   vi:'<b>説得（せっとく）する</b> = thuyết phục người khác đồng ý làm theo. Câu đúng: thuyết phục bố mẹ để được đi du học.<ul><li>Câu 1: giải thích tình hình với cảnh sát là <b>説明する</b>.</li><li>Câu 3: răn dạy học sinh làm sai là <b>叱る／注意する</b>.</li><li>Câu 4: trình bày ý kiến là <b>主張する／述べる</b>; 説得 phải có đối tượng bị thuyết phục đi với を.</li></ul>'}
   ]},
-{ key:"q6", label:"問題6 ｜ 語の使い方", instruction:"次の言葉の使い方として最もよいものを1・2・3・4から一つ選びなさい。", type:"usage",
-  items:[
-    {n:28, target:"行方", options:[
-        "土曜日の私の行方はいつも決まっていて、近くの喫茶店か図書館だ。",
-        "交差点を右に曲がると、行方に黒い高層ビルが見えた。",
-        "慌てていたので、行方を確かめずにバスに乗ってしまった。",
-        "この写真の二人は事件に関係があるらしいが、まだ行方が分からない。"], a:3,
-      e:"「行方」(tung tích, nơi đến) đúng khi dùng theo kiểu「まだ行方が分からない」— diễn tả nơi đến/tung tích của người hay vật. Câu nói về việc chưa rõ tung tích của hai người trong ảnh là phù hợp."},
-    {n:29, target:"甘やかす", options:[
-        "今日は、いつもより多めに砂糖を入れて、コーヒーを甘やかした。",
-        "ひどくなったら大変だから、風邪を甘やかさないほうがいいですよ。",
-        "田中さんは、ずっと親に甘やかされて育ったせいか、わがままで困る。",
-        "今年のY社の就職試験は、昨年より内容が甘やかされている。"], a:2,
-      e:"「甘やかす」(nuông chiều) mang nghĩa nuôi dạy ai đó quá bao bọc, khiến người đó trở nên ích kỷ, nhõng nhẽo. Câu nói được bố mẹ nuông chiều nên nay ích kỷ là phù hợp."},
-    {n:30, target:"用途", options:[
-        "本来の用途ではないが、この容器は花瓶にしてもいいと思う。",
-        "森さんの才能は、多くの用途に生かされるだろう。",
-        "会社での私の用途は、新入社員の指導をすることだ。",
-        "新しい趣味を始めるため、時間の用途を工夫することにした。"], a:0,
-      e:"「用途」(mục đích/công dụng sử dụng) chỉ cách dùng của một vật. Câu nói dù không phải công dụng gốc nhưng vẫn dùng làm bình hoa là phù hợp."},
-    {n:31, target:"振り向く", options:[
-        "佐藤さんは私を見ると、恥ずかしそうに下を振り向いたまま顔を上げなかった。",
-        "だれかが空を指したので、近くにいた人たちが一斉に上を振り向いた。",
-        "道を渡るときは、左右を振り向いて車が来ないことを確認しよう。",
-        "だれかに後ろから呼ばれたので振り向いたら、課長だった。"], a:3,
-      e:"「振り向く」(ngoảnh lại) là động tác quay người ra sau. Câu nói bị gọi từ phía sau nên ngoảnh lại thì thấy là trưởng phòng là phù hợp."},
-    {n:32, target:"温暖", options:[
-        "エアコンをつけたら、部屋の中が温暖になって眠くなってきた。",
-        "この地方は温暖で暮らしやすく、野菜や果物などの農産物も豊富だ。",
-        "冷めるとおいしくないので、なるべく温暖なうちに召し上がってください。",
-        "宮田さんはいつも厳しいが、本当はとても温暖な性格の人だ。"], a:1,
-      e:"「温暖」(ấm áp) chủ yếu dùng để nói về khí hậu. Câu nói vùng này khí hậu ấm áp, dễ sống là phù hợp."},
+
+ /* ---------- 問題5 ---------- */
+ {id:'b2s5', jp:'問題5', name:'Đọc hiểu', type:'mc', reading:true,
+  hint:'Đọc đoạn văn rồi trả lời các câu hỏi bên dưới (có hai chỗ trống 【A】【B】 trong bài).',
+  hintJp:'次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。',
+  passage:[
+   `${R('町工場','まちこうば')}というと技術力もなく大企業の${R('下請','したう')}け仕事ばかりやっているところという印象だろうが、日本には小さいながらも大企業を超える技術を持つ町工場もある。町工場でも技術いかんでオンリーワンの製品が生産できるのである。サッカーの${R('審判','しんぱん')}の笛、競技用のボールから痛くない注射針、手術用${R('顕微鏡','けんびきょう')}など、大企業も真似できない製品を作っているところもある。製品ではないが${R('研磨','けんま')}力(注)で世界一を誇る会社もある。しかし普通の町工場は経済のグローバル化や不況で${R('廃業','はいぎょう')}に${R('追','お')}い${R('込','こ')}まれつつある。そして町工場の減少と共に以前は${R('活気','かっき')}に${R('溢','あふ')}れていた町もまた${R('寂','さび')}れてきている。`,
+   `そんな中、${R('衰退','すいたい')}しっぱなしの町に活気を取り戻そうと大阪の町工場が集まり本業の{{1|（Ａ）}}人工衛星の打ち上げを目指した。2009年に「まいど1号」という人工衛星の打ち上げに成功して世間を驚かせた。しかしよく考えてみると元からある高い技術力を${R('結集','けっしゅう')}した結果だから{{2|（Ｂ）}}。人工衛星は9ヶ月間宇宙に留まり${R('雷','かみなり')}の${R('観測','かんそく')}などの成果を上げた。それはただ町工場の人たちの夢の実現であるのみならず、町工場の技術力を示す出来事でもあり、普通の人々をも${R('力','ちから')}づけることであった。`,
+   `日本の工業を長年支えてきたのはこのような町工場である。しかし人工衛星を上げても<u>状況は変わらない</u>。工場自身の努力や仲間同士で協力しているだけでは限界がある。今こそ国の${R('支援','しえん')}が必要なのではないだろうか。町工場の${R('喪失','そうしつ')}は技術の喪失であり日本産業全体の衰退に${R('繋','つな')}がる。町工場が生き残れるように何とかして欲しいと思う。`
+  ],
+  passageNote:'(注) 研磨：物の表面をなめらかにするために磨くこと',
+  passageVi:[
+   'Nhắc đến xưởng nhỏ (町工場), người ta thường có ấn tượng là nơi không có năng lực kỹ thuật, chỉ toàn nhận việc gia công thầu phụ cho doanh nghiệp lớn. Nhưng ở Nhật cũng có những xưởng nhỏ sở hữu kỹ thuật vượt cả doanh nghiệp lớn. Tùy vào kỹ thuật mà ngay cả xưởng nhỏ cũng làm ra được sản phẩm độc nhất vô nhị (only one). Có những nơi làm ra những sản phẩm mà doanh nghiệp lớn cũng không bắt chước nổi, như còi của trọng tài bóng đá, bóng thi đấu, kim tiêm không đau, kính hiển vi dùng trong phẫu thuật. Cũng có công ty tự hào số một thế giới về năng lực mài bóng (研磨), dù đó không phải là sản phẩm. Tuy nhiên, các xưởng nhỏ bình thường đang dần bị đẩy đến chỗ phải đóng cửa do toàn cầu hóa kinh tế và suy thoái. Và cùng với sự giảm đi của các xưởng nhỏ, những khu phố từng tràn đầy sức sống cũng dần trở nên vắng vẻ, tiêu điều.',
+   'Trong bối cảnh đó, các xưởng nhỏ ở Osaka đã tập hợp lại, đặt mục tiêu phóng vệ tinh nhân tạo bên cạnh công việc chính, nhằm đem lại sức sống cho khu phố vốn cứ suy tàn. Năm 2009, họ phóng thành công vệ tinh "Maido 1" khiến dư luận kinh ngạc. Nhưng nghĩ kỹ thì đó là kết quả của việc tập trung kỹ thuật cao vốn có, nên cũng chẳng có gì đáng ngạc nhiên. Vệ tinh ở lại trong vũ trụ 9 tháng và đạt được những thành quả như quan trắc sét. Đó không chỉ là hiện thực hóa ước mơ của những người ở xưởng nhỏ, mà còn là sự kiện cho thấy năng lực kỹ thuật của xưởng nhỏ, và tiếp thêm sức mạnh cho cả những người bình thường.',
+   'Chính những xưởng nhỏ như vậy đã nâng đỡ ngành công nghiệp Nhật Bản suốt nhiều năm. Thế nhưng dù có phóng được vệ tinh, tình hình vẫn không thay đổi. Chỉ dựa vào nỗ lực của bản thân từng xưởng và sự hợp tác giữa các xưởng thì có giới hạn. Chính bây giờ cần có sự hỗ trợ của nhà nước. Mất đi xưởng nhỏ là mất đi kỹ thuật, và dẫn tới sự suy thoái của toàn bộ nền công nghiệp Nhật Bản. Tôi mong bằng cách nào đó các xưởng nhỏ có thể tiếp tục sống sót.'
+  ],
+  passageNoteVi:'(Chú thích) 研磨: mài, đánh bóng bề mặt vật cho nhẵn mịn.',
+  qs:[
+  {n:1, text:'（Ａ）の中に最もよいものを入れなさい。',
+   choices:['かたほう','そばから','かたがた','かたわら'], a:3,
+   full:'そんな中、衰退しっぱなしの町に活気を取り戻そうと大阪の町工場が集まり本業の<mark>かたわら</mark>人工衛星の打ち上げを目指した。',
+   tr:'Các xưởng nhỏ ở Osaka tập hợp lại, bên cạnh công việc chính còn đặt mục tiêu phóng vệ tinh nhân tạo.',
+   vi:'<b>〜のかたわら</b> = "bên cạnh (việc chính) còn…", chỉ việc làm song song, kéo dài với công việc chính: 本業のかたわら人工衛星の打ち上げを目指した.<ul><li>かたほう: "một bên, một phía" (danh từ).</li><li>〜そばから: "vừa… là lại…" (làm xong là bị hỏng/quên ngay).</li><li>〜かたがた: "nhân tiện, kết hợp" khi làm một việc (như お礼かたがた), không dùng với 本業の.</li></ul>'},
+  {n:2, text:'（Ｂ）の中に最もよいものを入れなさい。',
+   choices:['驚くのは当たり前だ','驚くには当たらない','驚かないでもない','驚かないでは済まない'], a:1,
+   full:'しかしよく考えてみると元からある高い技術力を結集した結果だから<mark>驚くには当たらない</mark>。',
+   tr:'Nhưng nghĩ kỹ thì đó là kết quả của việc tập trung kỹ thuật cao vốn có, nên cũng chẳng có gì đáng ngạc nhiên.',
+   vi:'<b>〜には当たらない</b> = "không đáng (để)…, không cần phải…". 驚くには当たらない = "không có gì đáng ngạc nhiên", vì đó chỉ là kết quả của việc tập trung kỹ thuật cao vốn có.<ul><li>驚くのは当たり前だ: "ngạc nhiên là đương nhiên", ngược mạch.</li><li>驚かないでもない: "cũng không hẳn là không ngạc nhiên" (hơi ngạc nhiên).</li><li>驚かないでは済まない: "không thể không ngạc nhiên / không thể bỏ qua".</li></ul>'},
+  {n:3, text:'なぜ町工場は人工衛星を上げようとしたのか。',
+   choices:['本業のほうが暇だったから','町を元気にしたいと考えたから','本業以外の仕事を増やしたかったから','夢がないと働けないから'], a:1,
+   vi:'Đoạn 2 viết: "衰退しっぱなしの町に<b>活気を取り戻そうと</b>…人工衛星の打ち上げを目指した" → để đem lại sức sống cho khu phố. Các đáp án khác không có trong bài.'},
+  {n:4, text:'「まいど1号」の成功の理由は何か。',
+   choices:['人工衛星の部品が町工場で製造されていたから','町工場の夢の実現を願う人が多かったから','町工場が協力すれば何でも作れるから','町工場の技術水準がとても高かったから'], a:3,
+   vi:'Bài viết: "元からある<b>高い技術力を結集した結果</b>" → lý do thành công là trình độ kỹ thuật rất cao của các xưởng nhỏ.<ul><li>Các đáp án còn lại (nguồn linh kiện, nhiều người mong muốn, "hợp tác thì làm gì cũng được") không được nêu làm lý do.</li></ul>'},
+  {n:5, text:'<u>状況は変わらない</u>と言っているがどんな状況か。',
+   choices:['生き残れない工場同士が協力し合っている状況','特別な製品の生産や特別な技術を持つ工場以外は消えていく状況','人工衛星の打ち上げで技術力を示したので仕事が確保できている状況','国の支援を受けることができる工場だけが生き残れる状況'], a:1,
+   vi:'Ở đoạn 1, ngoài một số xưởng có sản phẩm/kỹ thuật đặc biệt, "普通の町工場は…廃業に追い込まれつつある". Dù đã phóng vệ tinh, tình hình đó vẫn không đổi → <b>trừ các xưởng có sản phẩm hoặc kỹ thuật đặc biệt, các xưởng còn lại vẫn dần biến mất</b>.<ul><li>Đáp án 1: bài chỉ nói chỉ hợp tác với nhau thì có giới hạn, không phải "tình hình".</li><li>Đáp án 3: ngược với "状況は変わらない".</li><li>Đáp án 4: tác giả đang kêu gọi nhà nước hỗ trợ, chưa có sự hỗ trợ đó.</li></ul>'}
+  ]}
+ ]
+},
+{
+ id:'ko3', no:3, tag:'Bộ đề 3', title:'小テスト 3',
+ sections:[
+
+ /* ---------- 問題1 ---------- */
+ {id:'b3s1', jp:'問題1', name:'Ngữ pháp', type:'mc',
+  hint:'Chọn đáp án phù hợp nhất điền vào chỗ trống （　　）.',
+  hintJp:'次の文の（　　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, text:'入社1年目にして新プロジェクトのリーダーを（　　）異例の人事だ。',
+   choices:['任されるとして','任せられるにあたって','任せられるにあって','任されるとは'], a:3,
+   tr:'Mới vào công ty năm đầu mà đã được giao làm trưởng nhóm dự án mới, đúng là một sự bổ nhiệm hiếm thấy.',
+   vi:'<b>〜とは</b> đứng sau một sự việc để nêu sự ngạc nhiên, cảm thán: "…lại được giao làm leader, thật là (một sự bổ nhiệm ngoại lệ)". 任される là thể bị động của 任せる = "được giao phó".<ul><li><b>任されるとして</b>: "giả sử/với tư cách là…", không hợp nghĩa.</li><li><b>任せられるにあたって</b>: "nhân dịp/khi…", không hợp mạch.</li><li><b>任せられるにあって</b>: "trong hoàn cảnh/vị trí…", cũng không phù hợp.</li></ul>'},
+  {n:2, text:'女性はいつから周りに人がいるの（　　）、化粧をするようになったのだろうか。',
+   choices:['もかまわず','をものともせず','をよそに','もかかわらず'], a:0,
+   tr:'Từ bao giờ phụ nữ bắt đầu trang điểm mà chẳng bận tâm có người xung quanh nhỉ?',
+   vi:'<b>〜もかまわず</b> = "không bận tâm/không để ý đến…". 周りに人がいるのもかまわず = mặc kệ có người xung quanh.<ul><li><b>をものともせず</b>: "bất chấp (khó khăn, nguy hiểm)", đi với danh từ và mang nghĩa vượt qua trở ngại.</li><li><b>をよそに</b>: "mặc kệ", đi với danh từ (期待をよそに), không nối được với 〜のを.</li><li><b>もかかわらず</b>: sai hình thức, đúng phải là にもかかわらず.</li></ul>'},
+  {n:3, text:'「差し支えなければ、こちらにお名前を（　　）。」',
+   choices:['ご記入しますでしょうか','ご記入されますでしょうか','ご記入いただけますでしょうか','ご記入申し上げますでしょうか'], a:2,
+   tr:'"Nếu không phiền, xin quý khách vui lòng điền tên vào đây ạ."',
+   vi:'Nhờ khách điền tên → dùng mẫu nhờ vả lịch sự <b>ご記入いただけますでしょうか</b> (ご〜いただく = nhận hành động từ người trên, dạng khả năng "…có được không ạ").<ul><li><b>ご記入しますでしょうか</b>: khiêm nhường ngữ, là hành động của người nói, không phải nhờ khách.</li><li><b>ご記入されますでしょうか</b>: kính ngữ, nhưng chỉ hỏi "ngài sẽ điền chứ?", không có ý nhờ.</li><li><b>ご記入申し上げます</b>: khiêm nhường ngữ cho hành động của mình, sai chủ thể.</li></ul>'},
+  {n:4, text:'うちの犬（　　）、だれに対してもしっぽを振ったりお腹を見せたりして、番犬として失格だな。',
+   choices:['とすれば','ともなれば','ときたら','とは'], a:2,
+   tr:'Con chó nhà tôi ấy à, với ai nó cũng vẫy đuôi, lăn ra phơi bụng, đúng là không đủ tư cách làm chó giữ nhà.',
+   vi:'<b>〜ときたら</b> = "nói đến… thì (thật là…)", nêu chủ đề để phàn nàn, chê trách (thường là người hoặc vật thân thuộc): うちの犬ときたら….<ul><li><b>とすれば</b>: "nếu cho rằng…".</li><li><b>ともなれば</b>: "một khi đã đến mức/vị trí… thì".</li><li><b>とは</b>: dùng để nêu sự ngạc nhiên hay định nghĩa, không mang sắc thái phàn nàn này.</li></ul>'},
+  {n:5, text:'3年間このマンションに住んでいるが、隣の人とは（　　）、顔を合わせたこともない。',
+   choices:['話したこともないばかりで','話したこともないどころか','話したことがないばかりでも','話したことがないどころではなく'], a:1,
+   tr:'Tôi sống ở chung cư này đã 3 năm, nhưng với người hàng xóm thì đừng nói là nói chuyện, đến mặt cũng chưa từng gặp.',
+   vi:'<b>〜どころか</b> = "đừng nói là… ngay cả… cũng…", vế sau nêu mức độ cực đoan hơn hoặc ngược kỳ vọng. 話したこともないどころか、顔を合わせたこともない = chưa từng nói chuyện đã đành, đến mặt cũng chưa từng gặp.<ul><li><b>ばかりで / ばかりでも</b>: không tạo thành cách nói tự nhiên ở đây.</li><li><b>どころではなく</b>: "không phải lúc để…", sai nghĩa.</li></ul>'},
+  {n:6, text:'この農家グループは、米や大豆の栽培（　　）、加工品の製造にも携わっている。',
+   choices:['のかたわら','にともなって','のはんめん','もかねて'], a:0,
+   tr:'Nhóm nông dân này, bên cạnh trồng gạo và đậu nành, còn tham gia chế biến sản phẩm.',
+   vi:'<b>〜のかたわら</b> = "bên cạnh (việc chính) còn…". 栽培のかたわら、加工品の製造にも携わっている.<ul><li><b>にともなって</b>: "cùng với (sự thay đổi)…".</li><li><b>のはんめん</b>: "mặt khác" (phải là 〜である反面).</li><li><b>もかねて</b>: "kiêm, nhân tiện" (勉強もかねて旅行する), không hợp với vế sau.</li></ul>'},
+  {n:7, text:'お金をもらってやる（　　）、中途半端なことはできない。',
+   choices:['からして','からでは','からに','からには'], a:3,
+   tr:'Đã nhận tiền để làm thì không thể làm nửa vời.',
+   vi:'<b>〜からには</b> = "một khi đã… thì (phải…)", vế sau là nghĩa vụ hoặc quyết tâm. お金をもらってやるからには、中途半端なことはできない.<ul><li><b>からして</b>: "ngay từ… đã".</li><li><b>からでは / からに</b>: không phải mẫu ngữ pháp phù hợp.</li></ul>'},
+  {n:8, text:'あんないい加減な連中に、こんな大役が（　　）。',
+   choices:['務まるものか','務めるものだ','務めるものを','務まるものだが'], a:0,
+   tr:'Cái đám cẩu thả như thế mà đảm đương nổi vai trò quan trọng thế này à? Đời nào!',
+   vi:'<b>〜ものか</b> = "làm sao mà… được (phủ định mạnh)". 務まる = đảm đương được (tự động từ, đi với 大役が). 務まるものか = "đời nào đảm đương nổi".<ul><li><b>務めるものだ / 務めるものを / 務まるものだが</b>: 務める là tha động từ (cần を) và các mẫu này không diễn đạt ý phản vấn.</li></ul>'},
+  {n:9, text:'（会社で）<br>Ａ「鈴木さんの送別会、どこにしましょうか。鈴木さんが気に入ってくれそうなところにしたいと思うんですが。」<br>Ｂ「そうねえ、お好み焼き屋（　　）、どうかしら？テーブルを囲んでみんなでわいわいできて、いいじゃない？」',
+   choices:['ならば','とすると','っていうのは','といえば'], a:2,
+   tr:'A: "Tiệc chia tay anh Suzuki mình tổ chức ở đâu đây? Tôi muốn chọn chỗ anh ấy sẽ thích." B: "Ừm, quán okonomiyaki thì sao nhỉ? Ngồi quanh bàn rôm rả, hay đấy chứ?"',
+   vi:'<b>〜っていうのは</b> (dạng nói của というのは) dùng để đưa ra một ý tưởng, đề xuất: "quán okonomiyaki thì sao?".<ul><li><b>ならば</b>: "nếu là… thì", cần điều kiện rõ ràng.</li><li><b>とすると</b>: "nếu cho là… thì".</li><li><b>といえば</b>: "nói đến… thì (nhớ ra)", dùng khi liên tưởng từ chủ đề, không phải để đề xuất.</li></ul>'},
+  {n:10, text:'（大学で）<br>Ａ「この前出てた求人、受けるんでしょ？」<br>Ｂ「もちろん。めったにないチャンスを逃す（　　）。」',
+   choices:['どころではないからね','ほどではないからね','わけにはいかないからね','ことにはいかないからね'], a:2,
+   tr:'A: "Đợt tuyển dụng hôm trước, cậu sẽ ứng tuyển chứ?" B: "Tất nhiên. Cơ hội hiếm có như thế thì không thể bỏ lỡ được."',
+   vi:'<b>〜わけにはいかない</b> = "không thể (vì lý do tình cảm/hoàn cảnh)…". めったにないチャンスを逃すわけにはいかない = không thể bỏ lỡ cơ hội hiếm có.<ul><li><b>どころではない</b>: "không phải lúc để…".</li><li><b>ほどではない</b>: "không đến mức…".</li><li><b>ことにはいかない</b>: không có dạng này (phải là わけにはいかない).</li></ul>'}
   ]},
-{ key:"q8", label:"問題8 ｜ 文の組み立て（★の位置）", instruction:"次の文の ★ に入る最もよいものを1・2・3・4から一つ選びなさい。", type:"order",
-  items:[
-    {n:45, stem:"いつ行っても長い行列ができているラーメン屋なのに　＿＿　＿＿　★　＿＿　だ。",
-      options:["今回あまり並ばないで済んだのは","事前に確認してから","何時ごろがすいているか","行ったから"], a:1,
-      e:"Thứ tự sắp xếp đúng: 「今回あまり並ばないで済んだのは」→「何時ごろがすいているか」→ ★「事前に確認してから」→「行ったから」。"},
-    {n:46, stem:"薬は正しく　＿＿　＿＿　★　＿＿　状態を悪化させてしまう危険もある。",
-      options:["得られないだけでなく","得られるはずの","飲まないと","効果が"], a:3,
-      e:"Thứ tự sắp xếp đúng: 「飲まないと」→「得られるはずの」→ ★「効果が」→「得られないだけでなく」。"},
-    {n:47, stem:"近所のスーパーの隣にはクリーニング屋がある。スーパーもクリーニング屋も私が　＿＿　＿＿　★　＿＿　助かる。",
-      options:["仕事から帰る時間でも","預けた服を取りに行けるのが","買い物するついでに","開いていて"], a:2,
-      e:"Thứ tự sắp xếp đúng: 「仕事から帰る時間でも」→「開いていて」→ ★「買い物するついでに」→「預けた服を取りに行けるのが」。"},
-    {n:48, stem:"このお菓子はとても簡単に作れるから初心者でも失敗する　＿＿　★　＿＿　＿＿　友人の話を聞いて、作ってみようと思った。",
-      options:["まず","ない","という","ことは"], a:0,
-      e:"Thứ tự sắp xếp đúng: 「ことは」→ ★「まず」→「ない」→「という」。Câu hoàn chỉnh: 「失敗することは［まず］ないという友人の話」。"},
-    {n:49, stem:"一人暮らしを始めたころは、料理も洗濯もすべて自分でするのが大変で、これまでずっと　＿＿　★　＿＿　＿＿　。",
-      options:["と感じさせられる","どんなに恵まれた","毎日だった","環境にいたか"], a:0,
-      e:"Thứ tự sắp xếp đúng: 「どんなに恵まれた」→「環境にいたか」→ ★「と感じさせられる」→「毎日だった」。"},
+
+ /* ---------- 問題2 ---------- */
+ {id:'b3s2', jp:'問題2', name:'Sắp xếp câu ★', type:'order',
+  hint:'Chạm lần lượt 4 mảnh để xếp thành câu đúng. Sau đó xem mảnh nằm ở ô ★ nhé.',
+  hintJp:'次の文の ★ に入る最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, pre:'ホームを歩きながら携帯電話などを操作する', post:'接触事故につながりかねない。',
+   f:{a:'の', b:'電車と', c:'は', d:'こと'}, order:['d','c','b','a'],
+   tr:'Việc vừa đi trên sân ga vừa thao tác điện thoại di động có thể dẫn đến tai nạn va chạm với tàu điện.',
+   vi:'Danh từ hóa động từ bằng <b>こと</b>, kèm chủ đề <b>は</b>: 操作することは…. <b>電車との接触事故</b> = tai nạn va chạm với tàu điện. <b>〜かねない</b> = "có thể dẫn đến (điều xấu)".<br>Thứ tự: こと → は → <b>電車と</b> (★) → の.'},
+  {n:2, pre:'今回の実験が上手く', post:'をあきらめることはない。',
+   f:{a:'といって', b:'いかなかった', c:'研究自体', d:'から'}, order:['b','d','a','c'],
+   tr:'Không phải vì lần thí nghiệm này không thành công mà phải từ bỏ chính việc nghiên cứu.',
+   vi:'<b>〜からといって〜ない</b> = "không có nghĩa là / không vì… mà…". 上手くいかなかったからといって研究自体をあきらめることはない. <b>〜ことはない</b> = "không cần/không việc gì phải…".<br>Thứ tự: いかなかった → から → <b>といって</b> (★) → 研究自体.'},
+  {n:3, pre:'転職先としては、これまでの経験を', post:'希望している。',
+   f:{a:'キャリアアップを', b:'図れる', c:'生かしつつ', d:'会社を'}, order:['c','a','b','d'],
+   tr:'Về nơi làm việc mới, tôi mong muốn một công ty nơi có thể vừa phát huy kinh nghiệm cho đến nay vừa nâng cao sự nghiệp.',
+   vi:'<b>〜つつ</b> = "vừa… vừa…" (hai hành động song song). 経験を生かしつつ、キャリアアップを図れる会社を. <b>図れる</b> (図る = mưu cầu, tính đến, dạng khả năng) bổ nghĩa cho 会社.<br>Thứ tự: 生かしつつ → キャリアアップを → <b>図れる</b> (★) → 会社を.'},
+  {n:4, pre:'何とか', post:'、将来に対して不安がないわけではない。',
+   f:{a:'ものの', b:'ことは', c:'就職する', d:'できた'}, order:['c','b','d','a'],
+   tr:'Tuy bằng cách nào đó đã xin được việc, nhưng không phải là tôi không bất an về tương lai.',
+   vi:'<b>〜ものの</b> = "tuy… nhưng…". 就職することはできた = "ít nhất cũng đã xin được việc" (〜ことはできた). Vế sau nêu nỗi bất an.<br>Thứ tự: 就職する → ことは → <b>できた</b> (★) → ものの.'},
+  {n:5, pre:'うちは', post:'ことはできるでしょうか。',
+   f:{a:'留守がち', b:'共働きで', c:'ですが', d:'ペットを飼う'}, order:['b','a','c','d'],
+   tr:'Nhà tôi vợ chồng đều đi làm nên hay vắng nhà, nhưng liệu có thể nuôi thú cưng không ạ?',
+   vi:'<b>共働き</b> = vợ chồng cùng đi làm; <b>〜がち</b> = "hay, thường xuyên (xu hướng không mong muốn)", 留守がち = hay vắng nhà. <b>〜ですが</b> = "…nhưng", dẫn vào câu hỏi.<br>Thứ tự: 共働きで → 留守がち → <b>ですが</b> (★) → ペットを飼う.'}
   ]},
-{ key:"q9", label:"問題9 ｜ 文章の文法", instruction:"次の文章を読んで、文章全体の内容を考えて、（　）の中に入る最もよいものを1・2・3・4から一つ選びなさい。", type:"cloze",
-  passage:"日本発のトイレマーク\n\n　公衆トイレの入り口に描かれている男女の絵のマーク。そのマークがあれば、文字で「トイレ」と書かれていなくても、そこがトイレであることがわかる。世界のあちこちで使われているこのトイレマークが実は日本で生まれたものだということを（50）。\n\n　トイレマークが生まれたのは、1964年の東京オリンピックがきっかけだ。この東京オリンピックは、アルファベットを使わない国での初めての開催であったため、特に問題になったのが、言葉の壁だった。当時、日本国内の案内板は「お手洗い」などと日本語で書かれているものがほとんどだった。（51）、それでは世界90数か国からやって来る選手たちに理解してもらえない。かといって参加国すべての国の言葉で書くわけにもいかない。そこで、案内板作成者たちは、あらゆる国の選手が理解できるよう、絵で表すことを考えた。（52）、トイレマークなのだ。\n\n　そのほかにも、食堂、シャワー、公衆電話等の施設や設備を表すマークや、水泳、バレーボール等の競技を表すマークも作られた。競技を表すマークは、この東京オリンピックで初めて全面的に導入され、高い評価を受けた。そして、その後のオリンピックでもデザインを変えながら毎回（53）。トイレマークに代表されるように、東京オリンピックをきっかけに日本で生まれたマークが、言葉の壁を越え、今や新たなコミュニケーション手段として、世界に広がっている。それは、あらゆる人にわかりやすくという思いが世界に届いた（54）。",
-  items:[
-    {n:50, stem:"（50）に入る最もよいものはどれか。", options:["ご存じだからだろう","ご存じのようだ","ご存じだろうか","ご存じなわけだ"], a:2, e:"「ご存じだろうか」(bạn có biết...?): mẫu câu mở đầu mang tính đặt câu hỏi dẫn dắt người đọc, theo dạng「〜ということをご存じだろうか」."},
-    {n:51, stem:"（51）に入る最もよいものはどれか。", options:["それどころか","または","しかし","それに"], a:2, e:"「しかし」(tuy nhiên) mang nghĩa nghịch tiếp: hầu hết biển chỉ dẫn đều viết bằng tiếng Nhật → tuy nhiên, như vậy vận động viên nước ngoài sẽ không hiểu được — thể hiện sự tương phản."},
-    {n:52, stem:"（52）に入る最もよいものはどれか。", options:["こうして生まれたのが","ここに生み出したのは","日本で考えられたのが","作成者が理解したのは"], a:0, e:"「こうして生まれたのが」(và như vậy, thứ ra đời chính là...): mẫu câu kết luận, tiếp nối diễn biến đã trình bày trước đó."},
-    {n:53, stem:"（53）に入る最もよいものはどれか。", options:["使用したいものだ","使用していける","使用した点だ","使用されている"], a:3, e:"Thể bị động「使用されている」diễn tả một sự thật khách quan: các kỳ Olympic sau đó vẫn tiếp tục sử dụng biểu tượng này mỗi lần."},
-    {n:54, stem:"（54）に入る最もよいものはどれか。", options:["結果でなければならなかった","結果に違いない","結果のはずだった","結果として表れるかもしれない"], a:1, e:"「結果に違いない」(chắc chắn là kết quả của...): thể hiện sự suy đoán, khẳng định mạnh mẽ của tác giả."},
+
+ /* ---------- 問題3 ---------- */
+ {id:'b3s3', jp:'問題3', name:'Đọc hiểu điền chỗ trống', type:'mc', reading:true,
+  hint:'Đọc đoạn văn rồi chọn đáp án phù hợp nhất cho mỗi chỗ trống 【1】–【5】.',
+  hintJp:'次の文章を読んで、文章全体の趣旨を踏まえて、1から5の中に入る最もよいものを、1・2・3・4から一つ選びなさい。',
+  passage:[
+   `私たちは何のために趣味を持つのだろうか。ある人は、仕事に${R('行','い')}き${R('詰','づ')}まったときに、${R('一心不乱','いっしんふらん')}に好きなことに${R('打','う')}ち${R('込','こ')}むことで、{{1|【1】}}、気持ちを前向きに切り替えることができるという。一つのことに集中することで、後ろ向きだった気持ちがリセットされるのだ。またある人は、仕事以外の仲間との付き合いもまた気分転換の一つだと考える。立場も年齢も異なる相手とのたわいもないおしゃべりがなかなか{{2|【2】}}。`,
+   `このように聞くといいことずくめの趣味だが、心に留めておきたい点がある。まずは、新しいことを始める時の${R('高揚','こうよう')}した気分のまま、勢いでお金を使わないことだ。例えばスポーツの場合、道具や専用のウェア、施設使用料など、いろいろな費用がかかる。気をつけないと、特に${R('入門者','にゅうもんしゃ')}は、お金をどんどん${R('無駄','むだ')}に使うことにもなる。{{3|【3‑a】}}、気軽に始められそうなウォーキングでさえ、${R('意気込','いきご')}んで高いシューズを買ったものの、数回履いただけでその後はたんすの${R('肥','こ')}やし(注1)になる、というのは{{3|【3‑b】}}。新たに趣味を始める場合、初めから一気に投資するのではなく、少ない出費でも楽しめる方法をまず見つけ、徐々にレベルアップをしていくのが${R('賢明','けんめい')}なのだ。`,
+   `もう一点は、はなから完璧を求めようとしないことだ。テレビでマラソン観戦をして、いざ自分も挑戦しようと思った場合、最初から長い距離に{{4|【4】}}。途中で足が${R('痙攣','けいれん')}(注2)してしまうかもしれないし、暑い夏なら${R('脱水症状','だっすいしょうじょう')}に${R('陥','おちい')}る危険性だってある。そんな事態を避けるためには、短時間のジョギングから体を${R('順応','じゅんのう')}させていくのがよい。まずは周りの景色を楽しめるぐらいのペースから行い、身体が慣れるのに合わせて、徐々に距離を伸ばしていくのだ。`,
+   `ともあれ、趣味になり得るかどうかは、それを心地よい気持ちでやっているかどうかによるのであり、無理に趣味を持とうと{{5|【5】}}のはいうまでもない。`
+  ],
+  passageNote:'(注1) たんすの肥やし：使わずに、ずっとたんすにしまってある物　／　(注2) 痙攣：筋肉がひとりでに伸びたり縮んだりして、震えるようになる',
+  passageVi:[
+   'Chúng ta có sở thích để làm gì nhỉ? Có người nói rằng khi bế tắc trong công việc, nhờ dốc hết tâm trí vào việc mình thích mà họ được giải thoát khỏi tâm trạng nặng nề và có thể chuyển sang tâm thế tích cực. Tập trung vào một việc thì tâm trạng tiêu cực được "đặt lại". Lại có người cho rằng giao du với bạn bè ngoài công việc cũng là một cách giải tỏa. Những câu chuyện phiếm vu vơ với người khác vị trí, khác tuổi thì khá là thú vị.',
+   'Nghe vậy thì sở thích toàn điều tốt, nhưng có những điểm cần ghi nhớ. Trước hết là đừng bốc đồng tiêu tiền theo tâm trạng hưng phấn khi bắt đầu việc mới. Ví dụ với thể thao thì tốn nhiều khoản như dụng cụ, trang phục chuyên dụng, phí sử dụng cơ sở. Nếu không cẩn thận, nhất là người mới, sẽ tiêu tiền lãng phí liên tục. Thoạt nhìn, ngay cả môn đi bộ tưởng chừng dễ bắt đầu, nhiều người hăm hở mua đôi giày đắt tiền nhưng mới đi vài lần rồi cất vào tủ luôn (注1), chuyện này thật thường gặp. Khi bắt đầu một sở thích mới, thay vì đầu tư một lần ngay từ đầu, khôn ngoan hơn là tìm cách vui với chi phí nhỏ trước rồi nâng dần trình độ.',
+   'Điểm nữa là đừng đòi hỏi hoàn hảo ngay từ đầu. Xem marathon trên tivi rồi muốn tự mình thử, thì không cần thử thách ngay quãng đường dài. Có thể bị chuột rút (注2) giữa đường, mùa hè nóng còn có nguy cơ mất nước. Để tránh tình huống đó, nên cho cơ thể thích nghi dần từ việc chạy bộ ngắn. Trước hết chạy với tốc độ vừa đủ để ngắm cảnh xung quanh, rồi kéo dài dần quãng đường theo mức cơ thể quen.',
+   'Dù sao thì một việc có thành sở thích hay không tùy thuộc vào việc mình làm nó với tâm trạng dễ chịu hay không, và việc không cần gồng mình hăm hở để cố có một sở thích là điều không cần nói.'
+  ],
+  passageNoteVi:'(Chú thích 1) たんすの肥やし: đồ không dùng, cất trong tủ mãi. (Chú thích 2) 痙攣: cơ tự co giãn và run lên.',
+  qs:[
+  {n:1, stem:'ある人は、仕事に行き詰まったときに、一心不乱に好きなことに打ち込むことで、【1】、気持ちを前向きに切り替えることができるという。',
+   choices:['浮いた気持ちを沈め','沈んだ気持ちから解放され','落ち着いた気持ちをなくし','落ち込んだ気持ちを思い出し'], a:1,
+   full:'…一心不乱に好きなことに打ち込むことで、<mark>沈んだ気持ちから解放され</mark>、気持ちを前向きに切り替えることができるという。',
+   tr:'Có người nói rằng khi bế tắc trong công việc, nhờ dốc hết tâm trí vào việc mình thích mà họ được giải thoát khỏi tâm trạng chùng xuống và chuyển sang tâm thế tích cực.',
+   vi:'Mạch văn: bế tắc trong công việc → say mê điều mình thích → <b>thoát khỏi tâm trạng nặng nề (沈んだ気持ちから解放され)</b> → chuyển sang hướng tích cực. Câu sau cũng nói "後ろ向きだった気持ちがリセットされる".<ul><li>Các đáp án khác (làm chìm tâm trạng phấn chấn, đánh mất sự bình tĩnh, nhớ lại tâm trạng buồn) đều đi ngược hướng "chuyển sang tích cực".</li></ul>'},
+  {n:2, stem:'立場も年齢も異なる相手とのたわいもないおしゃべりがなかなか【2】。',
+   choices:['いいというのだ','いいほどだ','いいためだ','いいことになる'], a:0,
+   full:'立場も年齢も異なる相手とのたわいもないおしゃべりがなかなか<mark>いいというのだ</mark>。',
+   tr:'(Người đó cho rằng) những câu chuyện phiếm vu vơ với người khác vị trí, khác tuổi thì khá là thú vị.',
+   vi:'Đoạn này kể ý kiến của từng người ("ある人は… / またある人は…考える"), nên kết bằng <b>〜というのだ</b> = "(người ấy) cho rằng/nói rằng…" để truyền đạt lại ý kiến đó: なかなかいいというのだ.<ul><li>いいほどだ: "đến mức tốt", không tự nhiên.</li><li>いいためだ / いいことになる: sai lô-gic, không phải cách kết thúc phù hợp.</li></ul>'},
+  {n:3, stem:'【3‑a】、気軽に始められそうなウォーキングでさえ、意気込んで高いシューズを買ったものの、数回履いただけでその後はたんすの肥やしになる、というのは【3‑b】。',
+   choices:['a その結果／b あるわけでもない話だ','a といっても／b あることは間違いない話だ','a たしかに／b あるものでもない話だ','a 一見／b ありがちな話だ'], a:3, fixed:true,
+   full:'<mark>一見</mark>、気軽に始められそうなウォーキングでさえ、…たんすの肥やしになる、というのは<mark>ありがちな話だ</mark>。',
+   tr:'Thoạt nhìn, ngay cả môn đi bộ tưởng chừng dễ bắt đầu, nhiều người hăm hở mua đôi giày đắt tiền nhưng mới đi vài lần rồi cất vào tủ luôn, chuyện này thật thường gặp.',
+   vi:'<b>a: 一見</b> = "thoạt nhìn" (đi bộ trông có vẻ dễ, ít tốn kém), và <b>b: ありがちな話だ</b> = "chuyện thường hay gặp". Cả câu: bề ngoài có vẻ không tốn kém nhưng mua đồ đắt rồi bỏ xó là chuyện hay xảy ra.<ul><li>その結果 / あるわけでもない: "kết quả là" không có quan hệ nhân quả với câu trước; "chuyện không hề có" phủ định ngược nội dung.</li><li>といっても / あることは間違いない: "tuy nói vậy" không hợp mạch.</li><li>たしかに / あるものでもない: "đúng là" rồi lại "không có chuyện đó", mâu thuẫn.</li></ul>'},
+  {n:4, stem:'テレビでマラソン観戦をして、いざ自分も挑戦しようと思った場合、最初から長い距離に【4】。',
+   choices:['チャレンジこそすべきだ','チャレンジするだけのことだ','チャレンジしてほしいのだ','チャレンジすることはない'], a:3,
+   full:'…いざ自分も挑戦しようと思った場合、最初から長い距離に<mark>チャレンジすることはない</mark>。',
+   tr:'Xem marathon trên tivi rồi muốn tự mình thử thì cũng không cần thử thách ngay quãng đường dài từ đầu.',
+   vi:'Đoạn này khuyên <b>đừng đòi hỏi hoàn hảo ngay từ đầu</b>; đi quãng dài ngay có nguy cơ chuột rút, mất nước → <b>チャレンジすることはない</b> ("không cần phải thử thách"). <b>〜ことはない</b> = "không cần/không việc gì phải…".<ul><li>Ba đáp án còn lại khuyến khích thử thách ngay, ngược hẳn với ý tác giả.</li></ul>'},
+  {n:5, stem:'ともあれ、趣味になり得るかどうかは、それを心地よい気持ちでやっているかどうかによるのであり、無理に趣味を持とうと【5】のはいうまでもない。',
+   choices:['意気込む必要がある','意識しない必要などない','意識する必要がある','意気込む必要などない'], a:3,
+   full:'…無理に趣味を持とうと<mark>意気込む必要などない</mark>のはいうまでもない。',
+   tr:'Việc không cần phải gồng mình hăm hở để cố có một sở thích là điều không cần nói.',
+   vi:'Câu trước: có thành sở thích hay không là do <b>làm với tâm trạng dễ chịu hay không</b> → vì vậy <b>無理に趣味を持とうと意気込む必要などない</b> = không cần gồng mình hăm hở để có sở thích. <b>〜必要などない</b> = "chẳng cần thiết phải…".<ul><li>意気込む必要がある / 意識する必要がある: ngược với ý "đừng ép bản thân".</li><li>意識しない必要などない: lặp phủ định, nghĩa ngược ("không có chuyện không cần ý thức").</li></ul>'}
   ]},
-{ key:"q10", label:"問題10 ｜ 内容理解（短文）", instruction:"次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。", type:"comp",
-  items:[
-    {n:55,
-      passage:"①　論理的に書かれている文章を読むときには、書かれた文章を自分が理解できたかどうかということにとどまらず、書かれている主張や根拠（注1）が本当に妥当だろうか、論理的に筋が通っている（注2）だろうか、別の考え方はないだろうかと考えて読むことが、とても大切です。こうして読むことによって、書かれている内容についての理解を深め、見方を広げることができます。これは批判的読みと呼ばれるものです。\n\n（秋田喜代美『読む心・書く心―文章の心理学入門』による）\n\n（注1）根拠：ある考えのもとになるもの\n（注2）筋が通っている：矛盾がない",
-      stem:"「こうして読む」とは、どのように読むことか。",
-      options:["理解が妥当かどうか確認しながら読むこと","理解を深めたり、見方を広げるように読むこと","内容の論理性や妥当性などを考えながら読むこと","別の主張や意見が述べられていないか探しながら読むこと"], a:2,
-      e:"「こうして読む」chỉ chung việc đọc trong khi suy nghĩ xem chủ trương và căn cứ có thỏa đáng không, có logic mạch lạc không. Đáp án 2 chỉ là “kết quả/hiệu quả” của cách đọc đó, chứ không phải mô tả bản thân cách đọc."},
-    {n:56,
-      passage:"②　以下は、ある庭園の案内である。\n\n多田庭園\n\n　多田庭園は、地元有力者多田家の別荘の庭を保存したもので、一般に公開されています。庭の一角には1800年代初めまで使用されていた伝統的な建物も残されています。\n\n　庭の中心には池があり、滝が約3メートルの高さから流れ落ちています。夏は滝の音が涼しげで、暑さを忘れさせてくれます。秋の夜にはライトアップが行われ、紅葉と滝が光の中に浮かんで見えて見事です。そのため、この時期には多くの観光客が訪れます。",
-      stem:"この案内から、多田庭園についてどんなことがわかるか。",
-      options:["秋の夜には紅葉と滝が美しく見える","年を通して多くの観光客が訪れる","庭園は建物を中心として造られている","1800年代初めに多田家によって造られた"], a:0,
-      e:"Bài đọc ghi rõ: “vào đêm mùa thu có chiếu sáng (light-up), lá đỏ và thác nước hiện lên trong ánh sáng rất đẹp”. Khách du lịch đông chỉ vào thời điểm này (không phải quanh năm). Công trình chỉ còn lại ở một góc vườn chứ không phải trung tâm, và bài cũng không nói rõ thời điểm xây dựng."},
-    {n:57,
-      passage:"③　私がやっている企業研究の現場で、学歴で差が出る瞬間に出くわす（注１）ことがある。それは、能力の差ではない。どの時点で「あっ、オレにはできない」とあきらめるかの差だ。\n\n　高学歴の者がえてして優秀な成績を収める（注２）のは、その人の能力が高いと言うよりも、その成長過程の中で「やればできる」「私には分からないはずはない」という自信が身についているからだ。この自信は、過去の成功体験に裏打ちされている（注3）。\n\n（注１）出くわす：ここでは、出会う\n（注２）えてして〜収める：ここでは、収める傾向がある\n（注３）裏打ちされている：裏付けられている",
-      stem:"企業研究の経験から、筆者は、なぜ高学歴の成績が優秀だと考えているか。",
-      options:["成功したことについては、自信があり、簡単にはあきらめないから","成功によって裏づけられた能力を身につけているから","成功するにはどのような能力が必要かを知っているから","成功体験によって自信がつき、失敗しなくなっているから"], a:0,
-      e:"Tác giả cho rằng đó không phải là sự khác biệt về năng lực, mà là khác biệt ở “thời điểm buông xuôi”. Nhờ có sự tự tin được củng cố bởi những trải nghiệm thành công trong quá khứ nên họ không dễ dàng bỏ cuộc — đó chính là lý do khiến người học lực cao thường đạt thành tích tốt hơn."},
-  ]},
-{ key:"q11", label:"問題11 ｜ 内容理解（中文）", instruction:"次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。", type:"comp",
-  items:[
-    {n:58,
-      passage:PASSAGE_58_60,
-      stem:"①会話の技術は、運転技術とよく似ていますとあるが、この文章ではどんなところが似ていると述べているか。",
-      options:["車の運転で事故を起こさない人は会話も同じように慎重に進められるところ","会話も車の運転のように他者とペースを合わせることが求められるところ","会話も車の運転も技術が高ければ仲間と楽しい時間を過ごせるところ","運転で他の車に注意が払える人は会話でも他者に敬意が払えるところ"], a:1,
-      e:"Bài viết cho rằng hội thoại giống với việc lái xe ở điểm: cả hai đều đòi hỏi phải điều chỉnh tốc độ (nhịp độ) cho phù hợp với người khác."},
-    {n:59,
-      passage:PASSAGE_58_60,
-      stem:"②うなずきながらエンジンを温めとあるが、ここではどういうことか。",
-      options:["静かに自分の話をしながら次の話題に移るのを待つこと","まずは人の話を聞きながら会話に加わる準備をすること","自分の話を聞いてもらいながらグループの話も聞くこと","人の話に軽く返事をしながら車のエンジンを温めること"], a:1,
-      e:"Đây là cách diễn đạt ngay sau câu “khi tham gia vào nhóm, trước tiên hãy im lặng lắng nghe”, chỉ việc vừa nghe người khác nói vừa chuẩn bị tham gia vào cuộc trò chuyện."},
-    {n:60,
-      passage:PASSAGE_58_60,
-      stem:"みんなで会話をしているときには、どのような注意が必要だと述べているか。",
-      options:["おとなしい人も、大勢で話すときは意識して他の人に話しかけるようにすること","ふだん発言しない人も、みんなの話を聞いて会話に参加するようにすること","発言が少ない人やおとなしい人の話をよく聞き、それに答えるようにすること","自分の発言量を意識しながら、おとなしい人にも話してもらえるようにすること"], a:3,
-      e:"Bài viết nói cần luôn ý thức được bản thân đã nói bao nhiêu, đồng thời cũng cần chủ động nhường lời (tạo cơ hội phát biểu) cho cả những người ít nói."},
-    {n:61,
-      passage:PASSAGE_61_63,
-      stem:"「速く走る技術」はなぜ①身につけることが難しいのか。",
-      options:["走るための神経の仕組みは他の動作とは違う特殊なものだから","走るための神経の仕組みはすでにできていて変えにくいから","走るフォームを指導する方法があまり改善されていないから","走るフォームは一度固定されると変えられないから"], a:1,
-      e:"Động tác càng quen thuộc thì cơ chế điều khiển thần kinh cho động tác đó càng được hình thành chắc chắn, nên việc tổ chức lại mạch thần kinh đó không hề đơn giản."},
-    {n:62,
-      passage:PASSAGE_61_63,
-      stem:"②この場合とはどんな場合か。",
-      options:["コーチの指導が理解できない場合","走り方の改善に集中できない場合","練習の効果がうまく現れない場合","練習に十分な時間が取れない場合"], a:2,
-      e:"「この場合」(trường hợp này) chỉ nội dung ngay trước đó: dù việc chỉnh sửa động tác cần nhiều thời gian và lặp lại nhiều lần, hiệu quả luyện tập vẫn thường không rõ rệt."},
-    {n:63,
-      passage:PASSAGE_61_63,
-      stem:"筆者によると、「速く走る技術」を身につけるにはどうすればよいか。",
-      options:["コーチの指導を受けながら走り方の修正に全神経を集中させて走る","頭で考えるよりも、何度も練習を重ねて体で覚えるようにする","神経の仕組みに直接刺激を与えるためにいろいろな走り方を試す","速く走る動きを頭に描いてその感覚を体で感じるようにする"], a:3,
-      e:"Bài viết nêu rằng việc “hình dung động tác trong đầu rồi cảm nhận nó bằng cơ thể” có hiệu quả trong việc cải thiện mạch thần kinh — tức là hình dung động tác chạy nhanh trong đầu và cảm nhận cảm giác đó bằng cơ thể."},
-  ]},
-{ key:"q13", label:"問題13 ｜ 主張理解（長文）", instruction:"次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。", type:"comp",
-  items:[
-    {n:64,
-      passage:PASSAGE_64_66,
-      stem:"ここでの重要なものとは何か。",
-      options:["強いあこがれ","シンプルさ","思い込み","悩み"], a:3,
-      e:"Theo mạch văn ngay trước câu “vứt bỏ những thứ quan trọng mà vẫn thấy bình thường”, “thứ quan trọng” bị vứt bỏ ở đây chính là「悩み」(sự trăn trở, khó khăn)."},
-    {n:65,
-      passage:PASSAGE_64_66,
-      stem:"筆者は、日本文化をどのようなものだと考えているか。",
-      options:["洗練されていないが深い味があるもの","要素が少なくシンプルなもの","単純であるが飽きが来ないもの","単純に見えて実は複雑なもの"], a:3,
-      e:"Tác giả cho rằng văn hóa Nhật Bản là sự đan xen phức tạp của nhiều yếu tố đối lập, được mài giũa qua lịch sử nên “chỉ nhìn có vẻ đơn giản” — tức là nhìn thì đơn giản nhưng thực chất rất phức tạp."},
-    {n:66,
-      passage:PASSAGE_64_66,
-      stem:"ものづくりについて、筆者はどのようなことが必要だと言いたいのか。",
-      options:["迷いながらも複雑に絡みあった要素をうまく切り捨てていくこと","深く考えながら対立する要素をうまく合わせていくこと","あまり悩まずにシンプルさを求めていくこと","できるだけ作り方を複雑にしていくこと"], a:1,
-      e:"Tác giả cho rằng thay vì né tránh và cắt bỏ những trăn trở, việc làm sản phẩm tốt cần khéo léo kết hợp các yếu tố đối lập — tức là vừa suy nghĩ sâu sắc vừa dung hòa những yếu tố trái ngược nhau."},
-  ]},
+
+ /* ---------- 問題4 ---------- */
+ {id:'b3s4', jp:'問題4', name:'Đọc hiểu (đoạn A–D)', type:'mc', reading:true,
+  hint:'Đọc bốn đoạn A–D rồi trả lời các câu hỏi bên dưới (có ba chỗ trống 【A】【B】【C】 trong bài).',
+  hintJp:'次の文章を読んで、後の問いに対する答えとして最もよいものを、1・2・3・4から一つ選びなさい。',
+  passage:[
+   `<span class="plab">A</span>インターネットが繋がらない部屋で${R('待機','たいき')}している人々の様子を見たことがある。全員が部屋に通される{{1|（Ａ）}}イラつき始めたが、間もなく${R('隣人','りんじん')}に話しかける人が出始めて会話が${R('弾','はず')}むようになった。インターネットが通じていたら彼らはデジタル機器に触れていて、そこにいる誰とも関係を持たなかっただろうに、切断されたおかげで新しい関係が生まれた。インターネットは人と人を結びつけるものであるが反対の状況を作る恐れもある。最近レストランにいる人を見る{{2|（Ｂ）}}見ていて、一緒にいるのにお互いに会話もせずおのおの違う画面に夢中になっていることに気がつき不安にかられた。`,
+   `<span class="plab">B</span>ネット${R('依存','いぞん')}が深刻だそうだ。日本に${R('依存症','いぞんしょう')}とされる人が270万人もいるという話も、10~30代の30%以上が依存症だという話もある。依存症とは自分の意志でインターネットや携帯を止めることができず、ネットなしには一時もいられない状態になることだ。接続時間が長時間になると日常の生活にも${R('支障','ししょう')}が出る。自分が何をしているのかも分からなくなり、最悪の場合は${R('幻聴','げんちょう')}や${R('幻覚','げんかく')}に悩まされることさえあるそうだ。`,
+   `<span class="plab">C</span>ITは便利な技術で生活の向上に役立ち、それを使って時間が短縮できるはずなのに、依存症の人にとっては反対に時間を奪う物に変わっている${R('始末','しまつ')}だ。便利なはずが絶えず誰かと繋がっていないと不安にかられ疲れが溜まる。それを断つために重症者は一瞬{{3|（Ｃ）}}機器に触れさせないように${R('隔離','かくり')}入院させられることもある。IT機器は手段に過ぎず適切に使うことで生活を快適にできるものを、機器に${R('振','ふ')}り${R('回','まわ')}されるとは${R('本末転倒','ほんまつてんとう')}である。`,
+   `<span class="plab">D</span><u>①こんな状況下</u>ではITに不安を感じる人が出現するのは自然である。そこで「IT${R('断食','だんじき')}」つまりパソコンやスマートフォンなどのデジタル機器からの一時的隔離の必要性を主張する人が出てきた。あるIT企業はIT企業とはいえこれを始めた。この会社の場合は全面的に禁止しているのではないが、よく使われる念のために送るCCメールや、社内向け資料作成時のパワーポイントの使用を禁止した。又、会議でパソコンは使用禁止だそうだ。その結果、社員が相手の意見をしっかり聞くようになり仕事の質が高まったと言う。あるホテルはこれをビジネスに結びつけようとばかりに、脱デジタル滞在プランを売り出した。客は2泊3日インターネットを${R('遮断','しゃだん')}して実際に体を使って様々なことをこなしていく。値段は高いがリフレッシュできると希望者が絶えないそうだ。過度の情報社会に疲れた人が<u>②脱デジタルを楽しむ時代</u>が来ているようだ。`
+  ],
+  passageLabels:['A','B','C','D'],
+  passageVi:[
+   'Tôi từng thấy cảnh những người đang chờ trong một căn phòng không có kết nối internet. Vừa được đưa vào phòng, tất cả đều bắt đầu bực bội, nhưng chẳng bao lâu sau, bắt đầu có người bắt chuyện với người bên cạnh và câu chuyện trở nên rôm rả. Nếu có internet thì họ đã mải mê với thiết bị số và không có quan hệ gì với bất kỳ ai ở đó; nhờ bị ngắt kết nối mà những mối quan hệ mới đã nảy sinh. Internet là thứ kết nối con người với nhau, nhưng cũng có nguy cơ tạo ra tình huống ngược lại. Gần đây, khi tôi vô thức nhìn những người trong nhà hàng, tôi nhận ra dù ở cùng nhau mà họ chẳng trò chuyện gì, mỗi người mải mê một màn hình khác nhau, và tôi cảm thấy bất an.',
+   'Nghe nói tình trạng nghiện mạng đang nghiêm trọng. Có chuyện rằng ở Nhật có tới 2,7 triệu người được coi là nghiện, cũng có chuyện rằng hơn 30% người ở độ tuổi 10–30 bị nghiện. Nghiện là tình trạng không thể tự ý chí dừng việc dùng internet hay điện thoại, không thể sống thiếu mạng dù chỉ một lúc. Nếu thời gian kết nối kéo dài thì sinh hoạt hằng ngày cũng bị ảnh hưởng. Đến mức không biết mình đang làm gì, và trong trường hợp xấu nhất, nghe nói thậm chí còn bị ảo thanh, ảo giác hành hạ.',
+   'IT là công nghệ tiện lợi, giúp nâng cao đời sống, lẽ ra dùng nó thì rút ngắn được thời gian, vậy mà với người nghiện, nó lại biến thành thứ cướp mất thời gian. Lẽ ra phải tiện lợi nhưng lại bất an nếu không liên tục kết nối với ai đó, và mệt mỏi chồng chất. Để cắt đứt điều đó, người bệnh nặng có khi bị cho nhập viện cách ly để không được chạm vào thiết bị dù chỉ một khoảnh khắc. Thiết bị IT chỉ là phương tiện, nếu dùng đúng cách thì có thể làm cuộc sống dễ chịu hơn, vậy mà lại bị thiết bị xoay như chong chóng thì đúng là đảo lộn gốc ngọn (本末転倒).',
+   'Trong tình trạng này (①), việc xuất hiện những người cảm thấy bất an với IT là điều tự nhiên. Vì thế, có người chủ trương sự cần thiết của "nhịn IT" (IT断食), tức là tạm thời cách ly khỏi các thiết bị số như máy tính, điện thoại thông minh. Có một công ty IT, dù là công ty IT, vẫn bắt đầu làm việc này. Công ty này không cấm hoàn toàn, nhưng cấm dùng CC email hay gửi để "cho chắc", cấm dùng PowerPoint khi làm tài liệu nội bộ. Nghe nói trong họp cũng cấm dùng máy tính. Kết quả là nhân viên chịu khó lắng nghe ý kiến người khác và chất lượng công việc tăng lên. Có một khách sạn còn gắn điều này với kinh doanh, tung ra gói lưu trú "thoát số". Khách ngắt internet 2 đêm 3 ngày, dùng cơ thể thực hiện nhiều việc thực tế. Giá cao nhưng nghe nói người muốn tham gia không dứt vì có thể làm mới bản thân. Có vẻ như thời đại mà những người mệt mỏi với xã hội thông tin quá mức vui hưởng việc "thoát số" (②) đang đến.'
+  ],
+  qs:[
+  {n:1, text:'（Ａ）の中に最もよいものを入れなさい。',
+   choices:['ときたら','が最後','やいなや','や早いが'], a:2,
+   full:'全員が部屋に通される<mark>やいなや</mark>イラつき始めたが、間もなく隣人に話しかける人が出始めて会話が弾むようになった。',
+   tr:'Vừa được đưa vào phòng, tất cả đã bắt đầu bực bội, nhưng chẳng bao lâu sau bắt đầu có người bắt chuyện với người bên cạnh và câu chuyện trở nên rôm rả.',
+   vi:'<b>〜やいなや</b> = "vừa… là ngay lập tức…". 全員が部屋に通されるやいなや、イラつき始めた = vừa được đưa vào phòng là bắt đầu bực bội.<ul><li>ときたら: "nói đến… thì" (phàn nàn).</li><li>が最後: "một khi đã… thì (chắc chắn kết quả xấu)", đi với thể た (通されたが最後).</li><li>や早いが: không có mẫu này (đúng là や否や hoặc が早いか).</li></ul>'},
+  {n:2, text:'（Ｂ）の中に最もよいものを入れなさい。',
+   choices:['とあれば','ともなく','ともすれば','ともあれば'], a:1,
+   full:'最近レストランにいる人を見る<mark>ともなく</mark>見ていて、一緒にいるのにお互いに会話もせずおのおの違う画面に夢中になっていることに気がつき不安にかられた。',
+   tr:'Gần đây, khi tôi vô thức nhìn những người trong nhà hàng, tôi nhận ra dù ở cùng nhau mà họ chẳng trò chuyện, mỗi người mải mê một màn hình khác nhau, và tôi thấy bất an.',
+   vi:'<b>〜ともなく</b> (V thể từ điển + ともなく + V) = "vô thức, không có chủ ý (làm gì)": 見るともなく見ていて = "nhìn mà không hẳn chủ ý nhìn", tình cờ để mắt tới.<ul><li>とあれば: "nếu là… / nếu cần thì…".</li><li>ともすれば: "dễ có xu hướng…" (ともすれば〜がちだ).</li><li>ともあれば: không phải cách nói phù hợp.</li></ul>'},
+  {n:3, text:'（Ｃ）の中に最もよいものを入れなさい。',
+   choices:['のだに','ならば','だったら','たりとも'], a:3,
+   full:'それを断つために重症者は一瞬<mark>たりとも</mark>機器に触れさせないように隔離入院させられることもある。',
+   tr:'Để cắt đứt điều đó, người bệnh nặng có khi bị cho nhập viện cách ly để không được chạm vào thiết bị dù chỉ một khoảnh khắc.',
+   vi:'<b>〜たりとも〜ない</b> = "dù chỉ… (một khoảnh khắc/một đồng) cũng không…" (nhấn mạnh đơn vị nhỏ nhất, đi với 一 + đơn vị). 一瞬たりとも機器に触れさせない = không cho chạm vào thiết bị dù chỉ một khoảnh khắc.<ul><li>のだに: dạng cổ, không dùng ở đây.</li><li>ならば / だったら: "nếu là…", không hợp nghĩa.</li></ul>'},
+  {n:4, text:'<u>①こんな状況下</u>とはどんな状況か。当てはまらないのはどれか。',
+   choices:['ネットなしではいられない状況','幻聴や幻覚が出てくるような状況','便利なのでよく利用する状況','ITに振り回される状況'], a:2,
+   vi:'Câu hỏi yêu cầu chọn đáp án <b>KHÔNG</b> phù hợp. "Tình trạng này" chỉ nội dung ở đoạn B và C: không thể sống thiếu mạng, xuất hiện ảo thanh ảo giác, bị IT xoay như chong chóng.<br>Còn <b>"vì tiện nên hay dùng"</b> chỉ là cách dùng bình thường, không phải tình trạng đáng lo nên đây là đáp án đúng của câu hỏi.'},
+  {n:5, text:'<u>②脱デジタルを楽しむ時代</u>とはどんな時代になることか。',
+   choices:['ネット依存を脱デジタルで治療する時代','情報社会に疲れた人が増加する時代','脱デジタル生活がビジネスになる時代','実際の体験をしたい人が増えていく時代'], a:3,
+   vi:'Đoạn D: khách sạn tổ chức gói lưu trú "thoát số" 2 đêm 3 ngày, ngắt internet và <b>dùng cơ thể thực hiện nhiều việc thực tế</b>; người muốn tham gia không dứt. Vì vậy "thời đại vui hưởng thoát số" là thời đại có ngày càng nhiều người muốn có <b>trải nghiệm thực tế</b>.<ul><li>Đáp án 1: bài không nói đến việc "chữa trị".</li><li>Đáp án 2: người mệt mỏi vì xã hội thông tin là bối cảnh, chưa phải nội dung của "thời đại ②".</li><li>Đáp án 3: gói của khách sạn chỉ là một ví dụ, không phải đặc trưng của cả thời đại.</li></ul>'},
+  {n:6, text:'Ａ～Ｄのそれぞれの段落の概要で正しいのはどれか。',
+   choices:['A:インターネットは人と人を引き離してしまうものだ。','B:インターネット利用者の30%が依存症になっている。','C:手段に過ぎないインターネットに混乱させられている。','D:全てのインターネット利用者にIT断食が必要である。'], a:2,
+   vi:'Đoạn C nói IT chỉ là phương tiện mà lại bị nó xoay như chong chóng (本末転倒) → <b>C: bị Internet, vốn chỉ là phương tiện, làm cho rối loạn</b>.<ul><li>A: bài nói Internet vừa kết nối con người vừa có thể tạo tình huống ngược lại, không khẳng định "chỉ chia rẽ".</li><li>B: chỉ là "có chuyện rằng" hơn 30% ở lứa tuổi 10–30, không phải 30% mọi người dùng.</li><li>D: chỉ có người chủ trương cần "nhịn IT", không phải mọi người dùng đều cần.</li></ul>'},
+  {n:7, text:'作者のインターネットに対する考えはどれか。',
+   choices:['ネットは上手に使って生活の役に立てるのがよい。','ネット依存症を根本的に治す方法はないに違いない。','ITを完全に遮断したほうがビジネスはうまくいく。','ITの使用を止めて実際に会って話すことが大切だ。'], a:0,
+   vi:'Tác giả viết "IT機器は手段に過ぎず適切に使うことで生活を快適にできる" → <b>nên dùng khéo để phục vụ cuộc sống</b>.<ul><li>Đáp án 2: bài không khẳng định là không có cách chữa.</li><li>Đáp án 3: công ty chỉ hạn chế một phần, không "ngắt hoàn toàn".</li><li>Đáp án 4: tác giả không chủ trương ngừng dùng hẳn.</li></ul>'}
+  ]}
+ ]
+}
 ];
 
-/* Flatten all questions in order, keep section ref */
-const ALL = [];
-SECTIONS.forEach(sec=>{
-  sec.items.forEach((it,idx)=>{
-    ALL.push({...it, sectionKey:sec.key, sectionLabel:sec.label, instruction:sec.instruction,
-      type:sec.type||"plain", sharedPassage:sec.passage||null, isFirstInSection: idx===0});
+/* ================= TRẠNG THÁI ================= */
+const S={view:'home', examId:null, secIdx:0, answers:{}, picks:{}, perm:{}, msg:{}, shuffle:false, active:null, showTr:false};
+const app=document.getElementById('app');
+const exam=()=>EXAMS.find(e=>e.id===S.examId);
+const keyOf=(sec,q)=>sec.id+'-'+q.n;
+const isActive=k=>!S.active||S.active.has(k);
+const secQs=sec=>sec.qs.filter(q=>isActive(keyOf(sec,q)));
+const secList=()=>exam().sections.filter(sec=>secQs(sec).length);
+const isDone=(sec,q)=>{const k=keyOf(sec,q); return sec.type==='order'?(S.picks[k]||[]).length===4:S.answers[k]!==undefined};
+const isOk=(sec,q)=>{const k=keyOf(sec,q); return sec.type==='order'?(S.picks[k]||[]).join()===q.order.join():S.answers[k]===q.a};
+const allActive=()=>{const out=[]; secList().forEach(sec=>secQs(sec).forEach(q=>out.push({sec,q,k:keyOf(sec,q)}))); return out};
+const LET=['A','B','C','D'];
+const GOOD=['Chính xác! Giỏi quá!','Tuyệt vời, đúng rồi!','Meo! Làm tốt lắm!','Đúng rồi, cứ thế phát huy nhé!'];
+const BAD=['Tiếc quá, cùng xem lại nhé.','Không sao, sai để nhớ lâu hơn!','Gần được rồi, xem giải thích nhé.','Meo… lần sau sẽ đúng thôi!'];
+const rnd=a=>a[Math.floor(Math.random()*a.length)];
+
+function shuffled(n){const a=[...Array(n).keys()]; for(let i=n-1;i>0;i--){const j=Math.floor(Math.random()*(i+1)); [a[i],a[j]]=[a[j],a[i]]} return a}
+function makePerm(){
+  S.perm={};
+  exam().sections.forEach(sec=>{ if(sec.type!=='mc') return;
+    sec.qs.forEach(q=>{ const k=keyOf(sec,q); if(!isActive(k)) return;
+      S.perm[k]=(S.shuffle&&!q.fixed)?shuffled(q.choices.length):[...q.choices.keys()];
+    });
   });
+}
+
+/* ================= MASCOT ================= */
+function cat(mood='normal',size=64){
+  const eyes = mood==='happy'
+    ? `<path class="ln" d="M33 54 q7 -9 14 0"/><path class="ln" d="M73 54 q7 -9 14 0"/>`
+    : mood==='sad'
+    ? `<ellipse class="dot" cx="40" cy="57" rx="4" ry="5"/><ellipse class="dot" cx="80" cy="57" rx="4" ry="5"/><path class="ln thin" d="M32 46 l12 3 M88 46 l-12 3"/><path class="tear" d="M84 63 q4 6 0 9 q-4 -3 0 -9z"/>`
+    : `<circle class="dot" cx="40" cy="55" r="4.5"/><circle class="dot" cx="80" cy="55" r="4.5"/>`;
+  const mouth = mood==='happy'
+    ? `<path class="mouth" d="M51 67 q9 12 18 0z"/>`
+    : mood==='sad'
+    ? `<path class="ln" d="M60 67 v2 M60 69 q-4 -4 -8 -1 M60 69 q4 -4 8 -1"/>`
+    : `<path class="ln" d="M60 66 v2 M60 68 q-4 4 -8 1 M60 68 q4 4 8 1"/>`;
+  return `<svg class="cat" width="${size}" height="${Math.round(size*.84)}" viewBox="0 0 120 100" role="img" aria-label="Mèo Neko">
+    <path class="fur" d="M20 40 L22 8 L50 26 Z"/><path class="fur" d="M100 40 L98 8 L70 26 Z"/>
+    <path class="ear" d="M27 32 L27 17 L42 26 Z"/><path class="ear" d="M93 32 L93 17 L78 26 Z"/>
+    <ellipse class="fur" cx="60" cy="60" rx="44" ry="36"/>
+    <ellipse class="cheek" cx="28" cy="68" rx="7" ry="4.5"/><ellipse class="cheek" cx="92" cy="68" rx="7" ry="4.5"/>
+    ${eyes}
+    <path class="nose" d="M56 61 h8 l-4 4.5z"/>${mouth}
+    <path class="ln thin" d="M12 58 h14 M13 67 l13 -3 M108 58 h-14 M107 67 l-13 -3"/>
+    <path class="bow" d="M34 20 l-10 -6 v12 z M34 20 l10 -6 v12 z"/><circle class="bow" cx="34" cy="20" r="3.2"/>
+  </svg>`;
+}
+
+/* ================= HOME ================= */
+function renderHome(){
+  S.view='home';
+  app.innerHTML=`
+  <div class="topbar"><div class="brand">${cat('normal',44)}<div>Neko Ôn Tập<small>Ôn tiếng Nhật cùng mèo Neko</small></div></div></div>
+  <section class="card hero">
+    ${cat('happy',130)}
+    <div><h1>Chào bạn! Hôm nay mình ôn gì nào?</h1>
+    <p>Chọn một bộ đề, làm từng câu và xem giải thích tiếng Việt ngay sau mỗi câu trả lời. Neko sẽ cổ vũ bạn suốt chặng đường!</p></div>
+  </section>
+  <label class="shuffle"><input type="checkbox" id="shuf" ${S.shuffle?'checked':''}><span>Xáo trộn thứ tự đáp án<span>Bật để đáp án đổi vị trí mỗi lần làm, tránh học vẹt theo vị trí.</span></span></label>
+  <div class="exams">
+    ${EXAMS.map(e=>`
+    <article class="card exam">
+      <span class="tag">${e.tag}</span>
+      <h2 class="jp">${e.title}</h2>
+      <ul>${e.sections.map(s=>`<li><b>${s.jp}</b><span>${s.name} · ${s.qs.length} câu</span></li>`).join('')}</ul>
+      <div class="chip">Tổng ${e.sections.reduce((a,s)=>a+s.qs.length,0)} câu</div>
+      <button class="btn" data-act="open" data-id="${e.id}">Bắt đầu làm bài</button>
+    </article>`).join('')}
+    <article class="card exam soon">${cat('normal',70)}<h2>Bộ đề tiếp theo</h2><p>Sắp có, Neko đang chuẩn bị!</p></article>
+  </div>`;
+  window.scrollTo(0,0);
+}
+
+/* ================= QUIZ ================= */
+function startExam(id){
+  S.examId=id; S.active=null; S.answers={}; S.picks={}; S.msg={}; S.secIdx=0; S.showTr=false;
+  makePerm(); renderQuiz();
+}
+function retryWrong(){
+  const wrong=allActive().filter(x=>!isOk(x.sec,x.q)).map(x=>x.k);
+  if(!wrong.length) return;
+  S.active=new Set(wrong);
+  wrong.forEach(k=>{delete S.answers[k]; delete S.picks[k]; delete S.msg[k]});
+  S.secIdx=0; S.showTr=false; makePerm(); renderQuiz();
+}
+
+function chromeHtml(){
+  const secs=secList(), all=allActive(), done=all.filter(x=>isDone(x.sec,x.q)).length, total=all.length;
+  const left=total-done;
+  return `
+  ${S.active?`<div class="banner">Đang làm lại ${total} câu bạn đã sai. Cố lên nhé!</div>`:''}
+  <div class="prog"><div class="bar"><i style="width:${Math.round(done/total*100)}%"></i></div><span class="txt">${done} / ${total} câu</span>
+    <button class="btn sm alt" data-act="results">Chấm điểm</button></div>
+  <div class="tabs" role="tablist">${secs.map((sec,i)=>{
+    const qs=secQs(sec), d=qs.filter(q=>isDone(sec,q)).length;
+    return `<button class="tab ${i===S.secIdx?'on':''} ${d===qs.length?'full':''}" role="tab" data-act="tab" data-i="${i}"><b>${sec.jp}</b><span>${sec.name} · ${d}/${qs.length}</span></button>`}).join('')}</div>`;
+}
+function navHtml(){
+  const secs=secList(), last=S.secIdx===secs.length-1, sec=secs[S.secIdx], qs=secQs(sec), d=qs.filter(q=>isDone(sec,q)).length;
+  return `<button class="btn alt" data-act="prev" ${S.secIdx===0?'disabled':''}>← Phần trước</button>
+    <span class="hint">${qs.length} câu · đã làm ${d}</span>
+    ${last?`<button class="btn mint" data-act="results">Xem kết quả →</button>`:`<button class="btn" data-act="next">Phần tiếp →</button>`}`;
+}
+function refreshChrome(){
+  document.getElementById('chrome').innerHTML=chromeHtml();
+  document.getElementById('nav').innerHTML=navHtml();
+  document.querySelectorAll('.pb[data-q]').forEach(el=>{
+    const sec=secList()[S.secIdx]; const q=sec&&sec.qs.find(x=>String(x.n)===el.dataset.q); if(!q) return;
+    el.classList.remove('ok','no'); if(isDone(sec,q)) el.classList.add(isOk(sec,q)?'ok':'no');
+  });
+}
+
+function passageHtml(sec){
+  const body=sec.passage.map(p=>`<p>${p.replace(/\{\{(\w+)(?:\|([^}]+))?\}\}/g,(m,id,custom)=>{
+    const n=parseInt(id,10), lab=custom||(id.length>1?`【${n}‑${id.slice(1)}】`:`【${n}】`);
+    const q=sec.qs.find(x=>x.n===n); let c='';
+    if(q&&isActive(keyOf(sec,q))&&isDone(sec,q)) c=isOk(sec,q)?' ok':' no';
+    return `<button class="pb${c}" data-act="jump" data-k="${keyOf(sec,q)}" data-q="${n}" title="Đến câu ${n}" style="font-family:var(--f-display)">${lab}</button>`;
+  })}</p>`).join('');
+  return `<div class="ptools"><button class="btn sm alt" data-act="tr">Xem bản dịch tiếng Việt</button></div><div class="passage">${body}</div>${sec.passageNote?`<p class="pnote">${sec.passageNote}</p>`:''}`;
+}
+
+const BLANK1=/（[\s　]*）/;
+const fullOf=q=>q.full||(BLANK1.test(q.text)?q.text.replace(BLANK,`<mark>${q.choices[q.a]}</mark>`):'');
+function mcHtml(sec,q){
+  const k=keyOf(sec,q), chosen=S.answers[k], done=chosen!==undefined;
+  const order=S.perm[k]||[...q.choices.keys()];
+  const long=q.choices.some(c=>plain(c).length>14);
+  const num=`<span class="qn">${q.n}</span>`;
+  const head = sec.usage
+    ? `<div class="q-head">${num}<div class="qtext"><span class="tgt">${q.text}</span></div></div>`
+    : (sec.reading&&q.stem)
+    ? `<div class="q-head">${num}<div class="qtext"><b>${q.label||('【'+q.n+'】')}</b> chọn đáp án phù hợp</div></div><div class="stem">${q.stem.replace(/【(\d)(‑[ab])?】/g,(m)=>`<span class="blank">${m}</span>`)}</div>`
+    : `<div class="q-head">${num}<div class="qtext">${q.text.replace(BLANK,'<span class="blank">（　　）</span>')}</div></div>`;
+  const ch=order.map((oi,pos)=>{
+    let cls='choice', mk='';
+    if(done){ if(oi===q.a){cls+=' right'; mk='<span class="mk">Đáp án</span>'} else if(oi===chosen){cls+=' wrong'; mk='<span class="mk">Bạn chọn</span>'} else cls+=' dim'; }
+    return `<button class="${cls}" data-act="pick" data-k="${k}" data-i="${oi}" ${done?'disabled':''}><span class="let">${LET[pos]}</span><span class="ct">${q.choices[oi]}</span>${mk}</button>`;
+  }).join('');
+  let ex='';
+  if(done){
+    const ok=chosen===q.a;
+    const full = fullOf(q);
+    ex=`<div class="explain ${ok?'ok':'no'}">
+      <div class="ex-top">${cat(ok?'happy':'sad',58)}<div class="bubble">${S.msg[k]}</div></div>
+      ${full?`<p><span class="lbl">Câu hoàn chỉnh</span><br><span class="jp">${full}</span></p>`:''}
+      ${q.tr?`<p><span class="lbl">Dịch nghĩa</span><br>${q.tr}</p>`:''}
+      <div><span class="lbl">Giải thích</span><br>${q.vi}</div></div>`;
+  }
+  return `<article class="q" id="q-${k}">${head}<div class="choices ${long?'long':''}">${ch}</div>${ex}</article>`;
+}
+
+function orderHtml(sec,q){
+  const k=keyOf(sec,q), picks=S.picks[k]||[], done=picks.length===4, ok=done&&isOk(sec,q);
+  const slots=[0,1,2,3].map(i=>{
+    const f=picks[i]; let cls='slot'+(i===2?' star':'');
+    if(f){ cls+=' filled'; if(done) cls+= (f===q.order[i])?' ok':' no'; }
+    else cls+=' empty';
+    const inner=f?q.f[f]:(i===2?'★':'…');
+    return done||!f ? `<span class="${cls}">${inner}</span>` : `<button class="${cls}" data-act="unslot" data-k="${k}" data-i="${i}" title="Chạm để bỏ mảnh này">${inner}</button>`;
+  }).join('');
+  const frags=Object.keys(q.f).map(f=>`<button class="frag" data-act="frag" data-k="${k}" data-f="${f}" ${(picks.includes(f)||done)?'disabled':''}><span class="let">${LET['abcd'.indexOf(f)]}</span>${q.f[f]}</button>`).join('');
+  let ex='';
+  if(done){
+    const star=q.f[q.order[2]];
+    const sent=q.pre+q.order.map((f,i)=>i===2?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
+    ex=`<div class="explain ${ok?'ok':'no'}">
+      <div class="ex-top">${cat(ok?'happy':'sad',58)}<div class="bubble">${S.msg[k]}</div></div>
+      <p class="ex-star"><span class="lbl" style="margin:0">Đáp án ô ★</span><b>${star}</b></p>
+      <p><span class="lbl">Câu hoàn chỉnh</span><br><span class="jp">${q.ctx?q.ctx+'<br>':''}${sent}</span></p>
+      <p><span class="lbl">Dịch nghĩa</span><br>${q.tr}</p>
+      <div><span class="lbl">Giải thích</span><br>${q.vi}</div></div>`;
+  }
+  return `<article class="q" id="q-${k}">
+    <div class="q-head"><span class="qn">${q.n}</span><div class="qtext">${q.ctx?`<span class="ctx">${q.ctx}</span>`:''}</div></div>
+    <div class="order-line">${q.pre}${slots}${q.post}</div>
+    <div class="frags">${frags}</div>
+    ${done?'':`<div class="order-tools"><button class="link" data-act="reset" data-k="${k}" ${picks.length?'':'disabled'}>Xếp lại từ đầu</button></div>`}
+    ${ex}</article>`;
+}
+
+function secHtml(sec){
+  const qs=secQs(sec);
+  return `<section class="card sec">
+    <div class="sec-head"><h2><span class="jp">${sec.jp}</span>${sec.name}</h2><p>${sec.hint}<span class="jp">${sec.hintJp}</span></p></div>
+    ${sec.reading?passageHtml(sec):''}
+    <div id="qs">${qs.map(q=>sec.type==='order'?orderHtml(sec,q):mcHtml(sec,q)).join('')}</div>
+  </section>`;
+}
+
+function renderQuiz(){
+  S.view='quiz';
+  const e=exam(), secs=secList(); if(S.secIdx>=secs.length) S.secIdx=0;
+  app.innerHTML=`
+  <div class="topbar"><div class="brand">${cat('normal',40)}<div><span class="jp">${e.title}</span> · ${e.tag}<small>Neko Ôn Tập</small></div></div>
+    <button class="btn sm alt" data-act="home">← Trang chủ</button></div>
+  <div id="chrome">${chromeHtml()}</div>
+  <div id="body">${secHtml(secs[S.secIdx])}</div>
+  <div class="navrow" id="nav">${navHtml()}</div>
+  ${S.showTr?trModal(secs[S.secIdx]):''}`;
+  window.scrollTo(0,0);
+}
+function refreshQ(sec,q){
+  const el=document.getElementById('q-'+keyOf(sec,q)); if(!el) return;
+  el.outerHTML = sec.type==='order'?orderHtml(sec,q):mcHtml(sec,q);
+  refreshChrome();
+}
+function trModal(sec){
+  return `<div class="overlay" data-act="trbg"><div class="card modal" role="dialog" aria-modal="true" aria-label="Bản dịch tiếng Việt">
+    <div class="modal-head"><h3>Bản dịch tiếng Việt</h3><button class="x" data-act="trx" aria-label="Đóng">✕</button></div>
+    <div class="modal-body">${sec.passageVi.map((p,i)=>`<p><span class="pn">${sec.passageLabels?sec.passageLabels[i]:'§'+(i+1)}</span>${p}</p>`).join('')}${sec.passageNoteVi?`<p style="font-size:14px;color:var(--ink-soft)">${sec.passageNoteVi}</p>`:''}</div></div></div>`;
+}
+
+/* ================= KẾT QUẢ ================= */
+function renderResults(){
+  S.view='results';
+  const all=allActive(), total=all.length, ok=all.filter(x=>isOk(x.sec,x.q)).length, pct=Math.round(ok/total*100), wrongN=total-ok;
+  const mood=pct>=70?'happy':(pct>=40?'normal':'sad');
+  const word=pct>=90?'Xuất sắc!':pct>=70?'Giỏi lắm!':pct>=50?'Khá rồi!':'Cố lên!';
+  const say=pct===100?'Điểm tuyệt đối! Neko tự hào về bạn lắm!':pct>=70?'Làm tốt lắm! Xem lại vài câu sai để chắc hơn nhé.':pct>=50?'Được một nửa rồi, ôn lại các câu sai là tiến bộ ngay!':'Đừng nản nhé, đọc giải thích rồi thử lại các câu sai cùng Neko.';
+  const e=exam();
+  app.innerHTML=`
+  <div class="topbar"><div class="brand">${cat('normal',40)}<div>Kết quả<small>${e.title} · ${e.tag}</small></div></div></div>
+  <section class="card res-hero">
+    <div class="res-score"><b>${ok}/${total}</b><span>${pct}% · ${word}</span></div>
+    <div class="res-copy"><h2>Bạn đúng ${ok} trên ${total} câu</h2>
+      <div class="row">${cat(mood,76)}<div class="bubble">${say}</div></div></div>
+  </section>
+  <div class="acts">
+    <button class="btn" data-act="retrywrong" ${wrongN?'':'disabled'}>Làm lại ${wrongN} câu sai</button>
+    <button class="btn alt" data-act="restart">Làm lại từ đầu</button>
+    <button class="btn alt" data-act="home">Về trang chủ</button>
+  </div>
+  <div class="bd">${secList().map(sec=>{
+    const qs=secQs(sec), c=qs.filter(q=>isOk(sec,q)).length;
+    return `<div class="card bd-card"><div class="t"><span class="jp">${sec.jp}</span> · ${sec.name}</div><div class="f">${c} / ${qs.length}</div><div class="bar"><i style="width:${Math.round(c/qs.length*100)}%"></i></div></div>`}).join('')}</div>
+  <h2 class="rv-title">Xem lại từng câu</h2>
+  <div class="rv">${all.map(({sec,q,k})=>reviewItem(sec,q,k)).join('')}</div>
+  <div class="acts" style="margin-top:22px">
+    <button class="btn" data-act="retrywrong" ${wrongN?'':'disabled'}>Làm lại ${wrongN} câu sai</button>
+    <button class="btn alt" data-act="home">Về trang chủ</button>
+  </div>`;
+  window.scrollTo(0,0);
+}
+function reviewItem(sec,q,k){
+  const ok=isOk(sec,q), done=isDone(sec,q);
+  let stem, mine, right, full;
+  if(sec.type==='order'){
+    stem=(q.ctx?q.ctx+'<br>':'')+q.pre+'［ ］［ ］［★］［ ］'+q.post;
+    const p=S.picks[k]||[];
+    mine=done?p.map(f=>q.f[f]).join(' → '):'';
+    right=q.order.map(f=>q.f[f]).join(' → ');
+    full=q.pre+q.order.map((f,i)=>i===2?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
+  } else {
+    stem=sec.usage?`<span class="tgt">${q.text}</span>`:(sec.reading&&q.stem)?q.stem.replace(/【(\d)(‑[ab])?】/g,'<span class="blank">$&</span>'):q.text.replace(BLANK,'<span class="blank">（　　）</span>');
+    mine=done?q.choices[S.answers[k]]:'';
+    right=q.choices[q.a];
+    full=fullOf(q);
+  }
+  return `<article class="rv-item ${ok?'ok':'no'}">
+    <div class="rv-top"><span class="st">${ok?'✓':'✕'}</span><span><span class="jp">${sec.jp}</span> · câu ${q.n}</span></div>
+    <div class="rv-q">${stem}</div>
+    <div class="rv-ans">${ok?`<span class="right">${right}</span>`:`${done?`<span class="mine">${mine}</span>`:'<span class="mine">Chưa trả lời</span>'}<span class="right">${right}</span>`}</div>
+    <details class="rv-ex" ${ok?'':'open'}><summary>Giải thích</summary><div class="body">
+      ${full?`<p class="jp">${full}</p>`:''}${q.tr?`<p>${q.tr}</p>`:''}<div>${q.vi}</div></div></details>
+  </article>`;
+}
+
+/* ================= SỰ KIỆN ================= */
+document.addEventListener('click',ev=>{
+  const t=ev.target.closest('[data-act]'); if(!t) return;
+  const a=t.dataset.act;
+  if(a==='trbg'&&ev.target!==t) return;
+  const secs=S.view==='quiz'?secList():null, sec=secs&&secs[S.secIdx];
+  const qOf=k=>sec&&sec.qs.find(q=>keyOf(sec,q)===k);
+  switch(a){
+    case 'open': startExam(t.dataset.id); break;
+    case 'home': S.showTr=false; renderHome(); break;
+    case 'tab': S.secIdx=+t.dataset.i; S.showTr=false; renderQuiz(); break;
+    case 'prev': if(S.secIdx>0){S.secIdx--; renderQuiz()} break;
+    case 'next': if(S.secIdx<secs.length-1){S.secIdx++; renderQuiz()} break;
+    case 'results': renderResults(); break;
+    case 'restart': startExam(S.examId); break;
+    case 'retrywrong': retryWrong(); break;
+    case 'pick': { const q=qOf(t.dataset.k); if(!q||S.answers[t.dataset.k]!==undefined) break;
+      const i=+t.dataset.i; S.answers[t.dataset.k]=i; S.msg[t.dataset.k]=rnd(i===q.a?GOOD:BAD); refreshQ(sec,q); break; }
+    case 'frag': { const k=t.dataset.k, q=qOf(k); if(!q) break;
+      const p=S.picks[k]=S.picks[k]||[]; if(p.length>=4||p.includes(t.dataset.f)) break;
+      p.push(t.dataset.f); if(p.length===4) S.msg[k]=rnd(isOk(sec,q)?GOOD:BAD); refreshQ(sec,q); break; }
+    case 'unslot': { const k=t.dataset.k, q=qOf(k); if(!q) break; const p=S.picks[k]||[]; if(p.length===4) break;
+      S.picks[k]=p.slice(0,+t.dataset.i); refreshQ(sec,q); break; }
+    case 'reset': { const k=t.dataset.k, q=qOf(k); if(!q) break; if((S.picks[k]||[]).length===4) break; S.picks[k]=[]; refreshQ(sec,q); break; }
+    case 'jump': { const el=document.getElementById('q-'+t.dataset.k); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); break; }
+    case 'tr': S.showTr=true; document.body.insertAdjacentHTML('beforeend','<div id="trwrap">'+trModal(sec)+'</div>'); break;
+    case 'trx': case 'trbg': S.showTr=false; { const w=document.getElementById('trwrap'); if(w) w.remove(); else renderQuiz(); } break;
+  }
 });
-const TOTAL = ALL.length;
+document.addEventListener('change',ev=>{ if(ev.target.id==='shuf') S.shuffle=ev.target.checked; });
+document.addEventListener('keydown',ev=>{ if(ev.key==='Escape'&&S.showTr){ S.showTr=false; const w=document.getElementById('trwrap'); if(w) w.remove(); } });
 
-function shuffleArray(arr){
-  const a = arr.slice();
-  for(let i=a.length-1;i>0;i--){
-    const j = Math.floor(Math.random()*(i+1));
-    [a[i],a[j]] = [a[j],a[i]];
-  }
-  return a;
-}
-
-/* Return a clone of the item with its 4 options shuffled and the correct
-   index recalculated to match — used fresh every time a session starts. */
-function shuffleItem(it){
-  const order = shuffleArray([0,1,2,3]); // order[newPos] = oldPos
-  const newOptions = order.map(oldPos=>it.options[oldPos]);
-  const newA = order.indexOf(it.a);
-  return {...it, options:newOptions, a:newA};
-}
-
-/* ---------- STATE ---------- */
-let screen = "menu";      // "menu" | "quiz"
-let selected = new Set(SECTIONS.map(s=>s.key)); // sections chosen for the session
-let cursor = 0;            // index into "flow"
-let answers = {};          // n -> {picked, correct}
-let flow = [];             // sequence of {type:'intro', sec} or {type:'q', item}
-
-function buildFlow(){
-  flow = [];
-  SECTIONS.filter(sec=>selected.has(sec.key)).forEach(sec=>{
-    flow.push({type:"intro", sec});
-    ALL.filter(it=>it.sectionKey===sec.key).forEach(it=> flow.push({type:"q", item:shuffleItem(it), sec}));
-  });
-}
-
-function renderTarget(html){
-  return html.replaceAll("＜b＞","<span class=\"target\">").replaceAll("＜/b＞","</span>");
-}
-
-/* ---------- RENDER ---------- */
-const app = document.getElementById("app");
-
-function sessionQItems(){ return flow.filter(f=>f.type==="q"); }
-
-function progressGrid(){
-  const qs = sessionQItems();
-  let cells = "";
-  qs.forEach((f,i)=>{
-    const rec = answers[f.item.n];
-    let cls = "cell";
-    if(rec) cls += rec.correct ? " done-correct" : " done-wrong";
-    if(i===cursor) cls += " current";
-    cells += `<div class="${cls}"></div>`;
-  });
-  const answeredCount = Object.keys(answers).length;
-  return `<div class="progress-wrap">
-    <div class="progress-grid">${cells}</div>
-    <div class="progress-label"><span>Đã làm ${answeredCount}/${qs.length} câu</span><span>${Math.round(answeredCount/qs.length*100)}%</span></div>
-  </div>`;
-}
-
-function header(sub){
-  return `<div class="header">
-    <div class="seal">N2</div>
-    <div class="htext">
-      <h1>JLPT N2 模擬問題</h1>
-      <p>${sub || "Đề luyện tập mô phỏng — " + TOTAL + " câu trắc nghiệm"}</p>
-    </div>
-  </div>`;
-}
-
-function renderMenu(){
-  let rows = "";
-  SECTIONS.forEach(sec=>{
-    const checked = selected.has(sec.key);
-    rows += `<div class="sel-row ${checked?"on":""}" onclick="toggleSection('${sec.key}')">
-      <span class="chk">${checked?"✓":""}</span>
-      <span class="sel-label">${sec.label}</span>
-      <span class="sel-count">${sec.items.length} câu</span>
-    </div>`;
-  });
-  const count = SECTIONS.filter(s=>selected.has(s.key)).reduce((n,s)=>n+s.items.length,0);
-  const allOn = selected.size===SECTIONS.length;
-  return `
-  ${header("Chọn phần muốn luyện tập")}
-  <div class="card">
-    <div class="eyebrow"><span class="no-badge">選</span>Chọn 問題 muốn luyện</div>
-    <p class="instruction">Chọn một hoặc nhiều phần. Mỗi lần bắt đầu, thứ tự các lựa chọn trong từng câu sẽ được xáo trộn ngẫu nhiên.</p>
-    <div class="sel-list">${rows}</div>
-    <div class="nav-row">
-      <button class="btn btn-ghost" onclick="toggleAll()">${allOn?"Bỏ chọn tất cả":"Chọn tất cả"}</button>
-      <button class="btn btn-primary" onclick="startQuiz()" ${count===0?"disabled":""}>Bắt đầu ${count} câu →</button>
-    </div>
-  </div>
-  <div class="footer-note">JLPT N2 模擬問題 — nội dung câu hỏi &amp; giải thích lấy từ đề và đáp án bạn đã tải lên.</div>`;
-}
-
-function renderIntro(step){
-  const sec = step.sec;
-  return `
-  ${header()}
-  ${progressGrid()}
-  <div class="card intro">
-    <div class="big-mark">${sec.label.split(" ｜")[0]}</div>
-    <h2>${sec.label.split(" ｜ ")[1]||""}</h2>
-    <p>${sec.instruction}</p>
-    ${sec.passage ? `<div class="passage">${sec.passage}</div>` : ""}
-    <div class="nav-row">
-      <button class="btn btn-ghost" onclick="backToMenu()">← Chọn lại phần</button>
-      <button class="btn btn-primary" onclick="goNext()">Bắt đầu ${sec.items.length} câu →</button>
-    </div>
-  </div>`;
-}
-
-function renderQuestion(step){
-  const it = step.item;
-  const rec = answers[it.n];
-  const passageHtml = it.passage
-    ? `<div class="passage">${it.passage}</div>`
-    : (it.sharedPassage ? `<div class="passage">${it.sharedPassage}</div>` : "");
-
-  let optsHtml = "";
-  it.options.forEach((opt,i)=>{
-    let cls = "opt";
-    if(rec){
-      cls += " disabled";
-      if(i===it.a) cls += " correct";
-      else if(i===rec.picked) cls += " wrong";
-      else cls += " dim";
-    }
-    optsHtml += `<div class="${cls}" onclick="pick(${it.n},${i})"><span class="num">${i+1}</span><span>${opt}</span></div>`;
-  });
-
-  const stemHtml = it.type==="usage"
-    ? `<div class="stem">次の言葉の使い方として最もよいものはどれか：<br><span class="target" style="font-size:22px;">「${it.target}」</span></div>`
-    : `<div class="stem">${renderTarget(it.stem)}</div>`;
-
-  const feedback = rec ? `
-    <div class="feedback show ${rec.correct?"ok":"no"}">
-      <b>${rec.correct ? "✓ Chính xác！" : "✗ Chưa đúng — đáp án đúng là " + (it.a+1) + "."}</b>
-      <span class="exp">${it.e}</span>
-    </div>` : `<div class="feedback"></div>`;
-
-  const isLast = (cursor === flow.length-1);
-  const nextLabel = isLast ? "Xem kết quả →" : "Câu tiếp theo →";
-
-  return `
-  ${header()}
-  ${progressGrid()}
-  <div class="card">
-    <div class="eyebrow"><span class="no-badge">${it.n}</span>${step.sec.label}</div>
-    ${passageHtml}
-    ${stemHtml}
-    <div class="options">${optsHtml}</div>
-    ${feedback}
-    <div class="nav-row">
-      <button class="btn btn-ghost" onclick="goPrev()" ${cursor===0?"disabled":""}>← Câu trước</button>
-      <button class="btn btn-primary" id="nextBtn" onclick="goNext()" ${rec?"":"disabled"}>${nextLabel}</button>
-    </div>
-  </div>`;
-}
-
-function renderResult(){
-  const qItems = sessionQItems().map(f=>f.item);
-  const sessionTotal = qItems.length;
-  const answeredEntries = Object.values(answers);
-  const correctCount = answeredEntries.filter(r=>r.correct).length;
-  const pct = Math.round(correctCount/sessionTotal*100);
-
-  let note = "Cần luyện thêm — xem lại phần giải thích các câu sai nhé.";
-  if(pct>=85) note = "Xuất sắc! Trình độ rất vững cho N2.";
-  else if(pct>=70) note = "Khá tốt! Chỉ còn vài điểm cần củng cố.";
-  else if(pct>=50) note = "Ổn, nhưng nên ôn lại các phần còn yếu.";
-
-  let breakdown = "";
-  SECTIONS.filter(sec=>selected.has(sec.key)).forEach(sec=>{
-    const items = qItems.filter(it=>it.sectionKey===sec.key);
-    const correct = items.filter(it=>answers[it.n] && answers[it.n].correct).length;
-    const w = Math.round(correct/items.length*100);
-    breakdown += `<div class="breakdown-row">
-      <span class="lbl">${sec.label}</span>
-      <div class="breakdown-bar"><div style="width:${w}%;"></div></div>
-      <span class="frac">${correct}/${items.length}</span>
-    </div>`;
-  });
-
-  let missed = "";
-  qItems.forEach(it=>{
-    const rec = answers[it.n];
-    if(rec && !rec.correct){
-      const label = it.type==="usage" ? "「"+it.target+"」" : (it.stem||"").replace(/＜\/?b＞/g,"");
-      missed += `<div class="review-item" onclick="jumpTo(${it.n})">
-        <span class="q-no">#${it.n}</span><span class="q-txt">${label}</span><span>↻</span>
-      </div>`;
-    }
-  });
-
-  return `
-  ${header()}
-  <div class="card">
-    <div class="result-score">
-      <div class="num">${correctCount}<span class="of"> / ${sessionTotal}</span></div>
-      <div class="result-note">${note}</div>
-    </div>
-    <div class="breakdown">${breakdown}</div>
-    ${missed ? `<div class="breakdown" style="border-top:1px solid var(--line);"><b style="font-size:13.5px;">Xem lại câu sai:</b><div class="review-list">${missed}</div></div>` : `<p style="text-align:center;color:var(--moss-deep);margin-top:20px;font-weight:600;">Không có câu sai nào — tuyệt vời！</p>`}
-    <div class="nav-row" style="justify-content:center; gap:12px; margin-top:24px;">
-      <button class="btn btn-ghost" onclick="backToMenu()">Chọn phần khác</button>
-      <button class="btn btn-primary" onclick="restart()">Làm lại (xáo trộn mới)</button>
-    </div>
-  </div>
-  <div class="footer-note">JLPT N2 模擬問題 — nội dung câu hỏi &amp; giải thích lấy từ đề và đáp án bạn đã tải lên.</div>`;
-}
-
-function render(){
-  if(screen==="menu"){
-    app.innerHTML = renderMenu();
-    return;
-  }
-  if(cursor >= flow.length){
-    app.innerHTML = renderResult();
-    return;
-  }
-  const step = flow[cursor];
-  app.innerHTML = step.type==="intro" ? renderIntro(step) : renderQuestion(step);
-}
-function renderAndScrollTop(){
-  render();
-  window.scrollTo({top:0, behavior:"instant"});
-}
-
-function toggleSection(key){
-  if(selected.has(key)) selected.delete(key); else selected.add(key);
-  render();
-}
-function toggleAll(){
-  if(selected.size===SECTIONS.length) selected = new Set();
-  else selected = new Set(SECTIONS.map(s=>s.key));
-  render();
-}
-function startQuiz(){
-  if(selected.size===0) return;
-  buildFlow();
-  answers = {};
-  cursor = 0;
-  screen = "quiz";
-  renderAndScrollTop();
-}
-function backToMenu(){
-  screen = "menu";
-  renderAndScrollTop();
-}
-
-function pick(n, idx){
-  if(answers[n]) return; // already answered
-  const step = flow.find(f=>f.type==="q" && f.item.n===n);
-  const it = step.item;
-  answers[n] = {picked:idx, correct: idx===it.a};
-  render(); // stays in place so the feedback appears where the user is looking
-}
-
-function goNext(){
-  cursor++;
-  renderAndScrollTop();
-}
-function goPrev(){
-  if(cursor>0){ cursor--; renderAndScrollTop(); }
-}
-function jumpTo(n){
-  const idx = flow.findIndex(f=>f.type==="q" && f.item.n===n);
-  if(idx>=0){ cursor=idx; renderAndScrollTop(); }
-}
-function restart(){
-  buildFlow(); // reshuffle
-  answers = {};
-  cursor = 0;
-  renderAndScrollTop();
-}
-
-render();
+renderHome();
 </script>
-</body>
-</html>
+
+</body></html>
+Neko Ôn Tập.html を表示しています。 1 / 1 ページ
