@@ -1,6 +1,3 @@
-
-Neko Ôn Tập.html
-100%
 <!doctype html><html><head><meta charset=utf8><meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover"><style>:root{color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}html{scroll-padding-top:env(safe-area-inset-top,0px)}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#fff;color:#000}img{max-width:100%}[hidden]:not([hidden=until-found i]){display:none!important}</style></head><body>
 <title>Neko Ôn Tập</title>
 <meta name="claude:viewport-fit-sides" content="cover">
@@ -92,6 +89,7 @@ button{font:inherit; color:inherit; cursor:pointer}
 .chip{display:inline-flex; align-items:center; gap:6px; background:var(--butter-soft); border:2px solid var(--line); border-radius:999px; padding:2px 12px; font-size:13px; font-weight:700}
 
 /* ---------- top bar ---------- */
+.tb-btns{display:flex; gap:8px; flex-wrap:wrap}
 .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px; margin-bottom:18px; flex-wrap:wrap}
 .brand{display:flex; align-items:center; gap:10px; font-family:var(--f-display); font-weight:700; font-size:22px}
 .brand small{font-family:var(--f-body); font-weight:700; font-size:12px; color:var(--ink-soft); display:block; margin-top:-4px}
@@ -280,6 +278,11 @@ details.rv-ex .jp{font-size:16px}
 details.rv-ex ul{margin:4px 0 0; padding-left:20px}
 
 @media (prefers-reduced-motion: reduce){ *{animation:none !important; transition:none !important} }
+.gtitle{grid-column:1/-1; margin:14px 0 0; font-family:var(--f-display); font-size:20px}
+.exam .sub{margin:-4px 0 4px; font-size:13px; opacity:.75; line-height:1.5}
+.gnote{background:var(--butter-soft); border:2.5px solid var(--line); border-radius:16px; padding:8px 14px; margin:0 0 14px}
+.gnote summary{cursor:pointer; font-weight:800; font-family:var(--f-display)}
+.gnote .gbody{margin-top:8px; line-height:1.75; font-size:15px}
 </style>
 
 <div class="wrap" id="app"></div>
@@ -287,7 +290,30 @@ details.rv-ex ul{margin:4px 0 0; padding-left:20px}
 <script>
 /* ================= DỮ LIỆU ================= */
 const R=(k,r)=>`<ruby>${k}<rt>${r}</rt></ruby>`;
-const BLANK=/（[\s　]*）/g;
+const BLANK=/[（［][\s　]*[）］]/g;
+/* ---- trợ giúp khai báo dữ liệu bộ đề 4 ---- */
+const LT='abcdef';
+const Q=(n,text,ch,ans,tr,vi)=>({n,text,choices:ch,a:LT.indexOf(ans),tr,vi});
+const O=(n,pre,post,fr,order,tr,vi)=>({n,pre,post,f:Object.fromEntries(fr.split('|').map((t,i)=>[LT[i],t])),order:order.split(''),tr,vi});
+const MC=(id,jp,name,note,qs)=>({id,jp,name,type:'mc',note,hint:'Chọn đáp án phù hợp nhất điền vào chỗ trống.',hintJp:'（　　）に入れるのに最もよいものを選びなさい。',qs});
+const OR=(id,jp,name,note,qs)=>({id,jp,name,type:'order',nostar:true,note,hint:'Chạm lần lượt 4 mảnh để xếp thành câu đúng (câu này không có ô ★).',hintJp:'次の文を正しい順に並べなさい。',qs});
+const GN={
+ kawakiri:'<b>〜を皮切りに（して／として）</b> = "bắt đầu từ…, rồi tiếp tục nhiều việc khác". Vế sau là <b>chuỗi sự việc nối tiếp, mở rộng</b> (nhiều nơi, liên tục), không dùng với mệnh lệnh hay một sự việc đơn lẻ.<br>Ví dụ: 東京公演を皮切りに、全国ツアーが始まった。',
+ itaru:'<b>〜に至るまで</b> = "cho đến tận…, ngay cả…", nhấn mạnh <b>phạm vi rộng, gồm cả những thứ nhỏ/cực đoan</b>. Hay đi cùng <b>〜はもちろん</b> hoặc <b>AからBに至るまで</b>.<br>Ví dụ: 子どもからお年寄りに至るまで楽しめる。',
+ kagiri:'<b>〜を限りに</b> = "lấy… làm mốc kết thúc". Trước đó là <b>danh từ chỉ thời điểm</b> (今日, 今月, 今年…), sau đó là việc <b>chấm dứt</b> (辞める, 閉店する, 募集しない).<br>Ví dụ: 今月を限りに閉店します。',
+ motte:'<b>〜をもって</b> (văn trang trọng) = "vào thời điểm…" dùng trong thông báo, thường là <b>kết thúc</b>: これをもって終了いたします / 3月末日をもって停止します.',
+ tokoro:'<b>〜といったところだ</b> = "cùng lắm chỉ ở mức…, khoảng…". Đi với <b>con số/mức độ nhỏ</b>, hay kèm せいぜい.<br><b>〜といったところで</b> = "dù nói là… thì cũng chỉ ở mức…".<br>Ví dụ: 参加者はせいぜい10人といったところだ。',
+ nari:'<b>〜なり〜なり</b> = "hoặc là… hoặc là…". Nêu <b>hai ví dụ cùng loại</b> làm phương án lựa chọn; vế sau thường là <b>khuyên, đề nghị, ý chí</b>.<br>Ví dụ: 電話なりメールなり、連絡してください。',
+ deare:'<b>〜であれ〜であれ / 〜であろうと〜であろうと</b> = "dù là… hay là…, (đều như nhau)". Nêu <b>hai trường hợp đối lập/đại diện</b>, vế sau đúng cho mọi trường hợp.<br>Ví dụ: 大人であれ子どもであれ、ルールは守るべきだ。',
+ toii:'<b>〜といい〜といい</b> = "cả… lẫn…". Nêu <b>hai ví dụ tiêu biểu cùng loại</b> rồi <b>đánh giá chung</b> (khen/chê) ở vế sau.<br>Ví dụ: 味といい値段といい、申し分ない。',
+ toiwazu:'<b>〜といわず〜といわず</b> = "bất kể… hay…". Hai ví dụ <b>cùng nhóm</b> để bao quát toàn bộ (khắp nơi, lúc nào cũng), vế sau là trạng thái/hành động liên tục.<br>Ví dụ: 昼といわず夜といわず、工事の音がする。',
+ nbakari:'<b>〜んばかり（に／の）</b> = "như thể sắp…, gần như…". Nối: <b>V-ない形 bỏ ない + んばかり</b> (する → せんばかり). Mô tả biểu hiện bên ngoài trông như sắp làm gì.<br>〜んばかりに + động từ/tính từ; 〜んばかりの + danh từ.<br>Ví dụ: 飛び上がらんばかりに喜んだ。',
+ tobakari:'<b>〜とばかり（に）</b> = "như muốn nói rằng…". Trước とばかり là lời/ý nghĩ trích dẫn; vế sau là <b>hành động thể hiện thái độ, không nói ra thành lời</b>.<br>Ví dụ: 「帰れ」とばかりにドアを閉めた。',
+ tomonaku:'<b>〜ともなく / 〜ともなしに</b> = "không chủ ý…, vô thức…".<br>(1) <b>V thể từ điển + ともなく + V</b>: 見るともなく見ている.<br>(2) <b>疑問詞 + ともなく</b>: どこからともなく / いつからともなく / だれともなく = "không rõ từ đâu/khi nào/ai".',
+ nagara:'<b>〜ながら</b>: (1) "tuy…"; <b>涙ながらに語る</b> = vừa khóc vừa kể.<br>(2) <b>N ながらの N</b> = "giữ nguyên như vốn có": 昔ながらの町, 生まれながらの才能 (bẩm sinh).<br>Nối với <b>V ます形 bỏ ます</b> (生まれながら).',
+ kirai:'<b>〜きらいがある</b> = "có khuynh hướng (không tốt)…". Chỉ dùng cho <b>khuynh hướng xấu/thiếu sót</b>, thường nhận xét về người khác.<br>Ví dụ: 彼は物事を大げさに言うきらいがある。'
+};
+
 const plain=s=>s.replace(/<rt>.*?<\/rt>/g,'').replace(/<br>/g,' ／ ').replace(/<[^>]+>/g,'');
 
 const EXAMS=[{
@@ -749,7 +775,415 @@ const EXAMS=[{
    vi:'Tác giả viết "IT機器は手段に過ぎず適切に使うことで生活を快適にできる" → <b>nên dùng khéo để phục vụ cuộc sống</b>.<ul><li>Đáp án 2: bài không khẳng định là không có cách chữa.</li><li>Đáp án 3: công ty chỉ hạn chế một phần, không "ngắt hoàn toàn".</li><li>Đáp án 4: tác giả không chủ trương ngừng dùng hẳn.</li></ul>'}
   ]}
  ]
+},
+/* ===== BỘ ĐỀ 4 · 第１ ===== */
+{
+ id:'k41', no:4, tag:'Bộ đề 4', title:'第１',
+ sub:'〜を皮切りに ・ 〜に至るまで ・ 〜を限りに ・ 〜をもって ・ 〜といったところ',
+ group:'Bộ đề 4 · Ngữ pháp theo chủ điểm',
+ sections:[
+ MC('k41a','問題１','〜を皮切りに',GN.kawakiri,[
+  Q(1,'その宇宙飛行士の講演会は（　　）を皮切りに、130か所で行われた。',['北海道','外国','全国'],'a',
+   'Buổi diễn thuyết của phi hành gia ấy bắt đầu từ Hokkaido rồi được tổ chức tại 130 nơi.',
+   '<b>〜を皮切りに</b> đi sau <b>điểm xuất phát cụ thể</b> (một địa danh/sự kiện đầu tiên). 北海道 là nơi bắt đầu, sau đó mở rộng ra 130 nơi.<ul><li><b>外国</b>: không phải một điểm bắt đầu cụ thể.</li><li><b>全国</b>: là phạm vi chung, không thể làm "điểm khởi đầu".</li></ul>'),
+  Q(2,'この選手は昨年の地区大会入賞を皮切りに、（　　）。',['ますます練習に励んでいる','今年も入賞が期待される','いくつもの大会で好成績を残している'],'c',
+   'Vận động viên này bắt đầu từ giải nhất khu vực năm ngoái, rồi đạt thành tích tốt ở rất nhiều giải đấu.',
+   'Vế sau của 〜を皮切りに phải là <b>chuỗi sự việc nối tiếp, mở rộng</b>: いくつもの大会で好成績を残している.<ul><li><b>ますます練習に励んでいる</b>: là một việc liên tục chứ không phải chuỗi sự kiện kế tiếp nhau.</li><li><b>今年も入賞が期待される</b>: chỉ một sự việc, mang tính dự đoán.</li></ul>'),
+  Q(3,'山田さんの発言を皮切りにして、（　　）。',['皆さんが意見を言ってください','みんなが次々に意見を言った','川田さんも意見を言った'],'b',
+   'Bắt đầu từ phát biểu của anh Yamada, mọi người lần lượt nêu ý kiến.',
+   '<b>次々に</b> = lần lượt, nối tiếp, hợp với 〜を皮切りに. Vế sau là sự việc đã xảy ra (thể quá khứ) chứ không phải mệnh lệnh.<ul><li><b>皆さんが意見を言ってください</b>: mệnh lệnh/nhờ vả, không dùng với 〜を皮切りに.</li><li><b>川田さんも意見を言った</b>: chỉ thêm một người, không phải chuỗi mở rộng.</li></ul>'),
+  Q(4,'中川さんは10年前の個展を皮切りとして、（　　）。',['いろいろなところで個展を開いている','その後2度個展を開いた','1度も個展を開いていない'],'a',
+   'Chị Nakagawa bắt đầu từ buổi triển lãm cá nhân cách đây 10 năm, và hiện đang mở triển lãm ở nhiều nơi.',
+   'Cần vế sau thể hiện <b>sự mở rộng liên tục</b>: いろいろなところで. <ul><li><b>その後2度</b>: con số nhỏ cụ thể, không phải mở rộng.</li><li><b>1度も開いていない</b>: mâu thuẫn, vì đã bắt đầu từ một buổi triển lãm.</li></ul>'),
+  Q(5,'わたしは退職の記念旅行を皮切りとして、（　　）。',['旅行が老後の趣味になった','国内、国外をあちこち旅行している','旅行会社に勤め始めた'],'b',
+   'Tôi bắt đầu từ chuyến du lịch kỷ niệm nghỉ hưu, rồi đi du lịch khắp nơi trong và ngoài nước.',
+   'Vế sau phải nói <b>nhiều chuyến đi nối tiếp</b>: 国内、国外をあちこち旅行している.<ul><li><b>旅行が老後の趣味になった</b>: chỉ là sự thay đổi sở thích, không có chuỗi sự việc.</li><li><b>旅行会社に勤め始めた</b>: một việc đơn lẻ, không liên quan mạch chuyện.</li></ul>')
+ ]),
+ MC('k41b','問題２','〜に至るまで',GN.itaru,[
+  Q(1,'小林先生には卒業後の進路はもちろん、（　　）に至るまで何でも相談している。',['勉強','宿題のやり方','恋愛の悩み'],'c',
+   'Tôi nhờ thầy Kobayashi tư vấn mọi thứ, từ hướng đi sau tốt nghiệp cho đến cả chuyện phiền muộn tình yêu.',
+   '〜に至るまで nhấn mạnh <b>cả những chuyện tận cùng/ngoài dự đoán</b>. Hướng đi sau tốt nghiệp là chuyện đương nhiên, còn 恋愛の悩み là chuyện cá nhân nhất nên hợp với "đến cả".<ul><li><b>勉強, 宿題のやり方</b>: là chuyện quá bình thường khi nhờ thầy giáo, không có sắc thái "đến cả".</li></ul>'),
+  Q(2,'外国で暮らすことになったので、（　　）に至るまでみんなリサイクルショップに売った。',['ベッドからスプーン','皿からカップ','雑誌から本'],'a',
+   'Vì sắp sống ở nước ngoài nên tôi bán hết mọi thứ cho cửa hàng đồ cũ, từ cái giường cho đến cái thìa.',
+   '<b>AからBに至るまで</b>: A và B là hai đầu của một phạm vi (<b>lớn ↔ nhỏ</b>), nên ベッド (đồ lớn) ↔ スプーン (đồ nhỏ) là cặp đối cực.<ul><li><b>皿からカップ, 雑誌から本</b>: cùng cỡ/cùng loại, không tạo thành hai đầu của phạm vi.</li></ul>'),
+  Q(3,'ゆみさんは天気はもちろん、（　　）に至るまで日記に書き留めているそうだ。',['その日の自分の行動','その日の朝、昼、晩の気温','その日の出来事'],'b',
+   'Nghe nói Yumi ghi vào nhật ký không chỉ thời tiết mà cả nhiệt độ buổi sáng, trưa, tối của ngày hôm đó.',
+    'Sau 〜はもちろん là <b>chi tiết nhỏ hơn, tỉ mỉ hơn</b>. 天気 → 朝昼晩の気温 là sự cụ thể hóa tận cùng.<ul><li><b>自分の行動, 出来事</b>: là nội dung nhật ký thông thường, không phải mức "đến tận chi tiết nhỏ".</li></ul>')
+ ]),
+ MC('k41c','問題３','〜を限りに',GN.kagiri,[
+  Q(1,'この店は（　　）を限りに閉店するそうだ。',['今月','今月まで','あと一月'],'a',
+   'Nghe nói cửa hàng này sẽ đóng cửa vào cuối tháng này.',
+   '<b>〜を限りに</b> đi sau <b>danh từ thời điểm</b>: 今月を限りに.<ul><li><b>今月まで</b>: đã có まで rồi nên không thể thêm を限りに.</li><li><b>あと一月</b>: là khoảng thời gian, không phải mốc thời điểm.</li></ul>'),
+  Q(2,'わたしは今日を限りに（　　）。',['この会社の社員です','この会社を辞めます','新しい会社に入社します'],'b',
+   'Tôi sẽ nghỉ việc ở công ty này kể từ hôm nay.',
+   'Vế sau của 〜を限りに là <b>việc chấm dứt</b>: 辞めます.<ul><li>Hai đáp án còn lại diễn tả trạng thái đang tiếp diễn hoặc một sự bắt đầu mới.</li></ul>'),
+  Q(3,'この高校は今年を限りに（　　）ことになっている。',['開校される','生徒数が増加する','生徒を募集しない'],'c',
+   'Trường cấp ba này đã quyết định từ năm nay sẽ không tuyển sinh nữa.',
+   '〜を限りに + <b>kết thúc</b>: 生徒を募集しない (ngừng tuyển sinh).<ul><li><b>開校される, 生徒数が増加する</b>: là sự bắt đầu/tăng lên, trái nghĩa với ý chấm dứt.</li></ul>')
+ ]),
+ MC('k41d','問題４','〜をもって',GN.motte,[
+  Q(1,'（　　）をもちまして本日の演説会は終了いたします。',['以上','以下','以後'],'a',
+   'Với phần trên, buổi diễn thuyết hôm nay xin được kết thúc.',
+   '<b>以上をもちまして</b> = "với những nội dung trên (đến đây) xin kết thúc", mẫu cố định trong lời bế mạc.<ul><li><b>以下</b> = từ đây trở xuống, <b>以後</b> = từ nay về sau: đều mang nghĩa tiếp diễn, không hợp với "kết thúc".</li></ul>'),
+  Q(2,'3月末日をもって（　　）。',['このサービスを開始いたします','このサービスは停止させていただきます','このサービスはございません'],'b',
+   'Dịch vụ này sẽ được tạm ngừng vào cuối ngày 31 tháng 3.',
+   '〜をもって + <b>kết thúc, ngừng</b>: 停止させていただきます.<ul><li><b>開始いたします</b>: là bắt đầu, sai với thông báo kết thúc kiểu này.</li><li><b>ございません</b>: là "không có", không nối với mốc thời gian theo cách này.</li></ul>'),
+  Q(3,'これをもって本日の役員会は（　　）したいと思います。',['休憩','開会','閉会'],'c',
+   'Với phần này, tôi xin bế mạc cuộc họp ban giám đốc hôm nay.',
+   'これをもって → <b>閉会</b> (bế mạc). 開会 là khai mạc, 休憩 là nghỉ giải lao: không hợp với "kết thúc ở đây".'),
+  Q(4,'今期をもって私は（　　）。',['この職に転職します','この職を引退します','この職を続けます'],'b',
+   'Kể từ kỳ này tôi sẽ nghỉ hưu khỏi công việc này.',
+   '〜をもって + <b>chấm dứt</b>: 引退します. 転職します (chuyển sang nghề này) và 続けます (tiếp tục) không phải là kết thúc.')
+ ]),
+ MC('k41e','問題５','〜といったところ',GN.tokoro,[
+  Q(1,'わたしの睡眠時間は（　　）といったところです。',['十分','もう少し欲しい','5時間'],'c',
+   'Thời gian ngủ của tôi cùng lắm chỉ khoảng 5 tiếng.',
+   '〜といったところ đi với <b>con số/mức độ cụ thể ở mức thấp</b>: 5時間.<ul><li><b>十分</b>, <b>もう少し欲しい</b>: không phải con số cụ thể.</li></ul>'),
+  Q(2,'毎日の運動といえば、近所を走るといったところなので、（　　）。',['とても疲れる','40分もかかる','無理なく続けられる'],'c',
+   'Nói về vận động hằng ngày thì cùng lắm là chạy quanh khu nhà thôi, nên tôi duy trì được mà không gắng sức.',
+    'Vận động chỉ ở mức nhẹ (といったところ) nên kết quả hợp lý là <b>無理なく続けられる</b>.<ul><li><b>とても疲れる, 40分もかかる</b>: ngụ ý vận động nặng/lâu, mâu thuẫn với mức "chỉ ở mức…".</li></ul>'),
+  Q(3,'このクラスのテストの平均点は、毎回（　　）67、8点といったところです。',['せめて','せいぜい','最低でも'],'b',
+   'Điểm trung bình bài kiểm tra của lớp này lần nào cũng chỉ khoảng 67, 68 điểm là cùng.',
+   '<b>せいぜい</b> = "cùng lắm", thường đi cặp với 〜といったところ.<ul><li><b>せめて</b> = "ít nhất" (mong muốn); <b>最低でも</b> = "tối thiểu là": không đi với ngữ cảnh mức tối đa.</li></ul>')
+ ]),
+ MC('k41f','問題1~5','Tổng hợp',GN.kawakiri+'<br><br>'+GN.itaru+'<br><br>'+GN.kagiri+'<br><br>'+GN.motte+'<br><br>'+GN.tokoro,[
+  Q(1,'全国高校野球大会は、一昨日の第1試合（　　）連日熱戦が繰り広げられている。',['を皮切りに','に至るまで','をもって'],'a',
+   'Giải bóng chày trung học toàn quốc bắt đầu từ trận 1 hôm kia, và những trận đấu nảy lửa diễn ra liên tục từng ngày.',
+   '<b>第1試合を皮切りに</b> = bắt đầu từ trận đầu tiên rồi liên tục diễn ra các trận. Vế sau 連日 (ngày nào cũng) là chuỗi nối tiếp.'),
+  Q(2,'今日（　　）もう車は運転しないことにしたんです。',['を限りに','をもって','に至るまで'],'a',
+   'Từ hôm nay tôi quyết định sẽ không lái xe nữa.',
+   '<b>今日を限りに</b> = lấy hôm nay làm mốc để chấm dứt (không lái xe nữa). <ul><li>を<b>もって</b> trang trọng hơn, hay dùng trong thông báo, ít dùng với quyết định cá nhân như thế này.</li></ul>'),
+  Q(3,'ただ今（　　）チケットの販売を打ち切らせていただきます。',['を皮切りに','に至るまで','をもって'],'c',
+   'Xin phép được ngừng bán vé kể từ lúc này.',
+   '<b>ただ今をもって</b> = "kể từ giờ phút này", mẫu thông báo trang trọng đi với việc chấm dứt (打ち切る).'),
+  Q(4,'日常のおかずから高級料理の食材（　　）、この店にないものはない。',['をもって','といったところで','に至るまで'],'c',
+   'Từ đồ ăn hằng ngày đến cả nguyên liệu cho món cao cấp, cửa hàng này thứ gì cũng có.',
+   'Cấu trúc <b>AからBに至るまで</b>: từ món ăn thường ngày (A) đến nguyên liệu cao cấp (B).'),
+  Q(5,'3歳の息子がやってくれる手伝いは、洗濯物をかごに入れるとか新聞を運ぶ（　　）あまり役に立ちません。',['に至るまで','といったところで','限りで'],'b',
+   'Việc giúp đỡ của thằng bé 3 tuổi, dù nói là bỏ đồ giặt vào giỏ hay mang tờ báo, cũng chỉ ở mức đó nên không giúp được nhiều.',
+   '<b>〜といったところで</b> = "dù nói là… thì cũng chỉ ở mức…", vế sau là phủ định: あまり役に立ちません.')
+ ])
+ ]
+},
+/* ===== BỘ ĐỀ 4 · 第２ ===== */
+{
+ id:'k42', no:4, tag:'Bộ đề 4', title:'第２',
+ sub:'〜なり〜なり ・ 〜であれ〜であれ ・ 〜といい〜といい ・ 〜といわず〜といわず',
+ group:'Bộ đề 4 · Ngữ pháp theo chủ điểm',
+ sections:[
+ MC('k42a','問題１','〜なり〜なり',GN.nari,[
+  Q(1,'あの部屋はかなり寒いから、長い時間いるなら上着なり（　　）なりが必要だろう。',['暖房をつける','ひざ掛け','防寒'],'b',
+   'Căn phòng đó khá lạnh, nếu ở lâu thì cần áo khoác hoặc chăn đắp đầu gối gì đó.',
+   '〜なり〜なり nối <b>hai danh từ cùng loại</b>: 上着 ↔ ひざ掛け (đều là đồ giữ ấm).<ul><li><b>暖房をつける</b>: là cụm động từ, không cùng loại với 上着.</li><li><b>防寒</b>: là danh từ chung, không phải vật cụ thể.</li></ul>'),
+  Q(2,'着ない服は人にあげるなりフリーマーケットに出すなりして、（　　）。',['整理した','整理したことがある','整理しよう'],'c',
+   'Quần áo không mặc nữa thì cho người khác hoặc đem ra chợ đồ cũ, rồi dọn dẹp cho gọn nào.',
+   'Sau 〜なり〜なり thường là <b>ý chí, đề nghị, khuyên</b>: 整理しよう.<ul><li><b>整理した, 整理したことがある</b>: là quá khứ/kinh nghiệm, không đi với なり〜なり.</li></ul>'),
+  Q(3,'1年に2、3度、ハイキングなりキャンプなり遊びに（　　）。',['行きませんか','行きました','行くことに決まった'],'a',
+   'Mỗi năm hai, ba lần, chúng ta đi chơi như leo núi hay cắm trại nhé?',
+    'Vế sau là <b>rủ rê, đề nghị</b>: 行きませんか.<ul><li><b>行きました, 行くことに決まった</b>: là sự việc đã xảy ra/đã quyết, không dùng với なり〜なり.</li></ul>'),
+  Q(4,'電話なりメールなり（　　）。',['どちらで知らせますか','知らせる方法はあるはずですよ','知らせる方法が何もない'],'b',
+   'Gọi điện hay gửi mail, thế nào chắc cũng có cách để báo được đấy.',
+   '<b>電話なりメールなり</b> nêu các phương án; vế sau khẳng định có cách: 知らせる方法はあるはずですよ.<ul><li><b>どちらで知らせますか</b>: không có なり〜なり nối với câu hỏi như vậy.</li><li><b>何もない</b>: phủ định, mâu thuẫn với việc nêu hai phương án.</li></ul>')
+ ]),
+ MC('k42b','問題２','〜であれ〜であれ',GN.deare,[
+  Q(1,'社長であろうと（　　）であろうと、自分の会社を大切に思っているはずだ。',['正社員','平社員','サラリーマン'],'b',
+   'Dù là giám đốc hay nhân viên thường, ai cũng đều coi trọng công ty của mình.',
+   'Cặp đối lập: 社長 ↔ <b>平社員</b> (nhân viên thường). <ul><li><b>正社員</b> và <b>サラリーマン</b> đều bao gồm cả giám đốc, không tạo cặp đối lập rõ ràng.</li></ul>'),
+  Q(2,'検査の結果、ある病気が見つかった。これから先、通院であれ入院であれ（　　）。',['心配ごとが増える','することになった','選ばなければならない'],'a',
+   'Kết quả khám phát hiện một bệnh. Từ giờ, dù là đi khám ngoại trú hay nằm viện thì cũng có thêm nhiều nỗi lo.',
+   '〜であれ〜であれ + vế sau <b>đúng cho mọi trường hợp</b>: 心配ごとが増える.<ul><li><b>することになった</b>: "đã quyết định làm" nên không còn là lựa chọn giữa hai khả năng.</li><li><b>選ばなければならない</b>: nghĩa là phải chọn một, mâu thuẫn với ý "dù cách nào cũng vậy".</li></ul>'),
+  Q(3,'与党であれ野党であれ、（　　）。',['わたしは選挙の結果に関心がある','選挙でどちらが勝つだろうか','選挙戦をしっかり頑張ってほしい'],'c',
+   'Dù là đảng cầm quyền hay đảng đối lập, tôi mong họ cố gắng thật tốt trong chiến dịch bầu cử.',
+   'Vế sau phải áp dụng chung cho cả hai bên: <b>選挙戦をしっかり頑張ってほしい</b>.<ul><li><b>どちらが勝つだろうか</b>: phân biệt hai bên, mâu thuẫn với ý "dù bên nào".</li><li><b>わたしは選挙の結果に関心がある</b>: không liên quan đến "đảng nào".</li></ul>')
+ ]),
+ MC('k42c','問題３','〜といい〜といい',GN.toii,[
+  Q(1,'（　　）、このパソコンは最高だ。',['機能といい軽さ','簡単だといい値段といい','便利だといい安いといい'],'a',
+   'Về chức năng hay độ nhẹ thì chiếc máy tính này đều tuyệt vời.',
+   'Đề gốc có lỗi chép nên đã chỉnh: choice a thành <b>機能といい軽さ</b>. Hai danh từ đối xứng: 機能といい + 軽さといい.<ul><li><b>簡単だといい値段といい</b>, <b>便利だといい安いといい</b>: sai vì といい phải đi sau <b>danh từ</b>, không đi sau tính từ như 簡単だ/便利だ/安い.</li></ul>'),
+  Q(2,'庭といい玄関といい、（　　）。',['きれいに掃いてください','ごみだらけだ','掃除しなければきれいにならない'],'b',
+   'Cả vườn lẫn cửa ra vào đều đầy rác.',
+   'Sau 〜といい〜といい là <b>đánh giá chung</b>: ごみだらけだ. Không đi với mệnh lệnh (きれいに掃いてください) hay điều kiện (掃除しなければ…).'),
+  Q(3,'この地方は山といい川といい、（　　）。いつか行ってみたい。',['たくさんある','今の季節はとてもきれいだ','テレビで紹介された'],'b',
+   'Vùng này cả núi lẫn sông, vào mùa này đều rất đẹp. Có dịp tôi muốn đến thử.',
+   'Cần nhận xét về <b>cả hai</b> (núi và sông): 今の季節はとてもきれいだ.<ul><li><b>たくさんある</b>: nghĩa là có nhiều (số lượng), không phải đánh giá.</li><li><b>テレビで紹介された</b>: không phải nhận xét về núi và sông.</li></ul>'),
+  Q(4,'水泳といいテニスといい、（　　）。',['スポーツはみな楽しい','わたしは子供に習わせている','わたしはやったことがない'],'b',
+   'Cả bơi lội lẫn quần vợt, tôi đều cho con học.',
+   'Nhận xét/đánh giá áp dụng cho cả hai môn: <b>子供に習わせている</b>.<ul><li><b>スポーツはみな楽しい</b>: nói về mọi môn thể thao nên rộng quá, không còn tập trung vào hai ví dụ.</li><li><b>やったことがない</b>: không hợp mạch về nghĩa với cách chọn đáp án của đề.</li></ul>')
+ ]),
+ MC('k42d','問題４','〜といわず〜といわず',GN.toiwazu,[
+  Q(1,'うちの娘は壁といわず（　　）といわず、あちこちに好きなアイドルの写真をはっている。',['かばん','天井','ノート'],'b',
+   'Con gái tôi dán ảnh thần tượng yêu thích khắp nơi, từ tường cho đến trần nhà.',
+   '〜といわず〜といわず nối hai thứ <b>cùng loại/cùng phạm vi</b>: 壁 ↔ 天井 (đều là bộ phận của căn phòng).<ul><li><b>かばん, ノート</b>: không cùng nhóm với 壁.</li></ul>'),
+  Q(2,'あの通りは昼といわず夜といわず（　　）。',['車は通れない','行ってみてください','にぎわっている'],'c',
+   'Con đường đó bất kể ngày hay đêm đều náo nhiệt.',
+   'Vế sau là <b>trạng thái liên tục</b>: にぎわっている. Không đi với phủ định/khả năng (通れない) hay mệnh lệnh (行ってみてください).'),
+  Q(3,'虫といわず魚といわず、（　　）。',['うちの子は何でも捕まえたがる','何でも早く捨てなさい','何も飼いたくない'],'a',
+   'Bất kể côn trùng hay cá, con tôi đều thích bắt hết.',
+   'Vế sau mô tả <b>hành vi lặp lại</b> của chủ thể: 何でも捕まえたがる.<ul><li><b>捨てなさい</b>: mệnh lệnh; <b>何も飼いたくない</b>: phủ định, đều không hợp với "bất kể… đều…".</li></ul>')
+ ]),
+ MC('k42e','問題1~4','Tổng hợp',GN.nari+'<br><br>'+GN.deare+'<br><br>'+GN.toii+'<br><br>'+GN.toiwazu,[
+  Q(1,'（　　）、この店の料理は素晴らしい。',['味なり盛り付けなり','味といい盛り付けといい','味といわず盛り付けといわず'],'b',
+   'Cả hương vị lẫn cách trình bày, món ăn ở quán này đều tuyệt vời.',
+   'Vế sau là <b>nhận xét chung</b> (素晴らしい) → <b>といい〜といい</b>.<ul><li><b>なり〜なり</b> đi với đề nghị/ý chí; <b>といわず〜といわず</b> đi với trạng thái liên tục/khắp nơi.</li></ul>'),
+  Q(2,'（　　）、何か筆記用具をここに置いておいたほうがいいです。',['鉛筆なりボールペンなり','鉛筆といいボールペンといい','鉛筆といわずボールペンといわず'],'a',
+   'Bút chì hay bút bi gì cũng được, nên để sẵn dụng cụ viết ở đây.',
+   'Vế sau là <b>lời khuyên</b> (〜たほうがいい) → <b>なり〜なり</b>.'),
+  Q(3,'（　　）、人との接し方が大切なのだ。',['レストランの店員なり会社員なり','レストランの店員であれ会社員であれ','レストランの店員といわず会社員といわず'],'b',
+   'Dù là nhân viên nhà hàng hay nhân viên công ty, cách cư xử với mọi người đều quan trọng.',
+   '"Dù là… hay là…, đều như nhau" → <b>であれ〜であれ</b>.'),
+  Q(4,'この名所には（　　）、一年中観光客が訪れる。',['春なり秋なり','春といい秋といい','春といわず秋といわず'],'c',
+   'Danh thắng này bất kể xuân hay thu, quanh năm đều có khách du lịch ghé thăm.',
+   'Ý "quanh năm, lúc nào cũng" → <b>春といわず秋といわず</b>.'),
+  Q(5,'（　　）、フォークで食べるのは変だ。',['すしなりさしみなり','すしであれさしみであれ','すしといわずさしみといわず'],'b',
+   'Dù là sushi hay sashimi, ăn bằng nĩa thì thật kỳ lạ.',
+   '"Dù là… hay là…, đều (kỳ lạ)" → <b>であれ〜であれ</b> (theo đáp án của đề).')
+ ])
+ ]
+},
+/* ===== BỘ ĐỀ 4 · 第３ ===== */
+{
+ id:'k43', no:4, tag:'Bộ đề 4', title:'第３',
+ sub:'〜んばかり ・ 〜とばかり ・ 〜ともなく ・ 〜ながら ・ 〜きらいがある',
+ group:'Bộ đề 4 · Ngữ pháp theo chủ điểm',
+ sections:[
+ MC('k43a','問題１','〜んばかり',GN.nbakari,[
+  Q(1,'うちの犬は、自分もこの家の家族の一人だと（　　）の顔をしてテレビを見ている。',['言うばかり','言わんばかり','言わないばかり'],'b',
+   'Con chó nhà tôi ngồi xem tivi với vẻ mặt như muốn nói "tôi cũng là một thành viên trong nhà này".',
+   'Đề gốc có lỗi chép (書わんばかり) nên đã chỉnh thành <b>言わんばかり</b> (言わない → 言わん + ばかり) + の + 顔 = "vẻ mặt như muốn nói".<ul><li><b>言うばかり, 言わないばかり</b>: sai hình thức; phải là V-ない bỏ ない + んばかり.</li></ul>'),
+  Q(2,'ニュースを聞いて、彼は（　　）驚いた。',['飛び上がらんばかりに','飛び上がると言わんばかりに','飛び上がれんばかりに'],'a',
+   'Nghe tin, anh ấy ngạc nhiên đến mức như muốn nhảy dựng lên.',
+   '<b>飛び上がらんばかりに</b> = "gần như muốn nhảy lên" (từ 飛び上がらない).<ul><li><b>飛び上がると言わんばかりに</b>: "như muốn nói rằng sẽ nhảy lên", lệch nghĩa.</li><li><b>飛び上がれんばかり</b>: sai, phải nối với thể phủ định của động từ gốc (飛び上がらん), không phải thể khả năng.</li></ul>'),
+  Q(3,'今にも（　　）子を置いて、母親はどこへ行ってしまったのだろう。',['泣き出さんばかりに','泣き出さんばかりの','泣き出さんばかりな'],'b',
+   'Người mẹ đã bỏ đứa trẻ đang như sắp bật khóc để đi đâu mất rồi nhỉ?',
+   'Đề gốc có lỗi chép (ぼ) nên đã chỉnh thành ばかり. Phía sau là danh từ 子 → <b>〜んばかりの + danh từ</b>.<ul><li><b>〜んばかりに</b> bổ nghĩa cho động từ/tính từ; <b>〜んばかりな</b> không tồn tại.</li></ul>'),
+  Q(4,'彼女はその人の死を知って、（　　）声を上げて泣いた。',['みんなに聞こえんばかりの','涙があふれんばかりの','のどが張り裂けんばかりの'],'c',
+   'Biết tin người ấy mất, cô ấy khóc thành tiếng đến mức như muốn vỡ cổ họng.',
+   '<b>のどが張り裂けんばかりの声</b> = tiếng gào "như muốn rách cổ họng", hợp với 声を上げて泣く.<ul><li><b>みんなに聞こえんばかり</b> không tự nhiên; <b>涙があふれんばかり</b> bổ nghĩa cho 涙 chứ không bổ nghĩa cho 声.</li></ul>')
+ ]),
+ MC('k43b','問題２','〜とばかり',GN.tobakari,[
+  Q(1,'息子は「入るな」とばかりに、（　　）。',['大声で言った','部屋を出ていってしまった','部屋にかぎをかけてしまった'],'c',
+   'Con trai tôi khoá cửa phòng lại như muốn nói "đừng vào".',
+   '〜とばかり = <b>không nói ra mà thể hiện bằng hành động</b>: 部屋にかぎをかけてしまった.<ul><li><b>大声で言った</b>: đã nói ra thành lời nên mâu thuẫn với とばかり.</li><li><b>部屋を出ていってしまった</b>: ra khỏi phòng không thể hiện được ý "đừng vào".</li></ul>'),
+  Q(2,'彼女は平凡なのはつまらないとばかりに、（　　）。',['変わった服を着ている','楽しそうにしている','面白い人だ'],'a',
+   'Cô ấy mặc những bộ đồ khác thường như thể muốn nói bình thường thì chán.',
+   'Hành động thể hiện thái độ "bình thường thì chán": 変わった服を着ている.'),
+  Q(3,'その女の子は皿の上の野菜を見て、（　　）とばかり、横を向いた。',['「おいしそう」','「食べたくない」','「わあ、いっぱい」'],'b',
+   'Cô bé nhìn rau trên đĩa rồi quay mặt đi như thể muốn nói "không muốn ăn".',
+   'Hành động quay mặt đi hợp với lời không nói ra: <b>「食べたくない」</b>.')
+ ]),
+ MC('k43c','問題３','〜ともなく',GN.tomonaku,[
+  Q(1,'（　　）ともなく空を見ていたら、珍しい鳥が目に入った。',['見る','見よう','見ている'],'a',
+   'Khi đang ngắm bầu trời một cách vô thức, tôi thấy một loài chim lạ.',
+   '<b>V thể từ điển + ともなく</b>: 見るともなく.<ul><li>見よう, 見ている không đúng cách nối.</li></ul>'),
+  Q(2,'（　　）ともなしにラジオをつけておくのが好きだ。',['何でも聞く','何を聞く','ピアノ曲を聞く'],'b',
+   'Tôi thích bật radio mà không nghe gì cụ thể.',
+   '<b>何を聞くともなしに</b> = "không nghe cái gì cụ thể".<ul><li><b>何でも聞く</b>, <b>ピアノ曲を聞く</b>: không đúng mẫu 疑問詞 + V + ともなしに.</li></ul>'),
+  Q(3,'父は日曜日、どこへ行くともなしに（　　）。',['うちにいた','一人で出かけた','考えた'],'b',
+   'Chủ nhật, bố tôi đi ra ngoài một mình mà chẳng có chỗ nào định đến.',
+   '<b>どこへ行くともなしに</b> + động từ di chuyển: 一人で出かけた. Hai đáp án còn lại không liên quan đến "đi đâu".'),
+  Q(4,'（　　）わたしは彼を尊敬するようになった。',['何ともなく','だれともなく','いつからともなく'],'c',
+   'Từ lúc nào không hay, tôi đã bắt đầu kính trọng anh ấy.',
+   '<b>いつからともなく</b> = "không rõ từ khi nào", hợp với 〜ようになった (dần dần).'),
+  Q(5,'さっきまであの木の枝に鳥が数羽いたが、（　　）飛んでいってしまった。',['どこへともなく','どこともなく','何羽ともなく'],'a',
+   'Lúc nãy vài con chim còn đậu trên cành cây kia, nhưng chúng đã bay đi đâu mất.',
+   '<b>どこへともなく</b> + động từ di chuyển (飛んでいく) = "bay đi đâu không rõ".')
+ ]),
+ MC('k43d','問題４','〜ながら',GN.nagara,[
+  Q(1,'大川選手は走るのも速いしボールの扱いもうまい。（　　）サッカー選手だ。',['生まれるながらの','生まれながらの','生まれたながらの'],'b',
+   'Cầu thủ Okawa chạy nhanh, xử lý bóng cũng giỏi. Đúng là một cầu thủ bóng đá bẩm sinh.',
+   '<b>生まれながらの</b> = bẩm sinh (V ます形 bỏ ます + ながらの + N).'),
+  Q(2,'祖母は（　　）戦争中の思い出話を語った。',['涙ながらの','涙ながらで','涙ながらに'],'c',
+   'Bà tôi vừa rơi nước mắt vừa kể chuyện về thời chiến.',
+   '<b>涙ながらに</b> + động từ (語る) = "vừa khóc vừa…". Phía sau là động từ nên dùng に chứ không dùng の.'),
+  Q(3,'久しぶりにふるさとを訪れた。（　　）古い家がわたしを迎えてくれた。',['昔ながらの','昔ながらで','昔ながらに'],'a',
+   'Lâu rồi mới về thăm quê. Ngôi nhà cũ vẫn như xưa đón tôi.',
+   '<b>昔ながらの + danh từ</b> = "giữ nguyên như ngày xưa" (昔ながらの古い家).'),
+  Q(4,'立ち食いそば屋は、座らないで（　　）そばを食べる店です。',['立って','立ちながらにして','立ちながら'],'a',
+   'Quán soba ăn đứng là quán mà người ta ăn soba trong khi đứng chứ không ngồi.',
+   'Cách nói tự nhiên: <b>立って</b> (đứng mà ăn).<ul><li><b>立ちながらにして</b> = "vẫn đứng nguyên đó mà (làm được điều khác)"; <b>立ちながら</b> (vừa đứng vừa) cũng không bằng 立って trong ngữ cảnh này.</li></ul>')
+ ]),
+ MC('k43e','問題５','〜きらいがある',GN.kirai,[
+  Q(1,'今度の議長はどうも甘い言い方をするきらいがあると、みんなに（　　）。',['批判されている','褒められている','喜ばれている'],'a',
+   'Vị chủ tịch lần này hay nói năng dễ dãi, nên bị mọi người chỉ trích.',
+   '〜きらいがある là <b>khuynh hướng xấu</b> → mọi người <b>批判されている</b>.<ul><li><b>褒められている, 喜ばれている</b>: nghĩa tích cực, mâu thuẫn.</li></ul>'),
+  Q(2,'うちの子は（　　）きらいがある。',['動物をかわいがる','部屋を片付ける','物事を大げさに言う'],'c',
+   'Con tôi có khuynh hướng nói chuyện thổi phồng lên.',
+   'Khuynh hướng xấu: <b>物事を大げさに言う</b>. Hai đáp án còn lại là việc tốt.'),
+  Q(3,'（　　）頭で考えるだけで行動に移さないきらいがある。',['わたしは','弟は','日本では'],'b',
+   'Em trai tôi có khuynh hướng chỉ nghĩ trong đầu chứ không bắt tay vào hành động.',
+   'きらいがある thường dùng để <b>nhận xét người khác</b>: 弟は. Nếu nói về bản thân hay nói chung (日本では) thì không tự nhiên.'),
+  Q(4,'うちの夫は（　　）きらいがある。',['趣味が多い','趣味がない','趣味を広げすぎる'],'c',
+   'Chồng tôi có khuynh hướng mở rộng sở thích quá mức.',
+   '<b>広げすぎる</b> = quá mức → khuynh hướng xấu. 趣味が多い/ない chỉ là trạng thái, không phải "khuynh hướng làm quá".')
+ ]),
+ MC('k43f','問題1~5','Tổng hợp',GN.nbakari+'<br><br>'+GN.tobakari+'<br><br>'+GN.tomonaku+'<br><br>'+GN.nagara,[
+  Q(1,'彼女は、周りを（　　）の行動力の持ち主だ。',['圧倒せんばかり','圧倒するとばかり','圧倒したとばかり'],'a',
+   'Cô ấy là người có sức hành động như muốn áp đảo cả những người xung quanh.',
+   '<b>圧倒せんばかりの</b> (する → せんばかり) + の + danh từ.'),
+  Q(2,'試験中ちょっと横を（　　）、カンニングと間違われた。',['見んばかりに','見たとばかりに','見たばかりに'],'c',
+   'Chỉ vì lúc thi nhìn sang bên một chút mà tôi bị nhầm là quay cóp.',
+   'Đề gốc có lỗi chép (鬼た) nên đã chỉnh thành <b>見たばかりに</b> = "chỉ vì đã làm… mà (kết quả xấu)".'),
+  Q(3,'だれに（　　）「春だなあ」とつぶやいた。',['言いながらにして','言うともなく','言うとばかりに'],'b',
+   'Tôi lẩm bẩm "Mùa xuân rồi nhỉ" mà không nói với ai cụ thể.',
+   '<b>だれに言うともなく</b> = không nói với ai cụ thể.'),
+  Q(4,'失敗して落ち込んでいたら、（　　）みんなに肩をたたかれた。',['元気を出さんばかりに','元気を出したばかりに','元気を出せとばかりに'],'c',
+   'Khi tôi đang chán nản vì thất bại, mọi người vỗ vai như thể bảo "cố lên nào".',
+   '<b>元気を出せとばかりに</b> = như muốn nói "hãy phấn chấn lên", thể hiện bằng hành động vỗ vai.')
+ ])
+ ]
+},
+/* ===== BỘ ĐỀ 4 · 第４ ===== */
+{
+ id:'k44', no:4, tag:'Bộ đề 4', title:'第４',
+ sub:'Tổng hợp nhiều mẫu ngữ pháp (問題1〜7)',
+ group:'Bộ đề 4 · Ngữ pháp theo chủ điểm',
+ sections:[
+ MC('k44a','問題１','Tổng hợp 15 câu','',[
+  Q(1,'駅には時間通りに着いた（　　）、駅からの道がわからず、会場に到着するまで時間がかかってしまった。',['ものの','ものを','もので','ものでも'],'a',
+   'Tuy đã đến ga đúng giờ nhưng vì không biết đường từ ga đến nơi nên mất thời gian mới tới được hội trường.',
+   '<b>〜ものの</b> = "tuy… nhưng…" (vế sau trái với kỳ vọng). Các đáp án còn lại không có nghĩa nghịch tiếp như vậy hoặc sai cách dùng.'),
+  Q(2,'この店にはスプーン（　　）大型家具に至るまで、生活用品は何でもそろっている。',['から','からして','を皮切りに','をはじめに'],'a',
+   'Cửa hàng này có đủ mọi đồ dùng sinh hoạt, từ cái thìa cho đến cả đồ nội thất cỡ lớn.',
+   '<b>AからBに至るまで</b> = từ A đến tận B. Các lựa chọn còn lại không đi cặp với に至るまで theo cấu trúc này.'),
+  Q(3,'仕事（　　）、徹夜続きでは体に悪いですよ。',['といって','とはいえ','といったら','といえば'],'b',
+   'Tuy là công việc, nhưng thức trắng đêm liên tục thì có hại cho sức khỏe đấy.',
+   '<b>〜とはいえ</b> = "tuy nói là… nhưng…". Các đáp án khác không tạo ra nghĩa nhượng bộ này.'),
+  Q(4,'山川さんは運転席に（　　）、勢いよくエンジンをかけた。',['座った上で','座らんばかりに','座りがてら','座るなり'],'d',
+   'Anh Yamakawa vừa ngồi vào ghế lái là nổ máy ngay lập tức.',
+   '<b>〜なり</b> = "vừa… là ngay lập tức…". 座るなり + hành động đột ngột liên tiếp.'),
+  Q(5,'頼み方（　　）相手の気持ちが変わると思う。',['にしたがって','に伴って','かぎりで','いかんで'],'d',
+   'Tôi nghĩ tuỳ vào cách nhờ vả mà tâm trạng của đối phương sẽ thay đổi.',
+   '<b>〜いかんで</b> = "tuỳ thuộc vào…". Các đáp án còn lại có nghĩa "theo cùng với/tiến cùng" hoặc "giới hạn", không hợp.'),
+  Q(6,'魚が豊富なこの地方（　　）この料理。大いに楽しみたい。',['だけではの','ならではの','ながらの','に限っての'],'b',
+   'Món ăn mà chỉ vùng nhiều cá này mới có. Tôi muốn thưởng thức thật nhiều.',
+   '<b>〜ならではの</b> = "đặc trưng chỉ có ở…".'),
+  Q(7,'山中さんは日本語の教師をする（　　）小説を書いているそうだ。',['かたわら','ついでに','がてら','そばで'],'a',
+   'Nghe nói anh Yamanaka vừa làm giáo viên tiếng Nhật vừa viết tiểu thuyết.',
+   '<b>〜かたわら</b> = "bên cạnh công việc chính còn làm thêm việc khác (dài hạn)".'),
+  Q(8,'値段のいかん（　　）、物をもらったら必ず感謝の気持ちを伝えるべきだ。',['もかまわず','はともかく','にもかかわらず','にかかわらず'],'d',
+   'Bất kể giá cả thế nào, nhận quà thì nhất định phải bày tỏ lòng biết ơn.',
+   '<b>〜のいかんにかかわらず</b> = "bất kể… như thế nào".'),
+  Q(9,'長期入院中（　　）、わたしにも選挙権があるのだ。',['だからといって','にかかわらず','と思いきや','といえども'],'d',
+   'Dù đang nằm viện dài ngày, tôi cũng có quyền bầu cử.',
+   '<b>〜といえども</b> = "dù là… đi nữa…".'),
+  Q(10,'先生にはもっと早くお礼を（　　）、今ごろになってしまって申し訳ありません。',['言うはずのところを','言うべきところを','言うはずのことで','言うべきもので'],'b',
+   'Lẽ ra phải cảm ơn thầy sớm hơn nhưng giờ mới nói, em xin lỗi thầy.',
+   '<b>〜べきところを</b> = "lẽ ra phải… (nhưng lại không)", dùng khi xin lỗi.'),
+  Q(11,'佐藤君は足のけがを（　　）、20キロもの距離を最後まで走り抜いた。',['問わず','よそに','おいて','ものともせずに'],'d',
+   'Bạn Sato bất chấp chấn thương ở chân vẫn chạy trọn quãng đường 20 km.',
+   '<b>〜をものともせず(に)</b> = "bất chấp (khó khăn, nguy hiểm)".'),
+  Q(12,'昔（　　）、今は男女平等の時代なんですよ。同じ権利が与えられるべきです。',['ならいざしらず','もさることながら','はさておき','はおろか'],'a',
+   'Ngày xưa thì không nói làm gì, chứ bây giờ là thời bình đẳng nam nữ. Phải được trao quyền như nhau.',
+   '<b>〜ならいざしらず</b> = "nếu là… thì còn chấp nhận, nhưng (bây giờ) thì không".'),
+  Q(13,'風が強く、木々が今にも（　　）揺れている。',['倒れるとばかりに','倒れんばかりに','倒れるともなく','倒れつつ'],'b',
+   'Gió mạnh, cây cối rung lắc như sắp đổ đến nơi.',
+   '<b>〜んばかりに</b> = "như thể sắp…".'),
+  Q(14,'（　　）昔聞いたことがある歌が聞こえてきた。',['どこからともいえず','どこともいえず','どこからともなしに','どこともなしに'],'c',
+   'Từ đâu đó vọng đến một bài hát mà ngày xưa tôi từng nghe.',
+   '<b>どこからともなしに</b> = "không rõ từ đâu".'),
+  Q(15,'川口先生はどうも授業に関係ない話をする（　　）。でも、そこがまた面白い。',['きらいがある','ものがある','わけがある','ならいがある'],'a',
+   'Thầy Kawaguchi có khuynh hướng hay nói chuyện không liên quan đến bài học. Nhưng chính điều đó lại thú vị.',
+   '<b>〜きらいがある</b> = "có khuynh hướng (xấu)…".')
+ ]),
+ OR('k44b','問題２','Sắp xếp câu','',[
+  O(1,'','、体の調子がいい。','なってから|早く|というもの|寝るように','bdac',
+   'Từ khi tôi bắt đầu đi ngủ sớm thì sức khỏe tốt hẳn lên.',
+   '<b>〜てからというもの</b> = "kể từ khi… thì (liên tục)". Thứ tự: 早く → 寝るように → なってから → というもの.'),
+  O(2,'彼は','もう見ている。','注意した|見るなと|スマホを|そばから','cbad',
+   'Vừa mới nhắc anh ấy đừng xem điện thoại thì anh ấy đã lại xem rồi.',
+   '<b>〜そばから</b> = "vừa mới… thì đã (lại)…". Thứ tự: スマホを → 見るなと → 注意した → そばから.'),
+  O(3,'','、色々な所で地震が起きている。','になって|いうもの|今年|からと','cadb',
+   'Từ năm nay trở đi, động đất xảy ra ở nhiều nơi.',
+   '<b>〜からというもの</b>. Thứ tự: 今年 → になって → からと → いうもの.'),
+  O(4,'その客は','、注文を始めた。','座る|早いか|席に|が','cadb',
+   'Vị khách vừa ngồi vào ghế đã bắt đầu gọi món.',
+   '<b>〜が早いか</b> = "vừa… là ngay lập tức". Thứ tự: 席に → 座る → が → 早いか.'),
+  O(5,'先生は','、プリントを配り始めた。','入って|否や|教室に|来るや','cadb',
+   'Thầy vừa bước vào lớp là bắt đầu phát tài liệu.',
+   '<b>〜や否や</b> = "vừa… là ngay…". Thứ tự: 教室に → 入って → 来るや → 否や.')
+ ]),
+ MC('k44c','問題３','Chọn mẫu đúng (2 lựa chọn)','',[
+  Q(1,'井上さん（　　）、次々とみんなの就職が決まっている。',['をもって','を皮切りに'],'b',
+   'Bắt đầu từ anh Inoue, việc làm của mọi người lần lượt được quyết định.',
+   '<b>を皮切りに</b> + 次々と (chuỗi nối tiếp).'),
+  Q(2,'テストといっても小テストなので、時間はせいぜい10分（　　）。',['に至るまでだ','といったところだ'],'b',
+   'Tuy gọi là bài kiểm tra nhưng chỉ là bài ngắn nên thời gian cùng lắm khoảng 10 phút.',
+   'せいぜい + con số → <b>といったところだ</b>.'),
+  Q(3,'(司会)これ（　　）、第25回入学式を終わります。',['をもちまして','を限りに'],'a',
+   '(Người dẫn chương trình) Với phần này, lễ nhập học lần thứ 25 xin được kết thúc.',
+   '<b>これをもちまして</b> = mẫu cố định trong lời bế mạc.'),
+  Q(4,'そのホテルのコンシェルジュは近隣の店はもちろん、その営業時間（　　）覚えている。',['を皮切りに','に至るまで'],'b',
+   'Nhân viên hỗ trợ khách của khách sạn đó không chỉ nhớ các cửa hàng gần đó mà còn nhớ cả giờ mở cửa của chúng.',
+   '<b>〜はもちろん、〜に至るまで</b> = "không chỉ… mà đến cả…".'),
+  Q(5,'今年（　　）この商品の生産を停止いたします。',['に至るまで','を限りに'],'b',
+   'Chúng tôi sẽ ngừng sản xuất sản phẩm này kể từ năm nay.',
+   '<b>今年を限りに</b> = lấy năm nay làm mốc chấm dứt.')
+ ]),
+ OR('k44d','問題４','Sắp xếp câu','',[
+  O(1,'このレストランは','を使っている。','ならでは|食材|の|この土地','dacb',
+   'Nhà hàng này dùng nguyên liệu chỉ có ở vùng đất này.',
+   '<b>〜ならでは</b> = "chỉ có ở…". Thứ tự: この土地 → ならでは → の → 食材.'),
+  O(2,'大地震による影響は、'  ,'。','地震直後に|続いた|とどまらず|何年も','acdb',
+   'Ảnh hưởng của trận động đất lớn không chỉ dừng ở ngay sau động đất mà còn kéo dài nhiều năm.',
+   '<b>〜にとどまらず</b> = "không chỉ dừng ở…". Thứ tự: 地震直後に → とどまらず → 何年も → 続いた.'),
+  O(3,'交通事故にあってから、','さえできない。','おろか|歩くこと|走ること|は','cdab',
+   'Sau tai nạn giao thông, đến đi bộ cũng không làm được, nói gì đến chạy.',
+   '<b>〜はおろか</b> = "nói gì đến…". Thứ tự: 走ること → は → おろか → 歩くこと.'),
+  O(4,'この仕事を頼めるのは、彼女','。','ほかに|おいて|を|いない','cbad',
+   'Người có thể nhờ công việc này chỉ có cô ấy, không có ai khác.',
+   '<b>〜をおいて〜いない</b> = "ngoài… ra không có". Thứ tự: を → おいて → ほかに → いない.'),
+  O(5,'最近は','、人権問題も関心を集めている。','問題も|さること|政治や戦争の|ながら','cabd',
+   'Dạo này, vấn đề chính trị và chiến tranh là đương nhiên, nhưng cả vấn đề nhân quyền cũng đang được quan tâm.',
+   '<b>〜もさることながら</b> = "không chỉ… mà…". Thứ tự: 政治や戦争の → 問題も → さること → ながら.')
+ ]),
+ MC('k44e','問題５','Điền hai chỗ trống','',[
+  Q(1,'部長［　　］課長［　　］、どうしてこの会社は時間にルーズな人ばかりなのだろう。',['であれ/であれ','といい/といい'],'b',
+   'Cả trưởng phòng lẫn tổ trưởng, sao công ty này toàn người lơ là giờ giấc thế nhỉ.',
+   'Hai ví dụ + nhận xét chung → <b>といい〜といい</b>.'),
+  Q(2,'彼女は犬［　　］猫［　　］、動物を見ると触りたがる。',['とも/とも','といわず/といわず'],'b',
+   'Cô ấy cứ thấy động vật, bất kể chó hay mèo, là muốn sờ.',
+   '<b>といわず〜といわず</b> = "bất kể… hay…" + hành vi lặp lại.'),
+  Q(3,'大阪［　　］東京［　　］、日本の物価は上がっている。',['であろうと/であろうと','なり/なり'],'a',
+   'Dù là Osaka hay Tokyo, vật giá ở Nhật đều đang tăng.',
+   '<b>であろうと〜であろうと</b> = "dù là… hay…", vế sau đúng cho cả hai.')
+ ]),
+ OR('k44f','問題６','Sắp xếp câu','',[
+  O(1,'','勝てるかどうかが決まる。','トレーニング|試合に|この一か月の|いかんで','cadb',
+   'Có thắng được trận đấu hay không tuỳ vào việc luyện tập trong một tháng này.',
+   '<b>〜いかんで</b> = "tuỳ vào…". Thứ tự: この一か月の → トレーニング → いかんで → 試合に.'),
+  O(2,'','、今はほとんどのことがインターネットでわかる。','いざ|昔|しらず|なら','bdac',
+   'Ngày xưa thì không nói làm gì, chứ bây giờ hầu hết mọi chuyện đều tra được trên mạng.',
+   '<b>〜ならいざしらず</b>. Thứ tự: 昔 → なら → いざ → しらず.'),
+  O(3,'','、試験結果を郵送いたします。','かかわらず|いかん|結果の|に','cbda',
+   'Bất kể kết quả như thế nào, chúng tôi sẽ gửi kết quả bài thi qua bưu điện.',
+   '<b>〜のいかんにかかわらず</b>. Thứ tự: 結果の → いかん → に → かかわらず.'),
+  O(4,'彼女は','ばかりしている。','買い物|心配|友だちの|をよそに','cbda',
+   'Cô ấy mặc kệ sự lo lắng của bạn bè, chỉ lo đi mua sắm.',
+   '<b>〜をよそに</b> = "mặc kệ…". Thứ tự: 友だちの → 心配 → をよそに → 買い物.'),
+  O(5,'消防隊員は','活動を行った。','ものとも|消火|せず|危険を','dacb',
+   'Các lính cứu hỏa bất chấp nguy hiểm vẫn thực hiện công tác chữa cháy.',
+   '<b>〜をものともせず</b>. Thứ tự: 危険を → ものとも → せず → 消火.')
+ ]),
+ MC('k44g','問題７','Chọn từ đúng (2 lựa chọn)','',[
+  Q(1,'彼は合格の知らせを聞いて、（　　）ばかりに喜んだ。',['飛び上がる','飛び上がらん'],'b',
+   'Nghe tin đậu, anh ấy vui mừng như muốn nhảy cẫng lên.',
+   '<b>飛び上がらんばかりに</b>.'),
+  Q(2,'（　　）からともなく私を呼ぶ声が聞こえる。',['どこ','だれ'],'a',
+   'Có tiếng ai đó gọi tôi, không rõ từ đâu vọng đến.',
+   '<b>どこからともなく</b> = "không rõ từ đâu".'),
+  Q(3,'あそこの部長は人の話をちゃんと聞かずに仕事を進めてしまう（　　）。',['きらいがある','かぎりだ'],'a',
+   'Trưởng phòng ở đó có khuynh hướng không nghe người khác nói cho kỹ mà cứ tiến hành công việc.',
+   '<b>きらいがある</b> = khuynh hướng xấu.'),
+  Q(4,'祖母は涙（　　）戦争の体験を語った。',['ともなく','ながらに'],'b',
+   'Bà tôi vừa rơi nước mắt vừa kể lại trải nghiệm chiến tranh.',
+   '<b>涙ながらに</b> = vừa khóc vừa.'),
+  Q(5,'先生は早く帰れ（　　）教室の電気を消した。',['とばかりに','と思いきや'],'a',
+   'Thầy tắt đèn lớp học như muốn nói "về sớm đi".',
+   '<b>〜とばかりに</b> = như muốn nói rằng…')
+ ])
+ ]
 }
+
 ];
 
 /* ================= TRẠNG THÁI ================= */
@@ -803,6 +1237,24 @@ function cat(mood='normal',size=64){
 }
 
 /* ================= HOME ================= */
+function homeItems(){const out=[],seen={};EXAMS.forEach(e=>{if(e.group){if(!seen[e.group]){seen[e.group]={group:e.group,tag:e.tag,list:[]};out.push(seen[e.group])}seen[e.group].list.push(e)}else out.push({e})});return out}
+function renderGroup(g){
+  S.view='group';
+  const list=EXAMS.filter(e=>e.group===g);
+  app.innerHTML=`
+  <div class="topbar"><div class="brand">${cat('normal',44)}<div>${g}<small>Neko Ôn Tập</small></div></div>
+    <button class="btn sm alt" data-act="home">← Trang chủ</button></div>
+  <section class="card hero">${cat('happy',110)}<div><h1>Chọn phần muốn ôn</h1><p>Mỗi phần là một nhóm mẫu ngữ pháp, làm xong có chấm điểm riêng.</p></div></section>
+  <div class="exams">${list.map(e=>`
+    <article class="card exam">
+      <span class="tag">${e.tag}</span>
+      <h2 class="jp">${e.title}</h2>${e.sub?`<p class="sub jp">${e.sub}</p>`:''}
+      <ul>${e.sections.map(s=>`<li><b>${s.jp}</b><span>${s.name} · ${s.qs.length} câu</span></li>`).join('')}</ul>
+      <div class="chip">Tổng ${e.sections.reduce((a,s)=>a+s.qs.length,0)} câu</div>
+      <button class="btn" data-act="open" data-id="${e.id}">Bắt đầu làm bài</button>
+    </article>`).join('')}</div>`;
+  window.scrollTo(0,0);
+}
 function renderHome(){
   S.view='home';
   app.innerHTML=`
@@ -814,13 +1266,20 @@ function renderHome(){
   </section>
   <label class="shuffle"><input type="checkbox" id="shuf" ${S.shuffle?'checked':''}><span>Xáo trộn thứ tự đáp án<span>Bật để đáp án đổi vị trí mỗi lần làm, tránh học vẹt theo vị trí.</span></span></label>
   <div class="exams">
-    ${EXAMS.map(e=>`
+    ${homeItems().map(it=>it.group?`
     <article class="card exam">
-      <span class="tag">${e.tag}</span>
-      <h2 class="jp">${e.title}</h2>
-      <ul>${e.sections.map(s=>`<li><b>${s.jp}</b><span>${s.name} · ${s.qs.length} câu</span></li>`).join('')}</ul>
-      <div class="chip">Tổng ${e.sections.reduce((a,s)=>a+s.qs.length,0)} câu</div>
-      <button class="btn" data-act="open" data-id="${e.id}">Bắt đầu làm bài</button>
+      <span class="tag">${it.tag}</span>
+      <h2 class="jp" style="font-family:var(--f-display)">${it.group.replace(/^.*? · /,'')}</h2>
+      <ul>${it.list.map(e=>`<li><b>${e.title}</b><span>${e.sections.length} phần · ${e.sections.reduce((a,s)=>a+s.qs.length,0)} câu</span></li>`).join('')}</ul>
+      <div class="chip">Tổng ${it.list.reduce((a,e)=>a+e.sections.reduce((x,s)=>x+s.qs.length,0),0)} câu</div>
+      <button class="btn" data-act="opengroup" data-g="${it.group}">Xem các phần</button>
+    </article>`:`
+    <article class="card exam">
+      <span class="tag">${it.e.tag}</span>
+      <h2 class="jp">${it.e.title}</h2>
+      <ul>${it.e.sections.map(s=>`<li><b>${s.jp}</b><span>${s.name} · ${s.qs.length} câu</span></li>`).join('')}</ul>
+      <div class="chip">Tổng ${it.e.sections.reduce((a,s)=>a+s.qs.length,0)} câu</div>
+      <button class="btn" data-act="open" data-id="${it.e.id}">Bắt đầu làm bài</button>
     </article>`).join('')}
     <article class="card exam soon">${cat('normal',70)}<h2>Bộ đề tiếp theo</h2><p>Sắp có, Neko đang chuẩn bị!</p></article>
   </div>`;
@@ -876,8 +1335,10 @@ function passageHtml(sec){
   return `<div class="ptools"><button class="btn sm alt" data-act="tr">Xem bản dịch tiếng Việt</button></div><div class="passage">${body}</div>${sec.passageNote?`<p class="pnote">${sec.passageNote}</p>`:''}`;
 }
 
-const BLANK1=/（[\s　]*）/;
-const fullOf=q=>q.full||(BLANK1.test(q.text)?q.text.replace(BLANK,`<mark>${q.choices[q.a]}</mark>`):'');
+const BLANK1=/[（［][\s　]*[）］]/;
+const blankHtml=t=>text=>text.replace(BLANK,m=>`<span class="blank">${m[0]==='［'?'［　　］':'（　　）'}</span>`);
+const fillMark=(text,ch)=>{const ps=ch.split('/');let i=0;return text.replace(BLANK,()=>`<mark>${ps[Math.min(i++,ps.length-1)]}</mark>`)};
+const fullOf=q=>q.full||(BLANK1.test(q.text)?fillMark(q.text,q.choices[q.a]):'');
 function mcHtml(sec,q){
   const k=keyOf(sec,q), chosen=S.answers[k], done=chosen!==undefined;
   const order=S.perm[k]||[...q.choices.keys()];
@@ -887,7 +1348,7 @@ function mcHtml(sec,q){
     ? `<div class="q-head">${num}<div class="qtext"><span class="tgt">${q.text}</span></div></div>`
     : (sec.reading&&q.stem)
     ? `<div class="q-head">${num}<div class="qtext"><b>${q.label||('【'+q.n+'】')}</b> chọn đáp án phù hợp</div></div><div class="stem">${q.stem.replace(/【(\d)(‑[ab])?】/g,(m)=>`<span class="blank">${m}</span>`)}</div>`
-    : `<div class="q-head">${num}<div class="qtext">${q.text.replace(BLANK,'<span class="blank">（　　）</span>')}</div></div>`;
+    : `<div class="q-head">${num}<div class="qtext">${blankHtml()(q.text)}</div></div>`;
   const ch=order.map((oi,pos)=>{
     let cls='choice', mk='';
     if(done){ if(oi===q.a){cls+=' right'; mk='<span class="mk">Đáp án</span>'} else if(oi===chosen){cls+=' wrong'; mk='<span class="mk">Bạn chọn</span>'} else cls+=' dim'; }
@@ -909,20 +1370,20 @@ function mcHtml(sec,q){
 function orderHtml(sec,q){
   const k=keyOf(sec,q), picks=S.picks[k]||[], done=picks.length===4, ok=done&&isOk(sec,q);
   const slots=[0,1,2,3].map(i=>{
-    const f=picks[i]; let cls='slot'+(i===2?' star':'');
+    const f=picks[i]; let cls='slot'+(i===2&&!sec.nostar?' star':'');
     if(f){ cls+=' filled'; if(done) cls+= (f===q.order[i])?' ok':' no'; }
     else cls+=' empty';
-    const inner=f?q.f[f]:(i===2?'★':'…');
+    const inner=f?q.f[f]:(i===2&&!sec.nostar?'★':'…');
     return done||!f ? `<span class="${cls}">${inner}</span>` : `<button class="${cls}" data-act="unslot" data-k="${k}" data-i="${i}" title="Chạm để bỏ mảnh này">${inner}</button>`;
   }).join('');
   const frags=Object.keys(q.f).map(f=>`<button class="frag" data-act="frag" data-k="${k}" data-f="${f}" ${(picks.includes(f)||done)?'disabled':''}><span class="let">${LET['abcd'.indexOf(f)]}</span>${q.f[f]}</button>`).join('');
   let ex='';
   if(done){
     const star=q.f[q.order[2]];
-    const sent=q.pre+q.order.map((f,i)=>i===2?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
+    const sent=q.pre+q.order.map((f,i)=>(i===2&&!sec.nostar)?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
     ex=`<div class="explain ${ok?'ok':'no'}">
       <div class="ex-top">${cat(ok?'happy':'sad',58)}<div class="bubble">${S.msg[k]}</div></div>
-      <p class="ex-star"><span class="lbl" style="margin:0">Đáp án ô ★</span><b>${star}</b></p>
+      ${sec.nostar?'':`<p class="ex-star"><span class="lbl" style="margin:0">Đáp án ô ★</span><b>${star}</b></p>`}
       <p><span class="lbl">Câu hoàn chỉnh</span><br><span class="jp">${q.ctx?q.ctx+'<br>':''}${sent}</span></p>
       <p><span class="lbl">Dịch nghĩa</span><br>${q.tr}</p>
       <div><span class="lbl">Giải thích</span><br>${q.vi}</div></div>`;
@@ -939,6 +1400,7 @@ function secHtml(sec){
   const qs=secQs(sec);
   return `<section class="card sec">
     <div class="sec-head"><h2><span class="jp">${sec.jp}</span>${sec.name}</h2><p>${sec.hint}<span class="jp">${sec.hintJp}</span></p></div>
+    ${sec.note?`<details class="gnote"><summary>📒 Ghi nhớ ngữ pháp</summary><div class="gbody">${sec.note}</div></details>`:''}
     ${sec.reading?passageHtml(sec):''}
     <div id="qs">${qs.map(q=>sec.type==='order'?orderHtml(sec,q):mcHtml(sec,q)).join('')}</div>
   </section>`;
@@ -949,7 +1411,7 @@ function renderQuiz(){
   const e=exam(), secs=secList(); if(S.secIdx>=secs.length) S.secIdx=0;
   app.innerHTML=`
   <div class="topbar"><div class="brand">${cat('normal',40)}<div><span class="jp">${e.title}</span> · ${e.tag}<small>Neko Ôn Tập</small></div></div>
-    <button class="btn sm alt" data-act="home">← Trang chủ</button></div>
+    <div class="tb-btns">${e.group?`<button class="btn sm" data-act="opengroup" data-g="${e.group}">← Chọn phần khác</button>`:''}<button class="btn sm alt" data-act="home">Trang chủ</button></div></div>
   <div id="chrome">${chromeHtml()}</div>
   <div id="body">${secHtml(secs[S.secIdx])}</div>
   <div class="navrow" id="nav">${navHtml()}</div>
@@ -985,6 +1447,7 @@ function renderResults(){
   <div class="acts">
     <button class="btn" data-act="retrywrong" ${wrongN?'':'disabled'}>Làm lại ${wrongN} câu sai</button>
     <button class="btn alt" data-act="restart">Làm lại từ đầu</button>
+    ${exam().group?`<button class="btn alt" data-act="opengroup" data-g="${exam().group}">Chọn phần khác</button>`:''}
     <button class="btn alt" data-act="home">Về trang chủ</button>
   </div>
   <div class="bd">${secList().map(sec=>{
@@ -994,6 +1457,7 @@ function renderResults(){
   <div class="rv">${all.map(({sec,q,k})=>reviewItem(sec,q,k)).join('')}</div>
   <div class="acts" style="margin-top:22px">
     <button class="btn" data-act="retrywrong" ${wrongN?'':'disabled'}>Làm lại ${wrongN} câu sai</button>
+    ${exam().group?`<button class="btn alt" data-act="opengroup" data-g="${exam().group}">Chọn phần khác</button>`:''}
     <button class="btn alt" data-act="home">Về trang chủ</button>
   </div>`;
   window.scrollTo(0,0);
@@ -1002,13 +1466,13 @@ function reviewItem(sec,q,k){
   const ok=isOk(sec,q), done=isDone(sec,q);
   let stem, mine, right, full;
   if(sec.type==='order'){
-    stem=(q.ctx?q.ctx+'<br>':'')+q.pre+'［ ］［ ］［★］［ ］'+q.post;
+    stem=(q.ctx?q.ctx+'<br>':'')+q.pre+(sec.nostar?'［ ］［ ］［ ］［ ］':'［ ］［ ］［★］［ ］')+q.post;
     const p=S.picks[k]||[];
     mine=done?p.map(f=>q.f[f]).join(' → '):'';
     right=q.order.map(f=>q.f[f]).join(' → ');
-    full=q.pre+q.order.map((f,i)=>i===2?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
+    full=q.pre+q.order.map((f,i)=>(i===2&&!sec.nostar)?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
   } else {
-    stem=sec.usage?`<span class="tgt">${q.text}</span>`:(sec.reading&&q.stem)?q.stem.replace(/【(\d)(‑[ab])?】/g,'<span class="blank">$&</span>'):q.text.replace(BLANK,'<span class="blank">（　　）</span>');
+    stem=sec.usage?`<span class="tgt">${q.text}</span>`:(sec.reading&&q.stem)?q.stem.replace(/【(\d)(‑[ab])?】/g,'<span class="blank">$&</span>'):blankHtml()(q.text);
     mine=done?q.choices[S.answers[k]]:'';
     right=q.choices[q.a];
     full=fullOf(q);
@@ -1031,6 +1495,7 @@ document.addEventListener('click',ev=>{
   const qOf=k=>sec&&sec.qs.find(q=>keyOf(sec,q)===k);
   switch(a){
     case 'open': startExam(t.dataset.id); break;
+    case 'opengroup': renderGroup(t.dataset.g); break;
     case 'home': S.showTr=false; renderHome(); break;
     case 'tab': S.secIdx=+t.dataset.i; S.showTr=false; renderQuiz(); break;
     case 'prev': if(S.secIdx>0){S.secIdx--; renderQuiz()} break;
@@ -1058,4 +1523,3 @@ renderHome();
 </script>
 
 </body></html>
-Neko Ôn Tập.html を表示しています。 1 / 1 ページ
