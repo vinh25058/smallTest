@@ -283,6 +283,28 @@ details.rv-ex ul{margin:4px 0 0; padding-left:20px}
 .gnote{background:var(--butter-soft); border:2.5px solid var(--line); border-radius:16px; padding:8px 14px; margin:0 0 14px}
 .gnote summary{cursor:pointer; font-weight:800; font-family:var(--f-display)}
 .gnote .gbody{margin-top:8px; line-height:1.75; font-size:15px}
+.grp{display:inline-block; font-family:var(--f-display); font-weight:700; font-size:13px; background:var(--sky-soft); border:2px solid var(--line); border-radius:999px; padding:0 9px; margin-right:6px; vertical-align:middle}
+.mboard{margin-bottom:22px}
+.mtitle{margin:0 0 10px; font-family:var(--f-display); font-size:20px}
+.c0{--mc:var(--pink)} .c1{--mc:var(--mint)} .c2{--mc:var(--sky)} .c3{--mc:var(--butter)} .c4{--mc:color-mix(in srgb,var(--pink) 50%,var(--sky))} .c5{--mc:color-mix(in srgb,var(--mint) 50%,var(--butter))}
+.mwrap{display:flex; gap:6px; align-items:stretch; margin-bottom:8px}
+.mrow{flex:1; min-width:0; display:flex; align-items:center; gap:10px; flex-wrap:wrap; text-align:left; background:var(--surface); color:var(--ink); border:2.5px solid var(--line); border-radius:14px; padding:8px 12px; font:inherit; cursor:pointer}
+.mrow .mtext{flex:1 1 140px; font-weight:700; line-height:1.5}
+.mrow .qn{width:30px; height:30px; font-size:14px; margin:0}
+.mrow.paired{background:color-mix(in srgb,var(--mc) 35%,var(--surface))}
+.mrow.sel{outline:3px dashed var(--ink); outline-offset:2px}
+.mslot{margin-left:auto; font-family:var(--f-jp); font-weight:700; border:2px dashed var(--line); border-radius:10px; padding:1px 10px; min-width:70px; text-align:center}
+.mrow.paired .mslot{border-style:solid; background:var(--mc); color:var(--on-pink)}
+.mrow.ok{border-color:var(--mint-ink); background:var(--mint-soft)} .mrow.no{border-color:var(--bad-ink); background:var(--bad-soft)}
+div.mrow{cursor:default}
+.munpair{flex:none; width:38px; border:2.5px solid var(--line); border-radius:12px; background:var(--surface); color:var(--ink); font:inherit; cursor:pointer}
+.mchips{display:flex; flex-wrap:wrap; gap:8px; margin:6px 0 10px}
+.mchip{font-family:var(--f-jp); font-weight:700; font-size:16px; color:var(--ink); border:2.5px solid var(--line); border-radius:12px; padding:6px 12px; background:var(--surface); cursor:pointer}
+.mchip.used{background:var(--mc); color:var(--on-pink)}
+.mchip:disabled{cursor:default; opacity:.7}
+.mfoot{display:flex; align-items:center; justify-content:space-between; gap:10px; flex-wrap:wrap}
+.mhint{font-size:14px; color:var(--ink-soft)}
+.mscore{font-family:var(--f-display); font-weight:700; background:var(--butter-soft); border:2.5px solid var(--line); border-radius:12px; padding:4px 14px}
 </style>
 
 <div class="wrap" id="app"></div>
@@ -292,6 +314,7 @@ details.rv-ex ul{margin:4px 0 0; padding-left:20px}
 const R=(k,r)=>`<ruby>${k}<rt>${r}</rt></ruby>`;
 const BLANK=/[（［][\s　]*[）］]/g;
 /* ---- trợ giúp khai báo dữ liệu bộ đề 4 ---- */
+let _mi=0; const M=(n,tag,text,ans,ds,tr,vi)=>{const pos=(_mi++*3+1)%4; const ch=[...ds]; ch.splice(pos,0,ans); return {n,tag,text,choices:ch,a:pos,tr,vi}};
 const LT='abcdef';
 const Q=(n,text,ch,ans,tr,vi)=>({n,text,choices:ch,a:LT.indexOf(ans),tr,vi});
 const O=(n,pre,post,fr,order,tr,vi)=>({n,pre,post,f:Object.fromEntries(fr.split('|').map((t,i)=>[LT[i],t])),order:order.split(''),tr,vi});
@@ -1183,11 +1206,232 @@ const EXAMS=[{
  ])
  ]
 }
+,
+/* ===== BỘ ĐỀ 5 · Shin Kanzen N2 Từ vựng 96–99 ===== */
+{
+ id:'ko5', no:5, tag:'Bộ đề 5', title:'新完全マスター N2 語彙 96–99',
+ sections:[
+ /* ---------- 問題1: nối 連語 ---------- */
+ {id:'b5s1', jp:'問題1', name:'Nối 連語', type:'match',
+  hint:'Chạm một nhóm từ bên trái, rồi chạm cụm bên phải để nối. Nối đủ cả bảng thì bấm "Kiểm tra".',
+  hintJp:'一緒に使う言葉を線で結びなさい。',
+  boards:[
+   {id:'a', title:'(1)', rights:['にぶつかる','を積む','を握る（にぎる）','を解く','がはねる','が膨らむ']},
+   {id:'b', title:'(2)', rights:['を解く','を寄せる','を招く','をとらえる','がふさがる','が膨らむ']},
+   {id:'c', title:'(3)', rights:['にはまる','を寄せる','を解く','を握る','が膨らむ','がふさがる']}
+  ],
+  qs:[
+  {n:1, board:0, text:'経験・トレーニング・練習・訓練', a:1, vi:'<b>経験を積む</b> = tích lũy kinh nghiệm; 練習を積む, 訓練を積む = rèn luyện nhiều lần. 積む = chất, chồng lên, tích lũy.'},
+  {n:2, board:0, text:'水・お湯・油・泥', a:4, vi:'<b>水／油／泥がはねる</b> = nước, dầu, bùn bắn tung tóe (はねる: bắn, văng). Ví dụ: 油がはねる.'},
+  {n:3, board:0, text:'ひも・縄・帯・包み・荷物', a:3, vi:'<b>ひもを解く</b> = cởi, tháo (dây, gói). 解く ở đây có nghĩa "tháo ra cái đã buộc/gói".'},
+  {n:4, board:0, text:'ハンドル・マイク・ペン・包丁・手', a:2, vi:'<b>ハンドルを握る</b> = cầm lấy, nắm chặt (vô lăng, micro, bút, dao, tay). 握る (にぎる) = nắm.'},
+  {n:5, board:0, text:'おなか・財布・ポケット・パン', a:5, vi:'<b>おなかが膨らむ</b> = bụng phình lên; 財布／ポケット／パンが膨らむ = ví, túi căng phồng, bánh nở phồng.'},
+  {n:6, board:0, text:'車・壁・柱・通行人', a:0, vi:'<b>車／壁／柱／通行人にぶつかる</b> = đâm vào, va phải. Đi với trợ từ <b>に</b>, không phải を.'},
+  {n:7, board:1, text:'道路・入り口・穴・血管', a:4, vi:'<b>道路／入り口／穴／血管がふさがる</b> = đường, lối vào, lỗ, mạch máu bị chặn, bị tắc.'},
+  {n:8, board:1, text:'なぞ・問題・パズル・疑問', a:0, vi:'<b>なぞ／問題／パズル／疑問を解く</b> = giải (câu đố, bài toán, thắc mắc).'},
+  {n:9, board:1, text:'夢・想像・期待・イメージ・アイデア', a:5, vi:'<b>夢／想像／期待／イメージ／アイデアが膨らむ</b> = ước mơ, tưởng tượng, kỳ vọng ngày càng lớn dần, nở rộng.'},
+  {n:10, board:1, text:'誤解・事故・混乱・疑い', a:2, vi:'<b>誤解／事故／混乱／疑いを招く</b> = dẫn đến (hậu quả không hay): gây hiểu lầm, gây tai nạn, gây hỗn loạn, bị nghi ngờ.'},
+  {n:11, board:1, text:'関心・信頼・期待・思い・好意', a:1, vi:'<b>関心／信頼／期待／思い／好意を寄せる</b> = dành sự quan tâm, tin tưởng, kỳ vọng, tình cảm cho ai đó.'},
+  {n:12, board:1, text:'特徴・状況・変化・意味', a:3, vi:'<b>特徴／状況／変化／意味をとらえる</b> = nắm bắt (đặc điểm, tình hình, sự thay đổi, ý nghĩa).'},
+  {n:13, board:2, text:'財布・かぎ・権力', a:3, vi:'<b>財布／かぎ／権力を握る</b> = nắm giữ (ví tiền, chìa khóa, quyền lực). Nghĩa bóng: nắm quyền kiểm soát.'},
+  {n:14, board:2, text:'渋滞・わな・深み', a:0, vi:'<b>渋滞／わな／深みにはまる</b> = sa vào, mắc vào (kẹt xe, bẫy, chỗ nước sâu). Đi với <b>に</b>.'},
+  {n:15, board:2, text:'誤解・緊張・怒り', a:2, vi:'<b>誤解／緊張／怒りを解く</b> = hóa giải, xóa bỏ (hiểu lầm, căng thẳng, cơn giận).'},
+  {n:16, board:2, text:'赤字・借金・予算', a:4, vi:'<b>赤字／借金／予算が膨らむ</b> = thâm hụt, nợ, ngân sách phình to ra.'},
+  {n:17, board:2, text:'席・部屋・電話・予定・手', a:5, vi:'<b>席／部屋／電話／予定／手がふさがる</b> = chỗ ngồi, phòng, điện thoại đã có người dùng/kín lịch/bận tay (không rảnh).'},
+  {n:18, board:2, text:'苦情・要望・相談・感想・意見・質問', a:1, vi:'<b>苦情／要望／相談／感想／意見／質問を寄せる</b> = gửi đến (khiếu nại, yêu cầu, tư vấn, cảm tưởng, ý kiến, câu hỏi). Thường dùng 〜が寄せられる.'}
+  ]},
+
+ /* ---------- 問題2-(1) ---------- */
+ {id:'b5s2a', jp:'問題2', name:'Từ chung (1)', type:'mc',
+  hint:'Từ trong khung: にらむ・膨らむ・積む・招く・寄せる. Mỗi nhóm ①②③④ (câu a, b, c) dùng chung một từ — chọn đúng dạng.',
+  hintJp:'（　）に共通して入る言葉を［　］の中から選んで、必要なら形を変えて書きなさい。（例）招く',
+  qs:[
+  M(1,'①a','今からゲームをするので、机を教室の隅に（　　）ください。','寄せて',['寄せられて','積んで','招いて'],
+   'Bây giờ chúng ta sẽ chơi trò chơi nên hãy dồn bàn vào góc lớp.',
+   '<b>寄せる</b> = dồn, xích sát về một phía. 机を隅に寄せる + てください.<ul><li>寄せられて: bị động, không phải ý "bạn tự dồn".</li></ul>'),
+  M(2,'①b','新聞の解説コーナーに、毎週たくさんの質問が（　　）いる。','寄せられて',['寄せて','寄せる','招かれて'],
+   'Mục giải thích trên báo mỗi tuần nhận được rất nhiều câu hỏi gửi đến.',
+   '<b>質問が寄せられる</b> = câu hỏi được gửi đến (thể bị động, chủ ngữ là 質問). Nếu dùng 寄せて thì chủ ngữ phải là người gửi.'),
+  M(3,'①c','国民は新しい政府に大きな期待を（　　）いる。','寄せて',['寄せられて','膨らんで','招いて'],
+   'Người dân đặt nhiều kỳ vọng vào chính phủ mới.',
+   '<b>期待を寄せる</b> = đặt kỳ vọng, chủ ngữ là người đặt kỳ vọng (国民) nên dùng thể chủ động 寄せている.'),
+  M(4,'②a','ポケットが（　　）いるけど、何が入っているの？','膨らんで',['膨らむ','積んで','寄せて'],
+   'Túi áo căng phồng lên, trong đó có gì thế?',
+   '<b>膨らむ</b> = phồng lên, căng lên. Trạng thái đang phồng: 膨らんでいる.'),
+  M(5,'②b','一つの言葉から、いろいろなイメージが（　　）くる。','膨らんで',['膨らむ','寄せて','招いて'],
+   'Từ một từ mà nhiều hình ảnh nảy nở ra.',
+   '<b>イメージが膨らむ</b> = hình dung ngày càng nở rộng. 〜てくる chỉ quá trình diễn ra dần dần.'),
+  M(6,'②c','映画は、製作を進めるうちに、どんどん予算が（　　）しまうものだ。','膨らんで',['膨らま','積んで','寄せて'],
+   'Phim càng làm thì ngân sách càng phình to ra.',
+   '<b>予算が膨らむ</b> = ngân sách phình to. Nối với しまう bằng thể て: 膨らんでしまう.'),
+  M(7,'③a','夫は娘の帰りを心配して、さっきから時計ばかり（　　）いる。','にらんで',['にらま','膨らんで','招いて'],
+   'Chồng tôi lo cho con gái chưa về, nãy giờ cứ nhìn chằm chằm vào đồng hồ.',
+   '<b>にらむ</b> = nhìn chằm chằm (nghĩa gốc: lườm). 時計をにらむ = nhìn đồng hồ chăm chú.'),
+  M(8,'③b','私が（　　）とおり、やはり故障の原因はこれだった。','にらんだ',['にらむ','積んだ','招いた'],
+   'Đúng như tôi đoán, nguyên nhân hỏng hóc quả nhiên là cái này.',
+   '<b>にらむ</b> = ngờ, đoán (nghĩa mở rộng: "nhắm trúng, dự đoán"). にらんだとおり = đúng như đã đoán. Vế sau nói kết quả đã xảy ra nên dùng quá khứ.'),
+  M(9,'④a','この車は大量の荷物を（　　）いるから、あまりスピードが出ない。','積んで',['積み','積まれて','寄せて'],
+   'Xe này chở nhiều hành lý nên không chạy nhanh được.',
+   '<b>荷物を積む</b> = chất, chở hàng lên. 積んでいる = đang chở.'),
+  M(10,'④b','卒業後は、国内のイタリア料理店で経験を（　　）つもりだ。','積む',['積んで','積み','積んだ'],
+   'Sau khi tốt nghiệp tôi định tích lũy kinh nghiệm ở một nhà hàng Ý trong nước.',
+   '<b>経験を積む</b> = tích lũy kinh nghiệm. 〜つもりだ nối với dạng từ điển: 積むつもり.')
+  ]},
+ /* ---------- 問題2-(2) ---------- */
+ {id:'b5s2b', jp:'問題2', name:'Từ chung (2)', type:'mc',
+  hint:'Từ trong khung: 解く・とらえる・はまる・はねる・振る. Mỗi nhóm ①②③④⑤ dùng chung một từ — chọn đúng dạng.',
+  hintJp:'（　）に共通して入る言葉を［　］の中から選んで、必要なら形を変えて書きなさい。',
+  qs:[
+  M(1,'①a','新しいスカートなのに、泥が（　　）、汚れてしまった。','はねて',['はねる','はまって','振って'],
+   'Váy mới mà bị bùn bắn lên nên bẩn mất rồi.',
+   '<b>泥がはねる</b> = bùn bắn lên. Nối hai vế bằng thể て: はねて、汚れてしまった.'),
+  M(2,'①b','髪が（　　）いるのに、彼女は気にしていないみたいだ。','はねて',['はねられて','はまって','振って'],
+   'Tóc bị vểnh lên mà cô ấy có vẻ chẳng để ý.',
+   '<b>髪がはねる</b> = tóc vểnh, bị cong ngược. はねている = đang trong trạng thái đó.'),
+  M(3,'①c','車は通学途中の小学生三人を（　　）、そのまま逃げていった。','はねて',['はねられて','振って','はまって'],
+   'Chiếc xe tông ba học sinh tiểu học đang trên đường đi học rồi bỏ chạy.',
+   '<b>人をはねる</b> = tông (xe) vào người, hất văng. Chủ ngữ là 車 nên dùng chủ động. Nếu chủ ngữ là người bị tông thì dùng はねられる.'),
+  M(4,'②a','トマトに塩を（　　）食べる。','振って',['振られて','振る','はねて'],
+   'Rắc muối lên cà chua rồi ăn.',
+   '<b>塩を振る</b> = rắc muối. 振る = rắc, vẩy. Nối bằng thể て với 食べる.'),
+  M(5,'②b','いつまでも就職しないので、付き合っていた彼女に（　　）しまった。','振られて',['振って','はねられて','振る'],
+   'Mãi không chịu đi làm nên tôi bị cô bạn gái đang hẹn hò đá mất.',
+   '<b>人に振られる</b> = bị (người yêu) đá, bị từ chối (thể bị động của 振る).'),
+  M(6,'②c','レポートに入れるグラフには番号を（　　）おきましょう。','振って',['振られて','振る','解いて'],
+   'Hãy đánh số cho biểu đồ đưa vào báo cáo.',
+   '<b>番号を振る</b> = đánh số, gán số. 振っておく = làm sẵn.'),
+  M(7,'③a','母に着物の帯を（　　）もらった。','解いて',['解かれて','解き','振って'],
+   'Tôi nhờ mẹ tháo dây đai (obi) của bộ kimono.',
+   '<b>帯を解く</b> = tháo, cởi (dây đai). 〜てもらう = nhờ ai làm giúp.'),
+  M(8,'③b','ある刑事が殺人事件のなぞを（　　）いくという内容の映画を見た。','解いて',['解かれて','解く','とらえて'],
+   'Tôi đã xem một bộ phim nói về một thám tử dần dần giải mã bí ẩn của vụ án giết người.',
+   '<b>なぞを解く</b> = giải bí ẩn. 〜ていく = làm dần dần.'),
+  M(9,'③c','事実を明らかにして、みんなの誤解を（　　）たい。','解き',['解いて','解く','解かれ'],
+   'Tôi muốn làm rõ sự thật và hóa giải hiểu lầm của mọi người.',
+   '<b>誤解を解く</b> = gỡ bỏ hiểu lầm. 〜たい nối với dạng ます bỏ ます: 解きたい.'),
+  M(10,'④a','動物園から逃げ出した猿を、係員が網で（　　）。','とらえた',['とらえて','はまった','振った'],
+   'Nhân viên đã dùng lưới bắt con khỉ trốn khỏi sở thú.',
+   '<b>とらえる</b> = bắt giữ (con vật, tội phạm). Câu kết thúc nên dùng とらえた.'),
+  M(11,'④b','時代の変化を（　　）、その時代に合った新商品を開発する。','とらえて',['とらえた','とらえられて','はまって'],
+   'Nắm bắt sự thay đổi của thời đại và phát triển sản phẩm mới hợp với thời đại đó.',
+   '<b>変化をとらえる</b> = nắm bắt sự thay đổi. Nối hai vế dùng thể て (とらえ cũng được). とらえられて là bị động nên sai.'),
+  M(12,'⑤a','この窓は先週割れてしまったので、今はガラスが（　　）いない。','はまって',['はまら','はめて','はねて'],
+   'Cửa sổ này tuần trước bị vỡ nên giờ chưa lắp kính.',
+   '<b>ガラスがはまる</b> = kính được lắp vào (tự động từ), phủ định はまっていない = chưa có kính. はめる là tha động từ (cần chủ thể).'),
+  M(13,'⑤b','深みに（　　）ないように、川で遊ぶときは気を付けよう。','はまら',['はまって','はまり','はまる'],
+   'Khi chơi ở sông hãy cẩn thận để không sa vào chỗ nước sâu.',
+   '<b>深みにはまる</b> = sa vào chỗ sâu. 〜ないように nối với thể ない: はまらない.')
+  ]},
+ /* ---------- 問題2-(3) ---------- */
+ {id:'b5s2c', jp:'問題2', name:'Từ chung (3)', type:'mc',
+  hint:'Từ trong khung: 握る・ふさがる・ぶつかる・触れる. Mỗi nhóm ①②③④ dùng chung một từ — chọn đúng dạng.',
+  hintJp:'（　）に共通して入る言葉を［　］の中から選んで、必要なら形を変えて書きなさい。',
+  qs:[
+  M(1,'①a','しょう油は、空気や光に（　　）と、味が変化してしまいます。','触れる',['触れて','ぶつかる','触れ'],
+   'Nước tương nếu tiếp xúc với không khí và ánh sáng thì mùi vị sẽ thay đổi.',
+   '<b>触れる</b> (ふれる) = chạm, tiếp xúc. 〜と (điều kiện) nối với dạng từ điển: 触れると.'),
+  M(2,'①b','首相はスピーチで重要な課題の一つとして環境問題にも（　　）。','触れた',['触れて','触れ','握った'],
+   'Trong bài phát biểu, thủ tướng cũng đề cập đến vấn đề môi trường như một trong những vấn đề quan trọng.',
+   '<b>〜に触れる</b> = đề cập đến. Câu kết thúc, chuyện đã nói nên dùng 触れた.'),
+  M(3,'②a','通勤時間に（　　）と電車が込むので、朝早く出かけよう。','ぶつかる',['ぶつかって','ふさがる','握る'],
+   'Nếu trùng giờ đi làm thì tàu sẽ đông nên hãy đi sớm.',
+   '<b>〜にぶつかる</b> = trùng với, rơi vào (thời điểm). 通勤時間にぶつかると = nếu trùng giờ đi làm.'),
+  M(4,'②b','彼とは考え方が違うので、いつも意見が（　　）しまう。','ぶつかって',['ぶつかる','ふさがって','触れて'],
+   'Vì cách nghĩ khác anh ấy nên ý kiến lúc nào cũng va chạm nhau.',
+   '<b>意見がぶつかる</b> = ý kiến xung đột. Nối với しまう bằng thể て.'),
+  M(5,'③a','手術をしたときの傷がまだ（　　）いないので、激しい運動はできない。','ふさがって',['ふさがら','ぶつかって','握って'],
+   'Vết thương lúc phẫu thuật vẫn chưa liền miệng nên chưa vận động mạnh được.',
+   '<b>傷がふさがる</b> = vết thương liền lại, khép miệng. ふさがっていない = chưa lành.'),
+  M(6,'③b','ホテルを予約しようとしたが、部屋は全部（　　）いるということだった。','ふさがって',['ふさがら','ぶつかって','触れて'],
+   'Tôi định đặt khách sạn nhưng nghe nói phòng đã kín hết.',
+   '<b>部屋がふさがる</b> = phòng đã có người, kín chỗ.'),
+  M(7,'④a','普段は電車を使っているので、車のハンドルを（　　）のは久しぶりだ。','握る',['握って','握ら','触れる'],
+   'Bình thường tôi đi tàu nên lâu rồi mới cầm vô lăng ô tô.',
+   '<b>ハンドルを握る</b> = cầm lái. のは + dạng từ điển: 握るのは久しぶりだ.'),
+  M(8,'④b','妻が財布を（　　）いるので、妻の許可を得ないと買い物できない。','握って',['握る','握ら','ふさがって'],
+   'Vợ tôi nắm giữ cái ví nên không có sự cho phép của vợ thì tôi không mua sắm được.',
+   '<b>財布を握る</b> = nắm quyền chi tiêu trong nhà. 握っている = đang nắm giữ.')
+  ]},
+ /* ---------- 問題3 ---------- */
+ {id:'b5s3', jp:'問題3', name:'Điền từ vào chỗ trống', type:'mc',
+  hint:'Chọn đáp án phù hợp nhất điền vào chỗ trống （　　）.',
+  hintJp:'（　）に入れるのに最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, text:'型に（　　）絵は面白くない。', choices:['よせた','よんだ','はねた','はまった'], a:3,
+   tr:'Bức tranh rập khuôn thì không thú vị.',
+   vi:'<b>型にはまる</b> = rập khuôn, theo một khuôn mẫu cố định. Các đáp án còn lại không đi với 型に.'},
+  {n:2, text:'法律に（　　）なければ何をしてもいいというわけではない。', choices:['ふれ','ふら','ふくらま','ふるえ'], a:0,
+   tr:'Không phải cứ không vi phạm luật là muốn làm gì cũng được.',
+   vi:'<b>法律に触れる</b> (ふれる) = vi phạm, đụng đến luật. 触れなければ = nếu không vi phạm.<ul><li>ふる (振る), ふくらむ, ふるえる (run) không đi với 法律に.</li></ul>'},
+  {n:3, text:'運転手の不注意が大事故を（　　）こととなった。', choices:['ぶつかる','にらむ','とく','まねく'], a:3,
+   tr:'Sự bất cẩn của tài xế đã dẫn đến một tai nạn lớn.',
+   vi:'<b>事故を招く</b> = gây ra, dẫn đến tai nạn. 招く còn có nghĩa "gây ra hậu quả".'},
+  {n:4, text:'話し合いの中で、意見が（　　）ことも少なくない。', choices:['はねる','あばれる','ふさがる','ぶつかる'], a:3,
+   tr:'Trong lúc thảo luận, không ít khi ý kiến va chạm nhau.',
+   vi:'<b>意見がぶつかる</b> = ý kiến xung đột nhau. はねる (bắn), あばれる (làm loạn), ふさがる (bị chặn) không hợp với 意見.'},
+  {n:5, text:'卵をよく（　　）から、小麦粉を入れてください。', choices:['ふくらんで','といて','こぼして','つんで'], a:1,
+   tr:'Hãy đánh đều trứng rồi cho bột mì vào.',
+   vi:'<b>卵を溶く</b> (とく) = đánh tan trứng. Ở đây 溶く là chữ khác với 解く nhưng cùng cách đọc.<ul><li>ふくらんで: phồng; こぼして: làm đổ; つんで: chất lên — đều không hợp.</li></ul>'},
+  {n:6, text:'油が（　　）ように、魚をそっと油の中に入れてください。', choices:['にえない','とけない','はねない','ぶつからない'], a:2,
+   tr:'Hãy nhẹ nhàng cho cá vào dầu để dầu không bắn lên.',
+   vi:'<b>油がはねる</b> = dầu bắn. 〜ないように = để không… Thả cá nhẹ nhàng để dầu không bắn.'},
+  {n:7, text:'レポートの本文には、必ずページ番号を（　　）ください。', choices:['ぬって','よせて','ふれて','ふって'], a:3,
+   tr:'Trong phần nội dung báo cáo, nhất định hãy đánh số trang.',
+   vi:'<b>番号を振る</b> = đánh số. 振ってください = hãy đánh số.'},
+  {n:8, text:'アメリカの大学に進学した友人の話を聞いて、ますます留学の夢が（　　）。', choices:['ちぢんだ','ふくらんだ','つんだ','ふさがった'], a:1,
+   tr:'Nghe chuyện của người bạn học đại học ở Mỹ, ước mơ du học của tôi càng lớn dần.',
+   vi:'<b>夢が膨らむ</b> = ước mơ nở rộng, lớn dần. ちぢむ là co lại (nghĩa ngược).'},
+  {n:9, text:'監督は「今年こそ優勝できるだろう」と選手たちの活躍に期待を（　　）いる。', choices:['よせて','まねいて','つんで','にらんで'], a:0,
+   tr:'Huấn luyện viên đặt kỳ vọng vào sự thi đấu của các tuyển thủ, cho rằng "năm nay nhất định có thể vô địch".',
+   vi:'<b>期待を寄せる</b> = đặt kỳ vọng vào. 寄せている = đang đặt kỳ vọng.'},
+  {n:10, text:'学校から帰る途中でバイクに（　　）、入院することになった。', choices:['ふさがって','だまされて','はまって','はねられて'], a:3,
+   tr:'Trên đường từ trường về nhà tôi bị xe máy tông và phải nhập viện.',
+   vi:'<b>バイクにはねられる</b> = bị xe máy tông (thể bị động của はねる).'}
+  ]},
+ /* ---------- 問題4 ---------- */
+ {id:'b5s4', jp:'問題4', name:'Từ gần nghĩa', type:'mc',
+  hint:'Chọn từ có nghĩa gần nhất với từ được gạch chân.',
+  hintJp:'下線の言葉に意味が最も近いものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, text:'妹は占いに<u>はまって</u>いる。', choices:['悩んで','夢中になって','慣れて','疑問を持って'], a:1,
+   tr:'Em gái tôi đang mê bói toán.',
+   vi:'<b>〜にはまる</b> (nghĩa mở rộng) = say mê, đắm chìm vào → <b>夢中になって</b>.<ul><li>悩む: khổ tâm; 慣れる: quen; 疑問を持つ: nghi ngờ.</li></ul>'},
+  {n:2, text:'田中さんは今の学校教育をどう<u>とらえて</u>いらっしゃいますか。', choices:['行って','考えて','調べて','教えて'], a:1,
+   tr:'Anh Tanaka nhìn nhận nền giáo dục học đường hiện nay như thế nào?',
+   vi:'<b>とらえる</b> (nghĩa mở rộng) = nhìn nhận, hiểu theo cách nào đó → <b>考えて</b>.'},
+  {n:3, text:'彼の言っていることは、半分以上うそだと<u>にらんで</u>いる。', choices:['知って','思って','聞いて','言って'], a:1,
+   tr:'Tôi đoán những gì anh ta nói hơn nửa là nói dối.',
+   vi:'<b>にらむ</b> (nghĩa mở rộng) = ngờ, đoán (có căn cứ) → <b>思って</b>.'},
+  {n:4, text:'来月まで予定が<u>ふさがって</u>いる。', choices:['わかって','届いて','空いて','入って'], a:3,
+   tr:'Lịch của tôi đã kín cho đến tháng sau.',
+   vi:'<b>予定がふさがる</b> = lịch đã kín, đã có việc → <b>入って</b> (予定が入っている).<ul><li>空いて: còn trống (nghĩa ngược).</li></ul>'},
+  {n:5, text:'「子育てこころの相談室」では数多くのご相談のメールを<u>お寄せ</u>いただいています。', choices:['お読み','お取り','お受け','お送り'], a:3,
+   tr:'Ở "Phòng tư vấn tâm lý nuôi dạy con", chúng tôi đã nhận được rất nhiều email xin tư vấn.',
+   vi:'<b>メールを寄せる</b> = gửi (thư, mail) đến → <b>お送り</b>. お〜いただく là cách nói khiêm nhường.'}
+  ]},
+ /* ---------- 問題5 ---------- */
+ {id:'b5s5', jp:'問題5', name:'Cách dùng từ', type:'mc', usage:true,
+  hint:'Chọn câu dùng từ đã cho đúng nhất.',
+  hintJp:'次の言葉の使い方として最もよいものを、1・2・3・4から一つ選びなさい。',
+  qs:[
+  {n:1, text:'にぎる', choices:['商品の特徴をよく<u>にぎらない</u>と、よい広告は作れない。','犯人は自転車で逃げたが、あっという間に警官に<u>にぎられた</u>。','そこの壁は汚れているので、<u>にぎらない</u>ように注意してください。','あの女が事件のかぎを<u>にぎって</u>いるに違いない。'], a:3,
+   vi:'<b>かぎを握る</b> = nắm giữ mấu chốt (của vụ án). Câu 4 đúng: "Người phụ nữ đó chắc chắn nắm chìa khóa của vụ án".<ul><li>Câu 1: nắm bắt đặc trưng là <b>つかむ</b>.</li><li>Câu 2: bị cảnh sát bắt là <b>つかまる／とらえられる</b>.</li><li>Câu 3: đụng vào tường là <b>触れない</b>.</li></ul>'},
+  {n:2, text:'つむ', choices:['日本チームの活躍に、全国民が期待を<u>つんで</u>いる。','もっと練習を<u>つめば</u>、君も試合に出場できるよ。','車に女性を<u>つむ</u>のは初めてだったので、とても緊張した。','お名前にひらがなでふりがなを<u>つんで</u>いただけますか。'], a:1,
+   vi:'<b>練習を積む</b> = luyện tập nhiều, tích lũy. Câu 2 đúng: "Nếu luyện tập nhiều hơn thì em cũng có thể ra sân đấu".<ul><li>Câu 1: dùng <b>期待を寄せる</b>.</li><li>Câu 3: chở người lên xe là <b>乗せる</b> (積む chỉ dùng cho đồ vật).</li><li>Câu 4: ghi furigana là <b>振る／ふってください</b>.</li></ul>'},
+  {n:3, text:'ぶつかる', choices:['この話が社長の耳に<u>ぶつかった</u>ら大変だ。','料理をしているときに、油が手に<u>ぶつかって</u>、やけどをしてしまった。','祝日が日曜と<u>ぶつかる</u>場合、月曜日も休みになる。','入り口が荷物で<u>ぶつかって</u>いて、中に入れない。'], a:2,
+   vi:'<b>〜とぶつかる</b> = trùng với (ngày/giờ). Câu 3 đúng: "Nếu ngày lễ trùng với Chủ nhật thì thứ Hai cũng nghỉ".<ul><li>Câu 1: lọt đến tai là <b>入る</b>.</li><li>Câu 2: dầu bắn vào tay là <b>はねる</b>.</li><li>Câu 4: lối vào bị chặn là <b>ふさがる</b>.</li></ul>'},
+  {n:4, text:'とく', choices:['誤解を<u>とかない</u>ように、もっとはっきり説明したほうがいい。','彼女は困難な問題に<u>といて</u>も、けっして夢をあきらめなかった。','娘が真剣な表情でパズルを<u>といて</u>いる。','ウサギがぴょんぴょん<u>といて</u>いる。'], a:2,
+   vi:'<b>パズルを解く</b> = giải câu đố. Câu 3 đúng: "Con gái tôi đang giải ô chữ với vẻ mặt nghiêm túc".<ul><li>Câu 1: muốn tránh hiểu lầm nên phải <b>解く</b> (khẳng định), ý "không hóa giải" sai nghĩa.</li><li>Câu 2: gặp khó khăn là <b>ぶつかる</b>.</li><li>Câu 4: thỏ nhảy là <b>はねる</b>.</li></ul>'},
+  {n:5, text:'にらむ', choices:['かわいい女の子がうれしそうに私の顔を<u>にらんで</u>いた。','大きく<u>にらんだ</u>風船が空高く飛んでいった。','女の子が母親と手を<u>にらんで</u>歩いている。','レストランでたばこを吸ったら、隣の席の人がこっちを<u>にらんだ</u>。'], a:3,
+   vi:'<b>にらむ</b> = lườm, nhìn trừng trừng với vẻ giận. Câu 4 đúng: "Tôi hút thuốc ở nhà hàng thì người bàn bên cạnh lườm sang".<ul><li>Câu 1: nhìn vui vẻ là <b>見つめる</b>.</li><li>Câu 2: bóng bay phồng là <b>ふくらむ</b>.</li><li>Câu 3: nắm tay là <b>つなぐ／にぎる</b>.</li></ul>'}
+  ]}
+ ]
+}
 
 ];
 
 /* ================= TRẠNG THÁI ================= */
-const S={view:'home', examId:null, secIdx:0, answers:{}, picks:{}, perm:{}, msg:{}, shuffle:false, active:null, showTr:false};
+const S={view:'home', examId:null, secIdx:0, answers:{}, picks:{}, perm:{}, msg:{}, shuffle:false, active:null, showTr:false, pairs:{}, sel:null};
 const app=document.getElementById('app');
 const exam=()=>EXAMS.find(e=>e.id===S.examId);
 const keyOf=(sec,q)=>sec.id+'-'+q.n;
@@ -1288,14 +1532,14 @@ function renderHome(){
 
 /* ================= QUIZ ================= */
 function startExam(id){
-  S.examId=id; S.active=null; S.answers={}; S.picks={}; S.msg={}; S.secIdx=0; S.showTr=false;
+  S.examId=id; S.active=null; S.answers={}; S.picks={}; S.pairs={}; S.sel=null; S.msg={}; S.secIdx=0; S.showTr=false;
   makePerm(); renderQuiz();
 }
 function retryWrong(){
   const wrong=allActive().filter(x=>!isOk(x.sec,x.q)).map(x=>x.k);
   if(!wrong.length) return;
   S.active=new Set(wrong);
-  wrong.forEach(k=>{delete S.answers[k]; delete S.picks[k]; delete S.msg[k]});
+  wrong.forEach(k=>{delete S.answers[k]; delete S.picks[k]; delete S.msg[k]; delete S.pairs[k]}); S.sel=null;
   S.secIdx=0; S.showTr=false; makePerm(); renderQuiz();
 }
 
@@ -1348,7 +1592,7 @@ function mcHtml(sec,q){
     ? `<div class="q-head">${num}<div class="qtext"><span class="tgt">${q.text}</span></div></div>`
     : (sec.reading&&q.stem)
     ? `<div class="q-head">${num}<div class="qtext"><b>${q.label||('【'+q.n+'】')}</b> chọn đáp án phù hợp</div></div><div class="stem">${q.stem.replace(/【(\d)(‑[ab])?】/g,(m)=>`<span class="blank">${m}</span>`)}</div>`
-    : `<div class="q-head">${num}<div class="qtext">${blankHtml()(q.text)}</div></div>`;
+    : `<div class="q-head">${num}<div class="qtext">${q.tag?`<span class="grp">${q.tag}</span> `:''}${blankHtml()(q.text)}</div></div>`;
   const ch=order.map((oi,pos)=>{
     let cls='choice', mk='';
     if(done){ if(oi===q.a){cls+=' right'; mk='<span class="mk">Đáp án</span>'} else if(oi===chosen){cls+=' wrong'; mk='<span class="mk">Bạn chọn</span>'} else cls+=' dim'; }
@@ -1396,13 +1640,46 @@ function orderHtml(sec,q){
     ${ex}</article>`;
 }
 
+function boardHtml(sec,bi){
+  const b=sec.boards[bi], rows=secQs(sec).filter(q=>q.board===bi); if(!rows.length) return '';
+  const checked=rows.every(q=>S.answers[keyOf(sec,q)]!==undefined);
+  const allPaired=rows.every(q=>S.pairs[keyOf(sec,q)]!==undefined);
+  const okN=rows.filter(q=>isOk(sec,q)).length;
+  const selRow=rows.find(q=>keyOf(sec,q)===S.sel);
+  const rowsH=rows.map((q,ri)=>{
+    const k=keyOf(sec,q), pv=S.pairs[k], ans=S.answers[k], done=ans!==undefined;
+    let cls='mrow c'+(ri%6)+(S.sel===k?' sel':'')+(pv!==undefined?' paired':'');
+    if(done) cls+=(ans===q.a?' ok':' no');
+    const inner=`<span class="qn">${ri+1}</span><span class="mtext jp">${q.text}</span><span class="mslot">${pv!==undefined?b.rights[pv]:'…'}</span>`;
+    const btn=done?`<div class="${cls}">${inner}</div>`:`<button class="${cls}" data-act="mrow" data-k="${k}">${inner}</button>`;
+    const un=(!done&&pv!==undefined)?`<button class="munpair" data-act="munpair" data-k="${k}" title="Gỡ nối">✕</button>`:'';
+    const ok=done&&ans===q.a;
+    const ex=done?`<div class="explain ok-${ok?1:0} ${ok?'ok':'no'}" style="margin:0 0 10px"><p><b>${ok?'✓ Đúng':'✕ Sai'}</b> · Đáp án: <span class="jp"><b>${b.rights[q.a]}</b></span></p><div>${q.vi}</div></div>`:'';
+    return `<div class="mwrap">${btn}${un}</div>${ex}`;
+  }).join('');
+  const chips=b.rights.map((r,i)=>{
+    const owner=rows.findIndex(q=>S.pairs[keyOf(sec,q)]===i);
+    return `<button class="mchip${owner>=0?' used c'+(owner%6):''}" data-act="mright" data-b="${bi}" data-i="${i}" ${checked?'disabled':''}>${r}</button>`;
+  }).join('');
+  const hint=checked?'':(selRow?'Giờ chạm cụm bên phải để nối với nhóm đã chọn.':'Chạm một nhóm bên trái trước, rồi chạm cụm bên phải.');
+  return `<div class="mboard" id="board-${sec.id}-${bi}">
+    <h3 class="mtitle">${b.title}</h3>
+    <div class="mrows">${rowsH}</div>
+    <div class="mchips-wrap"><span class="lbl">Cụm bên phải</span><div class="mchips">${chips}</div></div>
+    <div class="mfoot">${checked?`<div class="mscore">Bảng ${b.title}: đúng ${okN} / ${rows.length}</div>`:`<span class="mhint">${hint}</span><button class="btn sm mint" data-act="mcheck" data-b="${bi}" ${allPaired?'':'disabled'}>Kiểm tra</button>`}</div>
+  </div>`;
+}
+function refreshBoard(sec,bi){
+  const el=document.getElementById(`board-${sec.id}-${bi}`); if(!el) return;
+  el.outerHTML=boardHtml(sec,bi); refreshChrome();
+}
 function secHtml(sec){
   const qs=secQs(sec);
   return `<section class="card sec">
     <div class="sec-head"><h2><span class="jp">${sec.jp}</span>${sec.name}</h2><p>${sec.hint}<span class="jp">${sec.hintJp}</span></p></div>
     ${sec.note?`<details class="gnote"><summary>📒 Ghi nhớ ngữ pháp</summary><div class="gbody">${sec.note}</div></details>`:''}
     ${sec.reading?passageHtml(sec):''}
-    <div id="qs">${qs.map(q=>sec.type==='order'?orderHtml(sec,q):mcHtml(sec,q)).join('')}</div>
+    <div id="qs">${sec.type==='match'?sec.boards.map((b,bi)=>boardHtml(sec,bi)).join(''):qs.map(q=>sec.type==='order'?orderHtml(sec,q):mcHtml(sec,q)).join('')}</div>
   </section>`;
 }
 
@@ -1471,6 +1748,9 @@ function reviewItem(sec,q,k){
     mine=done?p.map(f=>q.f[f]).join(' → '):'';
     right=q.order.map(f=>q.f[f]).join(' → ');
     full=q.pre+q.order.map((f,i)=>(i===2&&!sec.nostar)?`<mark>${q.f[f]}</mark>`:q.f[f]).join('')+q.post;
+  } else if(sec.type==='match'){
+    const b=sec.boards[q.board]; stem=`${b.title} <span class="jp">${q.text}</span>`;
+    mine=(done&&S.answers[k]>=0)?b.rights[S.answers[k]]:''; right=b.rights[q.a]; full='';
   } else {
     stem=sec.usage?`<span class="tgt">${q.text}</span>`:(sec.reading&&q.stem)?q.stem.replace(/【(\d)(‑[ab])?】/g,'<span class="blank">$&</span>'):blankHtml()(q.text);
     mine=done?q.choices[S.answers[k]]:'';
@@ -1479,7 +1759,7 @@ function reviewItem(sec,q,k){
   }
   return `<article class="rv-item ${ok?'ok':'no'}">
     <div class="rv-top"><span class="st">${ok?'✓':'✕'}</span><span><span class="jp">${sec.jp}</span> · câu ${q.n}</span></div>
-    <div class="rv-q">${stem}</div>
+    <div class="rv-q">${q.tag?`<span class="grp">${q.tag}</span> `:''}${stem}</div>
     <div class="rv-ans">${ok?`<span class="right">${right}</span>`:`${done?`<span class="mine">${mine}</span>`:'<span class="mine">Chưa trả lời</span>'}<span class="right">${right}</span>`}</div>
     <details class="rv-ex" ${ok?'':'open'}><summary>Giải thích</summary><div class="body">
       ${full?`<p class="jp">${full}</p>`:''}${q.tr?`<p>${q.tr}</p>`:''}<div>${q.vi}</div></div></details>
@@ -1511,6 +1791,15 @@ document.addEventListener('click',ev=>{
     case 'unslot': { const k=t.dataset.k, q=qOf(k); if(!q) break; const p=S.picks[k]||[]; if(p.length===4) break;
       S.picks[k]=p.slice(0,+t.dataset.i); refreshQ(sec,q); break; }
     case 'reset': { const k=t.dataset.k, q=qOf(k); if(!q) break; if((S.picks[k]||[]).length===4) break; S.picks[k]=[]; refreshQ(sec,q); break; }
+    case 'mrow': { const k=t.dataset.k, q=qOf(k); if(!q) break; S.sel=(S.sel===k)?null:k; refreshBoard(sec,q.board); break; }
+    case 'munpair': { const k=t.dataset.k, q=qOf(k); if(!q) break; delete S.pairs[k]; if(S.sel===k) S.sel=null; refreshBoard(sec,q.board); break; }
+    case 'mright': { const bi=+t.dataset.b, i=+t.dataset.i, rows=secQs(sec).filter(q=>q.board===bi);
+      let q=rows.find(x=>keyOf(sec,x)===S.sel); if(!q) q=rows.find(x=>S.pairs[keyOf(sec,x)]===undefined); if(!q) break;
+      rows.forEach(x=>{ if(S.pairs[keyOf(sec,x)]===i) delete S.pairs[keyOf(sec,x)]; });
+      S.pairs[keyOf(sec,q)]=i; S.sel=null; refreshBoard(sec,bi); break; }
+    case 'mcheck': { const bi=+t.dataset.b, rows=secQs(sec).filter(q=>q.board===bi);
+      if(!rows.every(q=>S.pairs[keyOf(sec,q)]!==undefined)) break;
+      rows.forEach(q=>{ const k=keyOf(sec,q); S.answers[k]=S.pairs[k]; }); S.sel=null; refreshBoard(sec,bi); break; }
     case 'jump': { const el=document.getElementById('q-'+t.dataset.k); if(el) el.scrollIntoView({behavior:'smooth',block:'center'}); break; }
     case 'tr': S.showTr=true; document.body.insertAdjacentHTML('beforeend','<div id="trwrap">'+trModal(sec)+'</div>'); break;
     case 'trx': case 'trbg': S.showTr=false; { const w=document.getElementById('trwrap'); if(w) w.remove(); else renderQuiz(); } break;
